@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jonathan Jalotjot — Lead Product Designer</title>
+<meta name="description" content="Jonathan Jalotjot — Lead Product Designer with 15+ years transforming brands into digital products across insurance and retail." />
+
+<!--
+  ============================================================================
+  JONATHAN JALOTJOT — PORTFOLIO (single-file, no build step)
+  ============================================================================
+
+  HOW TO EDIT
+  -----------
+  • Everything lives in this one file. Colours, fonts and spacing are CSS
+    variables in :root (see <style> below) — change them in one place.
+
+  ADDING YOUR OWN IMAGES  (already wired — just drop the files in)
+  ---------------------------------------------------------------
+  • Create an "images/" folder next to this file and add files with these exact
+    names. Each appears automatically; until then a labelled placeholder shows.
+        images/work-itinerary.jpg       work card 1   4:3   ~1200×900
+        images/work-redesign.jpg        work card 2   4:3   ~1200×900
+        images/work-retail.jpg          work card 3   4:3   ~1200×900
+        images/work-design-system.jpg   work card 4   4:3   ~1200×900
+        images/portrait.jpg             about photo   4:5   ~1000×1250
+        images/logo.svg                 nav mark      1:1   SVG (or .png ≥128×128)
+  • JPG or WebP, keep each under ~500 KB. Images are cropped to fill (object-fit:
+    cover), so keep the key content centred.
+  • LOGO: images/logo.svg is preferred (crisp at any size). A transparent PNG at
+    128×128+ also works — change the <img src> in the nav to images/logo.png. The
+    mark sits on the light header, so use a dark/coloured logo (or one with its own
+    background). It shows uncropped; the "JJ" tile shows until your file is added.
+  • To use a different filename, edit the matching <img src="…"> below.
+
+  ACTIVATING THE CONTACT FORM
+  ---------------------------
+  • The form currently posts to a Formspree placeholder and shows a success
+    message via JS. To receive real submissions:
+      1. Create a free form at https://formspree.io
+      2. Replace "your-id" in the <form action="…"> below with your form ID.
+    No email address is shown anywhere on the page.
+
+  HOSTING
+  -------
+  • Upload this file (and any images/) to Netlify, GitHub Pages, Vercel, or any
+    static host. No server or build required.
+  ============================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    /* Colour */
+    --bg:        #FAFAF8;
+    --ink:       #0A0A0A;
+    --ink-soft:  #4A4A46;
+    --line:      #E6E5DF;
+    --accent:    #FF4A1C;
+    --accent-ink:#FFFFFF;
+    --ph-a:      #EDECE6;
+    --ph-b:      #DAD8CF;
+
+    /* Type */
+    --display: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --body:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    /* Layout */
+    --maxw: 1240px;
+    --gutter: clamp(16px, 5vw, 64px);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* Skip link */
+  .skip {
+    position: absolute; left: -9999px; top: 0;
+    background: var(--ink); color: var(--bg);
+    padding: 10px 16px; z-index: 100; border-radius: 0 0 8px 0;
+  }
+  .skip:focus { left: 0; }
+
+  /* ---------------------------------------------------------------- Nav */
+  header.site {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s ease;
+  }
+  header.site.scrolled { border-color: var(--line); }
+
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; padding-block: 18px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none; line-height: 1.15;
+  }
+  .brand .mark {
+    position: relative;
+    width: 34px; height: 34px; overflow: hidden;
+    flex: none;
+  }
+  /* Your logo fills the tile without cropping; sits on the light header. */
+  .brand .mark img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
+  /* "JJ" fallback tile — shown until a logo image successfully loads. */
+  .brand .mark .mark-fallback {
+    position: absolute; inset: 0;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--display); font-weight: 700; font-size: 17px;
+  }
+  .brand .mark.has-logo .mark-fallback { display: none; }
+
+  .nav-links {
+    display: flex; align-items: center; gap: clamp(14px, 3vw, 34px);
+  }
+  .nav-links a.link {
+    text-decoration: none; font-weight: 500; font-size: 15px; color: var(--ink);
+    position: relative; padding: 4px 0;
+  }
+  .nav-links a.link::after {
+    content: ""; position: absolute; left: 0; right: 100%; bottom: -2px;
+    height: 1.5px; background: var(--ink); transition: right .25s ease;
+  }
+  .nav-links a.link:hover::after { right: 0; }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: var(--accent-ink);
+    text-decoration: none; font-weight: 600; font-size: 14px;
+    padding: 11px 20px; border-radius: 999px;
+    transition: transform .2s ease, background .2s ease;
+    border: none; cursor: pointer;
+  }
+  .pill:hover { transform: translateY(-1px); background: #e8390d; }
+
+  .nav-toggle { display: none; }
+
+  /* ---------------------------------------------------------------- Hero */
+  .hero { padding-block: clamp(56px, 11vw, 128px) clamp(40px, 8vw, 88px); }
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2.6rem, 8.2vw, 6.6rem);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    margin: 0 0 clamp(28px, 5vw, 52px);
+    max-width: 15ch;
+  }
+  /* Hero word-by-word reveal (matches reference site) */
+  .hero h1 .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.22em);
+    will-change: opacity, transform;
+  }
+  .hero h1.revealed .word {
+    opacity: 1;
+    transform: none;
+    transition: opacity .5s ease, transform .5s cubic-bezier(.2, .7, .2, 1);
+  }
+
+  .hero-lead {
+    display: grid; grid-template-columns: 1fr; gap: 24px;
+    max-width: 760px; margin-left: auto;
+  }
+  .hero-lead p { margin: 0; font-size: clamp(1.05rem, 2.2vw, 1.35rem); color: var(--ink-soft); }
+  .hero-lead p strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------------------------------------------------------------- Section chrome */
+  section { padding-block: clamp(56px, 9vw, 120px); }
+  .eyebrow {
+    font-size: 13px; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-soft);
+    display: flex; align-items: center; gap: 10px; margin: 0 0 28px;
+  }
+  .eyebrow::before {
+    content: ""; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent); flex: none;
+  }
+  .section-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap; margin-bottom: clamp(32px, 5vw, 56px);
+  }
+  h2.big {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    line-height: 1.02; letter-spacing: -0.02em; margin: 0; max-width: 18ch;
+  }
+
+  /* ---------------------------------------------------------------- Statement */
+  .statement { border-top: 1px solid var(--line); }
+  .statement .grid {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(28px, 6vw, 80px);
+    align-items: start;
+  }
+  .statement p.body { font-size: clamp(1.05rem, 1.8vw, 1.25rem); color: var(--ink-soft); margin: 0 0 24px; }
+  .textlink {
+    font-weight: 600; text-decoration: none; color: var(--ink);
+    border-bottom: 2px solid var(--accent); padding-bottom: 2px;
+    transition: color .2s ease;
+  }
+  .textlink:hover { color: var(--accent); }
+
+  /* ---------------------------------------------------------------- Placeholder blocks */
+  .ph {
+    position: relative; width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--ph-a), var(--ph-b));
+    display: grid; place-items: center; overflow: hidden;
+    color: var(--ink-soft);
+  }
+  .ph::after {
+    content: attr(data-label);
+    font-size: 12px; font-weight: 500; letter-spacing: .04em;
+    text-transform: uppercase; opacity: .7; padding: 8px 14px;
+    border: 1px dashed color-mix(in srgb, var(--ink-soft) 45%, transparent);
+    border-radius: 999px; text-align: center;
+  }
+  /* Real images sit on top of the placeholder and fill the frame; if a file is
+     missing, onerror removes the <img> and the labelled placeholder shows through. */
+  article.work a.media .ph, .portrait .ph { position: absolute; inset: 0; }
+  article.work a.media img, .portrait img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+
+  /* ---------------------------------------------------------------- Work grid */
+  .work-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: clamp(24px, 3.5vw, 44px);
+  }
+  article.work { display: flex; flex-direction: column; }
+  article.work a.media {
+    position: relative;
+    display: block; aspect-ratio: 4 / 3; border-radius: 16px; overflow: hidden;
+    background: var(--ph-a); text-decoration: none;
+  }
+  article.work a.media .ph, article.work a.media img { transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+  article.work a.media:hover .ph, article.work a.media:hover img { transform: scale(1.03); }
+  article.work .meta { padding-top: 22px; display: flex; flex-direction: column; gap: 8px; }
+  article.work .row {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  }
+  article.work h3 { font-family: var(--display); font-weight: 600; font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 0; letter-spacing: -0.01em; }
+  article.work .metric {
+    flex: none; font-family: var(--display); font-weight: 600; font-size: 14px;
+    color: var(--accent); white-space: nowrap;
+  }
+  article.work p { margin: 0; color: var(--ink-soft); font-size: 15.5px; }
+  article.work .view {
+    margin-top: 6px; font-weight: 600; font-size: 14px; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 7px;
+  }
+  article.work .view .arw { transition: transform .2s ease; }
+  article.work .view:hover .arw { transform: translateX(4px); }
+
+  /* ---------------------------------------------------------------- About */
+  .about { border-top: 1px solid var(--line); }
+  .about-grid {
+    display: grid; grid-template-columns: 380px 1fr; gap: clamp(32px, 6vw, 72px);
+    align-items: start;
+  }
+  .portrait {
+    aspect-ratio: 4 / 5; border-radius: 18px; overflow: hidden;
+    background: var(--ph-a); position: sticky; top: 100px;
+  }
+  .about-body p { font-size: clamp(1.02rem, 1.7vw, 1.2rem); color: var(--ink-soft); margin: 0 0 20px; }
+  .about-body p strong { color: var(--ink); font-weight: 600; }
+
+  .caps { list-style: none; margin: 40px 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 28px; }
+  .caps li {
+    font-size: 15px; padding-left: 24px; position: relative; color: var(--ink);
+  }
+  .caps li::before {
+    content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700;
+  }
+
+  .subhead {
+    font-family: var(--display); font-weight: 600; font-size: 13px;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--ink);
+    margin: 56px 0 20px; padding-bottom: 12px; border-bottom: 1px solid var(--line);
+  }
+  .timeline { display: grid; gap: 4px; }
+  .job {
+    display: grid; grid-template-columns: 150px 1fr; gap: 8px 28px;
+    padding: 22px 0; border-bottom: 1px solid var(--line);
+  }
+  .job .when { font-family: var(--display); font-weight: 500; font-size: 14px; color: var(--ink-soft); }
+  .job h4 { margin: 0 0 4px; font-family: var(--display); font-weight: 600; font-size: 1.2rem; }
+  .job .org { color: var(--accent); font-weight: 600; font-size: 14px; margin-bottom: 12px; }
+  .job ul { margin: 0; padding-left: 18px; color: var(--ink-soft); font-size: 15px; display: grid; gap: 8px; }
+
+  .edu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 28px; }
+  .edu .item { padding: 20px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+  .edu .item .yr { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  .edu .item h5 { margin: 8px 0 4px; font-family: var(--display); font-size: 1.05rem; font-weight: 600; }
+  .edu .item p { margin: 0; font-size: 14px; color: var(--ink-soft); }
+
+  /* ---------------------------------------------------------------- Contact */
+  .contact { border-top: 1px solid var(--line); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
+  .contact h2.big { max-width: 12ch; }
+  .contact .lead { color: var(--ink-soft); font-size: clamp(1.05rem,1.8vw,1.3rem); margin: 20px 0 0; max-width: 34ch; }
+
+  form.contact-form { display: grid; gap: 18px; }
+  .field { display: grid; gap: 8px; }
+  .field label { font-size: 13px; font-weight: 600; letter-spacing: .04em; }
+  .field input, .field textarea {
+    font-family: var(--body); font-size: 16px; color: var(--ink);
+    background: #fff; border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px 16px; width: 100%; resize: vertical;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .field input:focus, .field textarea:focus {
+    outline: none; border-color: var(--ink);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ink) 10%, transparent);
+  }
+  form.contact-form .pill { justify-content: center; padding: 14px 22px; font-size: 15px; }
+  .form-status { font-size: 14px; font-weight: 500; min-height: 1.2em; }
+  .form-status.ok { color: #1a7a3c; }
+  .form-status.err { color: var(--accent); }
+
+  /* ---------------------------------------------------------------- Footer */
+  footer.site { border-top: 1px solid var(--line); padding-block: clamp(48px, 7vw, 88px) 40px; }
+  .foot-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+  .foot-top .big-name {
+    font-family: var(--display); font-weight: 700; letter-spacing: -0.02em;
+    font-size: clamp(2rem, 7vw, 4.5rem); line-height: 1; margin: 0;
+  }
+  .foot-top .avail { display: inline-flex; align-items: center; gap: 9px; font-weight: 500; color: var(--ink-soft); font-size: 15px; }
+  .foot-top .avail .dot { width: 9px; height: 9px; border-radius: 50%; background: #1a7a3c; box-shadow: 0 0 0 4px color-mix(in srgb, #1a7a3c 18%, transparent); }
+  .foot-bottom {
+    margin-top: clamp(36px, 6vw, 64px); padding-top: 24px; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    font-size: 13.5px; color: var(--ink-soft);
+  }
+  .foot-bottom a { text-decoration: none; font-weight: 500; }
+  .foot-bottom a:hover { color: var(--ink); }
+
+  /* ---------------------------------------------------------------- Reveal animation */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .hero h1 .word { opacity: 1 !important; transform: none !important; transition: none !important; }
+    * { animation: none !important; }
+  }
+
+  /* ---------------------------------------------------------------- Responsive */
+  @media (max-width: 900px) {
+    .statement .grid { grid-template-columns: 1fr; }
+    .work-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .portrait { position: static; max-width: 420px; }
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    .nav-links { display: none; }
+    .nav-links.open {
+      display: flex; position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; align-items: flex-start; gap: 4px;
+      background: var(--bg); border-bottom: 1px solid var(--line);
+      padding: 16px var(--gutter) 24px;
+    }
+    .nav-links.open a.link { font-size: 20px; padding: 8px 0; }
+    .nav-links.open .pill { margin-top: 8px; }
+    .nav-toggle {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 44px; height: 40px; border: 1px solid var(--line); border-radius: 10px;
+      background: #fff; cursor: pointer; gap: 4px; flex-direction: column;
+    }
+    .nav-toggle span { display: block; width: 18px; height: 2px; background: var(--ink); transition: .25s; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(4px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { transform: translateY(-2px) rotate(-45deg); }
+    .job { grid-template-columns: 1fr; }
+    .caps { grid-template-columns: 1fr; }
+    .edu { grid-template-columns: 1fr; }
+    .hero-lead { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#work">Skip to content</a>
+
+<!-- ============================================================ NAV -->
+<header class="site" id="top">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Jonathan Jalotjot, home">
+      <!-- Your logo: add images/logo.svg (or .png). Falls back to the "JJ" tile until it exists. -->
+      <span class="mark">
+        <img src="images/logo.svg" alt="Jonathan Jalotjot logo"
+             onload="this.closest('.mark').classList.add('has-logo')" onerror="this.remove()" />
+        <span class="mark-fallback">JJ</span>
+      </span>
+    </a>
+
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
+      <span></span><span></span>
+    </button>
+
+    <nav class="nav-links" id="navlinks">
+      <a class="link" href="#work">Work</a>
+      <a class="link" href="#about">About</a>
+      <a class="link" href="#contact">Contact</a>
+      <a class="pill" href="#contact">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ========================================================== HERO -->
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="wrap">
+      <h1 id="hero-h">Hi, I'm Jonathan — Product Designer for insurance, retail, and next-gen brands.</h1>
+      <div class="hero-lead reveal">
+        <p><strong>15+ years</strong> driving digital transformation — turning complex
+        problems into scalable products with measurable lifts in engagement, conversion,
+        and sales.</p>
+        <p>I define, design, and launch customer-led experiences across web, mobile, and
+        service journeys — grounded in research, evidence, and data.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== STATEMENT -->
+  <section class="statement" aria-labelledby="stmt-h">
+    <div class="wrap">
+      <div class="grid">
+        <h2 class="big reveal" id="stmt-h">I transform brands into products people trust.</h2>
+        <div class="reveal">
+          <p class="body">From product strategy to high-fidelity delivery, I translate business,
+          customer, and technical needs into clear flows and production-ready experiences —
+          then use customer evidence to keep improving them over time.</p>
+          <p class="body">I work commercially and collaboratively: facilitating alignment,
+          lifting design capability, and influencing stakeholders across agile,
+          multidisciplinary teams.</p>
+          <a class="textlink" href="#about">Meet Jonathan &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== WORK -->
+  <section id="work" aria-labelledby="work-h">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow reveal">Selected work</p>
+          <h2 class="big reveal" id="work-h">Recent work</h2>
+        </div>
+        <a class="textlink reveal" href="#contact">Start a project &rarr;</a>
+      </div>
+
+      <div class="work-grid">
+
+        <article class="work reveal">
+          <a class="media" href="#contact" aria-label="Cover-More — AI itinerary planner">
+            <!-- Add images/work-itinerary.jpg (4:3, ~1200×900). Placeholder shows until the file exists. -->
+            <span class="ph" data-label="Add images/work-itinerary.jpg"></span>
+            <img src="images/work-itinerary.jpg" alt="AI-powered itinerary planner app screens" onerror="this.remove()" />
+          </a>
+          <div class="meta">
+            <div class="row">
+              <h3>AI itinerary planner</h3>
+              <span class="metric">+22% engagement</span>
+            </div>
+            <p>A native leisure travel app with an AI-powered itinerary planner — leading
+            UX/UI from discovery through release. Cover-More · Zurich.</p>
+            <a class="view" href="#contact">View project <span class="arw">&rarr;</span></a>
+          </div>
+        </article>
+
+        <article class="work reveal">
+          <a class="media" href="#contact" aria-label="Multi-brand website redesign">
+            <!-- Add images/work-redesign.jpg (4:3, ~1200×900). Placeholder shows until the file exists. -->
+            <span class="ph" data-label="Add images/work-redesign.jpg"></span>
+            <img src="images/work-redesign.jpg" alt="Multi-brand website redesign layouts" onerror="this.remove()" />
+          </a>
+          <div class="meta">
+            <div class="row">
+              <h3>Multi-brand redesign</h3>
+              <span class="metric">+32% online sales</span>
+            </div>
+            <p>End-to-end website redesigns across multiple brands, plus an insight-to-action
+            research practice that cut bounce rates by 24%. PML.</p>
+            <a class="view" href="#contact">View project <span class="arw">&rarr;</span></a>
+          </div>
+        </article>
+
+        <article class="work reveal">
+          <a class="media" href="#contact" aria-label="Retail digital and in-store touchpoints">
+            <!-- Add images/work-retail.jpg (4:3, ~1200×900). Placeholder shows until the file exists. -->
+            <span class="ph" data-label="Add images/work-retail.jpg"></span>
+            <img src="images/work-retail.jpg" alt="Retail digital and in-store touchpoints" onerror="this.remove()" />
+          </a>
+          <div class="meta">
+            <div class="row">
+              <h3>Retail digital experience</h3>
+              <span class="metric">+26% engagement</span>
+            </div>
+            <p>Web and in-store digital touchpoints across major consumer brands, with a
+            17% lift in user acquisition. Pacific Brands.</p>
+            <a class="view" href="#contact">View project <span class="arw">&rarr;</span></a>
+          </div>
+        </article>
+
+        <article class="work reveal">
+          <a class="media" href="#contact" aria-label="Journey-led design system">
+            <!-- Add images/work-design-system.jpg (4:3, ~1200×900). Placeholder shows until the file exists. -->
+            <span class="ph" data-label="Add images/work-design-system.jpg"></span>
+            <img src="images/work-design-system.jpg" alt="Journey-led design system components" onerror="this.remove()" />
+          </a>
+          <div class="meta">
+            <div class="row">
+              <h3>Journey-led design system</h3>
+              <span class="metric">Coming soon</span>
+            </div>
+            <p>A reusable, journey-led product-design framework — shared React Native stack,
+            multi-brand configuration, and design governance. Cover-More · Freely.</p>
+            <a class="view" href="#contact">View project <span class="arw">&rarr;</span></a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== ABOUT -->
+  <section id="about" class="about" aria-labelledby="about-h">
+    <div class="wrap">
+      <p class="eyebrow reveal">About</p>
+      <div class="about-grid">
+        <div class="portrait reveal">
+          <!-- Add images/portrait.jpg (4:5, ~1000×1250). Placeholder shows until the file exists. -->
+          <span class="ph" data-label="Add images/portrait.jpg"></span>
+          <img src="images/portrait.jpg" alt="Jonathan Jalotjot" onerror="this.remove()" />
+        </div>
+
+        <div class="about-body">
+          <h2 class="big reveal" id="about-h" style="margin-bottom:28px;">A strategic designer who ships evidence-led outcomes.</h2>
+          <p class="reveal">I'm a <strong>Strategic Lead Product Designer</strong> with 15+ years driving
+          digital transformation across insurance and retail. My strength is customer-led
+          product strategy — from information architecture and research to high-fidelity
+          prototyping — translating complex problems into scalable digital experiences.</p>
+          <p class="reveal">I bring a commercially aware approach to delivery across web, mobile, and
+          service journeys, and I thrive in agile, multidisciplinary teams — facilitating
+          alignment, lifting capability, and using data to improve experiences over time.</p>
+
+          <ul class="caps reveal" aria-label="Core capabilities">
+            <li>Product strategy &amp; end-to-end design</li>
+            <li>Customer experience strategy</li>
+            <li>Information architecture &amp; journey mapping</li>
+            <li>Human-centred &amp; usability research</li>
+            <li>A/B testing, analytics &amp; KPIs</li>
+            <li>Workshop facilitation &amp; alignment</li>
+            <li>Design systems &amp; multi-brand</li>
+            <li>Agile delivery &amp; design leadership</li>
+            <li>AI-enabled, data-driven design</li>
+            <li>Prototyping &amp; experimentation</li>
+          </ul>
+
+          <h3 class="subhead reveal">Experience</h3>
+          <div class="timeline">
+            <div class="job reveal">
+              <span class="when">2022 — Present</span>
+              <div>
+                <h4>Lead Product Designer</h4>
+                <div class="org">Cover-More · Zurich</div>
+                <ul>
+                  <li>Drove a 22% engagement lift via an AI-powered itinerary planner for a native leisure app.</li>
+                  <li>Defined UX/UI for end-to-end products with Product &amp; Engineering, discovery to release.</li>
+                  <li>Achieved a 16% uplift in cross-platform conversions through research, analytics, and KPI tracking.</li>
+                  <li>Led the consolidation of Freely &amp; Cover-More apps onto a shared React Native stack.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="job reveal">
+              <span class="when">2011 — 2022</span>
+              <div>
+                <h4>Lead Product Designer</h4>
+                <div class="org">PML</div>
+                <ul>
+                  <li>Lifted online sales 32% through customer journey mapping and IA optimisation.</li>
+                  <li>Cut bounce rates 24% by establishing an insight-to-action user research practice.</li>
+                  <li>Boosted conversion 21% by embedding A/B testing and experimentation into the toolkit.</li>
+                  <li>Reached a 93% on-time delivery rate by adapting design systems and tone of voice per brand.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="job reveal">
+              <span class="when">2007 — 2011</span>
+              <div>
+                <h4>Digital Design Manager</h4>
+                <div class="org">Pacific Brands</div>
+                <ul>
+                  <li>Increased retail digital engagement 26% through a customer-led design approach.</li>
+                  <li>Accelerated user acquisition 17% via behavioural analysis and quantitative A/B testing.</li>
+                  <li>Supported a scalable CMS migration, cutting platform downtime 14% with strong IA deliverables.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="subhead reveal">Education &amp; training</h3>
+          <div class="edu">
+            <div class="item reveal">
+              <span class="yr">2025 · RMIT</span>
+              <h5>CX Strategy &amp; Design</h5>
+              <p>Customer experience strategy and design.</p>
+            </div>
+            <div class="item reveal">
+              <span class="yr">2011–2014 · Charles Sturt University</span>
+              <h5>Master of Information Studies</h5>
+              <p>Specialising in Information Architecture.</p>
+            </div>
+            <div class="item reveal">
+              <span class="yr">Nielsen Norman Group</span>
+              <h5>UX certifications</h5>
+              <p>Visual design, mobile UX, wireframing &amp; prototyping, persuasive design.</p>
+            </div>
+            <div class="item reveal">
+              <span class="yr">Design Centre Enmore</span>
+              <h5>Diploma in Design</h5>
+              <p>Foundations in visual and interaction design.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== CONTACT -->
+  <section id="contact" class="contact" aria-labelledby="contact-h">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div class="reveal">
+          <p class="eyebrow">Contact</p>
+          <h2 class="big" id="contact-h">Let's build something worth trusting.</h2>
+          <p class="lead">Have a product, brand, or journey that needs shaping? Tell me a
+          little about it and I'll get back to you.</p>
+        </div>
+
+        <!--
+          Contact form: replace "your-id" with your Formspree form ID to receive
+          submissions (https://formspree.io). No email address is exposed on the page.
+        -->
+        <form class="contact-form reveal" action="https://formspree.io/f/your-id" method="POST" novalidate>
+          <div class="field">
+            <label for="cf-name">Name</label>
+            <input id="cf-name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="cf-email">Email</label>
+            <input id="cf-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="cf-msg">Project / message</label>
+            <textarea id="cf-msg" name="message" rows="5" required></textarea>
+          </div>
+          <button class="pill" type="submit">Send message &rarr;</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================================================ FOOTER -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-top">
+      <p class="big-name">Jonathan Jalotjot</p>
+      <span class="avail"><span class="dot"></span> Available for new projects</span>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; <span id="year"></span> Jonathan Jalotjot · Lead Product Designer</span>
+      <a href="#top">Back to top &uarr;</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Hero: split into words and reveal them one-by-one on load (matches reference)
+  const heroH = document.getElementById('hero-h');
+  const heroLead = document.querySelector('.hero-lead');
+  const revealHeroLead = () => { if (heroLead) heroLead.classList.add('in'); };
+  if (heroH) {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const stagger = 0.05;   // seconds between each word
+    const wordDur = 0.5;    // matches the .word transition duration
+    const words = heroH.textContent.trim().split(/\s+/);
+    heroH.textContent = '';
+    words.forEach((w, i) => {
+      const span = document.createElement('span');
+      span.className = 'word';
+      span.textContent = w;
+      span.style.transitionDelay = (i * stagger).toFixed(2) + 's';
+      heroH.appendChild(span);
+      if (i < words.length - 1) heroH.appendChild(document.createTextNode(' '));
+    });
+    if (reduceMotion) {
+      heroH.classList.add('revealed');
+      revealHeroLead();
+    } else {
+      // Double rAF so the initial (hidden) state paints before we transition in.
+      requestAnimationFrame(() => requestAnimationFrame(() => heroH.classList.add('revealed')));
+      // Reveal the lead paragraph once the last word has finished animating in.
+      const total = (words.length - 1) * stagger + wordDur;
+      setTimeout(revealHeroLead, total * 1000 + 120);
+    }
+  } else {
+    revealHeroLead();
+  }
+
+  // Nav: shadow on scroll + mobile toggle
+  const header = document.querySelector('header.site');
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.getElementById('navlinks');
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    links.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }));
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  // The hero paragraph is revealed manually after the hero heading finishes; exclude it here.
+  document.querySelectorAll('.reveal:not(.hero-lead)').forEach(el => io.observe(el));
+
+  // Contact form — graceful AJAX submit + success state
+  const form = document.querySelector('.contact-form');
+  const status = form.querySelector('.form-status');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    status.className = 'form-status';
+    status.textContent = '';
+
+    if (!form.checkValidity()) {
+      status.classList.add('err');
+      status.textContent = 'Please complete all fields with a valid email.';
+      return;
+    }
+
+    // If the placeholder endpoint hasn't been configured yet, show a friendly note
+    // instead of attempting a broken request.
+    if (form.action.includes('your-id')) {
+      status.classList.add('ok');
+      status.textContent = 'Thanks! (Demo mode — connect a form service to receive this.)';
+      form.reset();
+      return;
+    }
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        status.classList.add('ok');
+        status.textContent = 'Thanks — your message is on its way.';
+        form.reset();
+      } else {
+        throw new Error('Bad response');
+      }
+    } catch (err) {
+      status.classList.add('err');
+      status.textContent = 'Something went wrong. Please try again.';
+    }
+  });
+</script>
+</body>
+</html>
