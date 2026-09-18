@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Retail Digital Experience — Jonathan Jalotjot</title>
+<meta name="description" content="Case study: web and in-store digital experiences across major consumer brands at Pacific Brands — +26% engagement, +17% acquisition." />
+
+<!--
+  ============================================================================
+  CASE STUDY — RETAIL DIGITAL EXPERIENCE  (Pacific Brands)
+  ============================================================================
+  Standalone page, linked from the "View project" action on index.html.
+  Reuses the site's design system (tokens, fonts, nav, footer, custom cursor).
+
+  IMAGES (drop into images/ with these names; a labelled placeholder shows until then):
+      images/retail-hero.jpg   wide hero band   16:9   ~1600×900
+      images/retail-1.jpg      feature mockup   4:3    ~1200×900
+      images/retail-2.jpg      feature mockup   4:3    ~1200×900
+  ============================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg:        #FAFAF8;
+    --ink:       #0A0A0A;
+    --ink-soft:  #4A4A46;
+    --line:      #E6E5DF;
+    --accent:    #FF4A1C;
+    --accent-ink:#FFFFFF;
+    --ph-a:      #EDECE6;
+    --ph-b:      #DAD8CF;
+    --display: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --body:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --maxw: 1240px;
+    --gutter: clamp(16px, 5vw, 64px);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--body); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--gutter); }
+
+  .skip { position: absolute; left: -9999px; top: 0; background: var(--ink); color: var(--bg); padding: 10px 16px; z-index: 100; border-radius: 0 0 8px 0; }
+  .skip:focus { left: 0; }
+
+  header.site {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .3s ease;
+  }
+  header.site.scrolled { border-color: var(--line); }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 18px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .brand .mark { position: relative; width: 34px; height: 34px; overflow: hidden; flex: none; }
+  .brand .mark img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
+  .brand .mark .mark-fallback { position: absolute; inset: 0; background: var(--ink); color: var(--bg); display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 17px; }
+  .brand .mark.has-logo .mark-fallback { display: none; }
+
+  .nav-links { display: flex; align-items: center; gap: clamp(14px, 3vw, 34px); }
+  .nav-links a.link { text-decoration: none; font-weight: 500; font-size: 15px; color: var(--ink); position: relative; padding: 4px 0; }
+  .nav-links a.link::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -2px; height: 1.5px; background: var(--ink); transition: right .25s ease; }
+  .nav-links a.link:hover::after { right: 0; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: var(--accent-ink); text-decoration: none; font-weight: 600; font-size: 14px; padding: 11px 20px; border-radius: 999px; transition: transform .2s ease, background .2s ease; border: none; cursor: pointer; }
+  .pill:hover { transform: translateY(-1px); background: #e8390d; }
+  .nav-toggle { display: none; }
+
+  .backlink { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 14px; color: var(--ink-soft); padding-top: clamp(28px, 5vw, 48px); transition: color .2s ease; }
+  .backlink .arw { transition: transform .2s ease; }
+  .backlink:hover { color: var(--ink); }
+  .backlink:hover .arw { transform: translateX(-4px); }
+
+  .case-hero { padding-block: clamp(28px, 5vw, 44px) clamp(36px, 6vw, 64px); }
+  .case-kicker { font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin: 0 0 20px; }
+  .case-hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(28px, 6vw, 80px); align-items: end; }
+  .case-hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(2.6rem, 7vw, 5.4rem); line-height: 0.98; letter-spacing: -0.025em; margin: 0; }
+  .case-hero .intro { font-size: clamp(1.05rem, 1.9vw, 1.3rem); color: var(--ink-soft); margin: 0; }
+
+  .meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: clamp(36px, 6vw, 64px); padding-top: 26px; border-top: 1px solid var(--line); }
+  .meta .cell .k { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 8px; }
+  .meta .cell .v { font-family: var(--display); font-weight: 500; font-size: 15px; margin: 0; color: var(--ink); }
+
+  .band { width: 100%; border-radius: 18px; overflow: hidden; background: var(--ph-a); position: relative; }
+  .band.wide { aspect-ratio: 16 / 9; }
+  .band.tall { aspect-ratio: 4 / 3; }
+  .band .ph { position: absolute; inset: 0; }
+  .band img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ph { width: 100%; height: 100%; background: linear-gradient(135deg, var(--ph-a), var(--ph-b)); display: grid; place-items: center; color: var(--ink-soft); }
+  .ph::after { content: attr(data-label); font-size: 12px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; opacity: .7; padding: 8px 14px; border: 1px dashed color-mix(in srgb, var(--ink-soft) 45%, transparent); border-radius: 999px; text-align: center; }
+
+  .hero-band { margin-top: clamp(24px, 4vw, 40px); }
+
+  section.block { padding-block: clamp(48px, 8vw, 100px); }
+  .block-grid { display: grid; grid-template-columns: 260px 1fr; gap: clamp(24px, 5vw, 64px); align-items: start; }
+  .label { font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); margin: 0; display: flex; align-items: center; gap: 10px; }
+  .label::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; }
+  .block-body h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.7rem, 3.4vw, 2.6rem); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 24px; max-width: 22ch; }
+  .block-body p { font-size: clamp(1.05rem, 1.7vw, 1.25rem); color: var(--ink-soft); margin: 0 0 20px; max-width: 62ch; }
+  .block-body p:last-child { margin-bottom: 0; }
+  .block-body p strong { color: var(--ink); font-weight: 600; }
+
+  .feature { border-top: 1px solid var(--line); }
+  .feature .lede { max-width: 760px; }
+  .feature h3 { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.06; letter-spacing: -0.015em; margin: 0 0 18px; }
+  .feature p { font-size: clamp(1.02rem, 1.6vw, 1.18rem); color: var(--ink-soft); margin: 0; max-width: 62ch; }
+  .feature .band { margin-top: clamp(28px, 5vw, 52px); }
+  .two-up { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 36px); margin-top: clamp(28px, 5vw, 52px); }
+  .two-up .band { margin-top: 0; }
+
+  .outcomes { border-top: 1px solid var(--line); }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 4vw, 48px); margin-bottom: clamp(36px, 6vw, 60px); }
+  .stat .n { font-family: var(--display); font-weight: 700; font-size: clamp(2.6rem, 6vw, 4.4rem); line-height: 1; letter-spacing: -0.03em; margin: 0; }
+  .stat .n .accent { color: var(--accent); }
+  .stat .d { margin: 12px 0 0; color: var(--ink-soft); font-size: 15px; max-width: 26ch; }
+  .outcomes .closing { font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--ink); max-width: 60ch; margin: 0; }
+
+  .cta { border-top: 1px solid var(--line); text-align: center; }
+  .cta h2 { font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 6vw, 4rem); line-height: 1.02; letter-spacing: -0.025em; margin: 0 auto clamp(28px, 4vw, 40px); max-width: 16ch; }
+  .cta .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .cta .pill.lg { padding: 15px 26px; font-size: 15px; }
+  .cta .ghost { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 15px; padding: 15px 26px; border: 1px solid var(--line); border-radius: 999px; background: #fff; transition: border-color .2s ease; }
+  .cta .ghost:hover { border-color: var(--ink); }
+
+  footer.site { border-top: 1px solid var(--line); padding-block: clamp(40px, 6vw, 72px) 40px; margin-top: clamp(48px, 8vw, 100px); }
+  .foot-bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13.5px; color: var(--ink-soft); }
+  .foot-bottom a { text-decoration: none; font-weight: 500; }
+  .foot-bottom a:hover { color: var(--ink); }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  #cursor { position: fixed; top: 0; left: 0; z-index: 60; width: 32px; height: 32px; border-radius: 999px; background: #fff; mix-blend-mode: difference; display: flex; align-items: center; justify-content: center; pointer-events: none; will-change: transform; opacity: 0; transform: translate3d(-100px,-100px,0) translate(-50%,-50%); transition: width .3s cubic-bezier(.2,.7,.2,1), height .3s cubic-bezier(.2,.7,.2,1), padding .3s cubic-bezier(.2,.7,.2,1), background-color .25s ease, opacity .25s ease; }
+  #cursor .cursor-label { font-family: var(--display); font-weight: 600; font-size: 12px; letter-spacing: .01em; white-space: nowrap; color: var(--accent-ink); opacity: 0; transform: translateY(3px); transition: opacity .2s ease, transform .2s ease; }
+  #cursor.is-grow { width: 64px; height: 64px; }
+  #cursor.is-label { width: auto; height: auto; padding: 10px 15px; border-radius: 999px; background: var(--accent); mix-blend-mode: normal; }
+  #cursor.is-label .cursor-label { opacity: 1; transform: none; }
+  @media (hover: hover) and (pointer: fine) { html.cursor-custom, html.cursor-custom * { cursor: none !important; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    * { animation: none !important; }
+  }
+
+  @media (max-width: 900px) {
+    .case-hero-grid { grid-template-columns: 1fr; align-items: start; }
+    .meta { grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .block-grid { grid-template-columns: 1fr; gap: 20px; }
+    .two-up { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr; gap: 28px; }
+  }
+  @media (max-width: 720px) {
+    .nav-links { display: none; }
+    .nav-links.open { display: flex; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: flex-start; gap: 4px; background: var(--bg); border-bottom: 1px solid var(--line); padding: 16px var(--gutter) 24px; }
+    .nav-links.open a.link { font-size: 20px; padding: 8px 0; }
+    .nav-links.open .pill { margin-top: 8px; }
+    .nav-toggle { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 40px; border: 1px solid var(--line); border-radius: 10px; background: #fff; cursor: pointer; gap: 4px; flex-direction: column; }
+    .nav-toggle span { display: block; width: 18px; height: 2px; background: var(--ink); transition: .25s; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(4px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { transform: translateY(-2px) rotate(-45deg); }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#challenge">Skip to content</a>
+
+<header class="site" id="top">
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="Jonathan Jalotjot, home">
+      <span class="mark">
+        <img src="images/logo.svg" alt="Jonathan Jalotjot logo" onload="this.closest('.mark').classList.add('has-logo')" onerror="this.remove()" />
+        <span class="mark-fallback">JJ</span>
+      </span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
+      <span></span><span></span>
+    </button>
+    <nav class="nav-links" id="navlinks">
+      <a class="link" href="index.html#work">Work</a>
+      <a class="link" href="index.html#about">About</a>
+      <a class="link" href="index.html#contact">Contact</a>
+      <a class="pill" href="index.html#contact">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <a class="backlink" href="index.html#work"><span class="arw">&larr;</span> All work</a>
+  </div>
+
+  <section class="case-hero">
+    <div class="wrap">
+      <p class="case-kicker">Pacific Brands — Retail &amp; in-store</p>
+      <div class="case-hero-grid">
+        <h1>Retail digital experience</h1>
+        <p class="intro">Enhancing experiences across major consumer web properties and
+        in-store digital touchpoints — raising retail digital engagement <strong>26%</strong>
+        with a customer-led approach.</p>
+      </div>
+
+      <div class="meta">
+        <div class="cell"><p class="k">Timeline</p><p class="v">2007 — 2011</p></div>
+        <div class="cell"><p class="k">Role</p><p class="v">Digital Design Manager</p></div>
+        <div class="cell"><p class="k">Scope</p><p class="v">Web &amp; in-store UX, Behavioural analysis, A/B testing, IA</p></div>
+        <div class="cell"><p class="k">Reach</p><p class="v">Major consumer brands</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap hero-band reveal">
+    <div class="band wide">
+      <span class="ph" data-label="Add images/retail-hero.jpg"></span>
+      <img src="images/retail-hero.jpg" alt="Retail digital experience — overview" onerror="this.remove()" />
+    </div>
+  </div>
+
+  <section class="block" id="challenge">
+    <div class="wrap block-grid">
+      <p class="label reveal">Challenge</p>
+      <div class="block-body reveal">
+        <h2>Bridge the web and the shop floor into one experience.</h2>
+        <p>Across major consumer brands, the digital experience lived in one world and the
+        store in another. Customers moved fluidly between them, but the touchpoints didn't —
+        leaving engagement and acquisition on the table.</p>
+        <p>As Digital Design Manager, I led a customer-led effort to connect web properties
+        and in-store digital touchpoints, and to make the whole system measurable.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0;">
+    <div class="wrap block-grid">
+      <p class="label reveal">Approach</p>
+      <div class="block-body reveal">
+        <h2>Follow the behaviour, then design for it.</h2>
+        <p>I grounded the work in behavioural analysis and journey optimisation — understanding
+        how people actually moved across channels — and used quantitative A/B testing to
+        validate what worked before scaling it.</p>
+        <p>To support growth without fragility, I streamlined interaction design production and
+        backed a scalable CMS migration with comprehensive IA deliverables, including sitemaps
+        and page flows.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block feature">
+    <div class="wrap">
+      <div class="lede reveal">
+        <h3>A customer-led experience, online and in-store</h3>
+        <p>By designing web and in-store touchpoints around real customer needs, retail digital
+        engagement rose <strong>26%</strong> — a more joined-up experience that customers
+        actually responded to.</p>
+      </div>
+      <div class="band wide reveal">
+        <span class="ph" data-label="Add images/retail-1.jpg"></span>
+        <img src="images/retail-1.jpg" alt="Retail web and in-store touchpoints" onerror="this.remove()" />
+      </div>
+    </div>
+  </section>
+
+  <section class="block feature">
+    <div class="wrap">
+      <div class="lede reveal">
+        <h3>Acquisition, driven by evidence</h3>
+        <p>Through behavioural analysis, journey optimisation, and quantitative A/B testing,
+        user acquisition across multiple online channels accelerated <strong>17%</strong> —
+        growth built on data, not guesswork.</p>
+      </div>
+      <div class="band tall reveal">
+        <span class="ph" data-label="Add images/retail-2.jpg"></span>
+        <img src="images/retail-2.jpg" alt="Acquisition channels and analytics" onerror="this.remove()" />
+      </div>
+    </div>
+  </section>
+
+  <section class="block feature">
+    <div class="wrap">
+      <div class="lede reveal">
+        <h3>A platform built to scale</h3>
+        <p>I streamlined interaction design production and supported a scalable CMS migration,
+        decreasing platform downtime <strong>14%</strong> through comprehensive IA deliverables
+        — sitemaps, page flows, and the structures a growing digital estate depends on.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block outcomes">
+    <div class="wrap">
+      <p class="label reveal" style="margin-bottom:36px;">Outcomes</p>
+      <div class="stats">
+        <div class="stat reveal">
+          <p class="n"><span class="accent">+26%</span></p>
+          <p class="d">Retail digital engagement, customer-led</p>
+        </div>
+        <div class="stat reveal">
+          <p class="n"><span class="accent">+17%</span></p>
+          <p class="d">User acquisition across online channels</p>
+        </div>
+        <div class="stat reveal">
+          <p class="n"><span class="accent">&minus;14%</span></p>
+          <p class="d">Platform downtime, via stronger IA</p>
+        </div>
+      </div>
+      <p class="closing reveal">The work connected digital and physical retail into a single
+      customer-led experience — and set up the information architecture for it to scale.</p>
+    </div>
+  </section>
+
+  <section class="block cta">
+    <div class="wrap">
+      <h2 class="reveal">Have a product that needs shaping?</h2>
+      <div class="actions reveal">
+        <a class="pill lg" href="index.html#contact">Get in touch &rarr;</a>
+        <a class="ghost" href="index.html#work">See more work</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap foot-bottom">
+    <span>&copy; <span id="year"></span> Jonathan Jalotjot · Lead Product Designer</span>
+    <a href="#top">Back to top &uarr;</a>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  const header = document.querySelector('header.site');
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.getElementById('navlinks');
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    links.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false');
+  }));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  (function () {
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!fine || reduce) return;
+    const dot = document.createElement('div');
+    dot.id = 'cursor'; dot.setAttribute('aria-hidden', 'true');
+    const label = document.createElement('span'); label.className = 'cursor-label';
+    dot.appendChild(label); document.body.appendChild(dot);
+    document.documentElement.classList.add('cursor-custom');
+    let x = -100, y = -100, tx = -100, ty = -100, shown = false;
+    const ease = 0.18;
+    window.addEventListener('mousemove', (e) => {
+      tx = e.clientX; ty = e.clientY;
+      if (!shown) { shown = true; dot.style.opacity = '1'; }
+    }, { passive: true });
+    document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; });
+    document.addEventListener('mouseenter', () => { if (shown) dot.style.opacity = '1'; });
+    (function tick() {
+      x += (tx - x) * ease; y += (ty - y) * ease;
+      dot.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0) translate(-50%,-50%)';
+      requestAnimationFrame(tick);
+    })();
+    document.querySelectorAll('a, button, input, textarea, summary, [role="button"]').forEach((el) => {
+      el.addEventListener('mouseenter', () => dot.classList.add('is-grow'));
+      el.addEventListener('mouseleave', () => dot.classList.remove('is-grow'));
+    });
+  })();
+</script>
+</body>
+</html>
