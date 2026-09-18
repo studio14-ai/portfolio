@@ -375,7 +375,7 @@
      pill over work cards. Only active on fine-pointer devices (see JS + media query). */
   #cursor {
     position: fixed; top: 0; left: 0; z-index: 60;
-    width: 16px; height: 16px; border-radius: 999px;
+    width: 32px; height: 32px; border-radius: 999px;
     background: #fff; mix-blend-mode: difference;
     display: flex; align-items: center; justify-content: center;
     pointer-events: none; will-change: transform; opacity: 0;
@@ -388,7 +388,7 @@
     letter-spacing: .01em; white-space: nowrap; color: var(--accent-ink);
     opacity: 0; transform: translateY(3px); transition: opacity .2s ease, transform .2s ease;
   }
-  #cursor.is-small { width: 8px; height: 8px; }
+  #cursor.is-small { width: 16px; height: 16px; }
   #cursor.is-label {
     width: auto; height: auto; padding: 10px 15px; border-radius: 999px;
     background: var(--accent); mix-blend-mode: normal;
