@@ -369,6 +369,37 @@
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
   .reveal.in { opacity: 1; transform: none; }
 
+  /* ---------------------------------------------------------------- Custom cursor
+     Native port of a React/motion component: a spring-trailed dot that inverts via
+     mix-blend-difference, shrinks over links/buttons, and morphs into a labelled
+     pill over work cards. Only active on fine-pointer devices (see JS + media query). */
+  #cursor {
+    position: fixed; top: 0; left: 0; z-index: 60;
+    width: 16px; height: 16px; border-radius: 999px;
+    background: #fff; mix-blend-mode: difference;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none; will-change: transform; opacity: 0;
+    transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+    transition: width .3s cubic-bezier(.2,.7,.2,1), height .3s cubic-bezier(.2,.7,.2,1),
+                padding .3s cubic-bezier(.2,.7,.2,1), background-color .25s ease, opacity .25s ease;
+  }
+  #cursor .cursor-label {
+    font-family: var(--display); font-weight: 600; font-size: 12px;
+    letter-spacing: .01em; white-space: nowrap; color: var(--accent-ink);
+    opacity: 0; transform: translateY(3px); transition: opacity .2s ease, transform .2s ease;
+  }
+  #cursor.is-small { width: 8px; height: 8px; }
+  #cursor.is-label {
+    width: auto; height: auto; padding: 10px 15px; border-radius: 999px;
+    background: var(--accent); mix-blend-mode: normal;
+  }
+  #cursor.is-label .cursor-label { opacity: 1; transform: none; }
+
+  /* Enable only where there's a precise pointer; hide the native cursor then. */
+  @media (hover: hover) and (pointer: fine) {
+    html.cursor-custom, html.cursor-custom * { cursor: none !important; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .reveal { opacity: 1; transform: none; transition: none; }
@@ -815,6 +846,59 @@
       status.textContent = 'Something went wrong. Please try again.';
     }
   });
+
+  // Playful custom cursor — native port of the React/motion component.
+  // Desktop / fine-pointer only, and skipped for reduced-motion users.
+  (function () {
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!fine || reduce) return;
+
+    const dot = document.createElement('div');
+    dot.id = 'cursor';
+    dot.setAttribute('aria-hidden', 'true');
+    const label = document.createElement('span');
+    label.className = 'cursor-label';
+    dot.appendChild(label);
+    document.body.appendChild(dot);
+    document.documentElement.classList.add('cursor-custom');
+
+    let x = -100, y = -100, tx = -100, ty = -100, shown = false;
+    const ease = 0.18; // spring-like trailing follow
+
+    window.addEventListener('mousemove', (e) => {
+      tx = e.clientX; ty = e.clientY;
+      if (!shown) { shown = true; dot.style.opacity = '1'; }
+    }, { passive: true });
+    document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; });
+    document.addEventListener('mouseenter', () => { if (shown) dot.style.opacity = '1'; });
+
+    (function tick() {
+      x += (tx - x) * ease;
+      y += (ty - y) * ease;
+      dot.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0) translate(-50%,-50%)';
+      requestAnimationFrame(tick);
+    })();
+
+    // Shrink over links, buttons and form fields (the component's "sm" variant).
+    document.querySelectorAll('a:not(.media), button, input, textarea, summary, [role="button"]').forEach((el) => {
+      el.addEventListener('mouseenter', () => dot.classList.add('is-small'));
+      el.addEventListener('mouseleave', () => dot.classList.remove('is-small'));
+    });
+
+    // Morph into a labelled pill over work-card images (the demo's "View Project").
+    document.querySelectorAll('article.work a.media').forEach((el) => {
+      el.addEventListener('mouseenter', () => {
+        label.textContent = 'View project';
+        dot.classList.add('is-label');
+        dot.classList.remove('is-small');
+      });
+      el.addEventListener('mouseleave', () => {
+        dot.classList.remove('is-label');
+        label.textContent = '';
+      });
+    });
+  })();
 </script>
 </body>
 </html>
