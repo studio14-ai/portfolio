@@ -141,6 +141,16 @@
   .cta .ghost { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 15px; padding: 15px 26px; border: 1px solid var(--line); border-radius: 999px; background: #fff; transition: border-color .2s ease; }
   .cta .ghost:hover { border-color: var(--ink); }
 
+  /* Next project row */
+  .next-project { display: block; border-top: 1px solid var(--line); text-decoration: none; }
+  .next-project .next-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: clamp(40px, 7vw, 88px); }
+  .next-project .np-meta { display: flex; flex-direction: column; gap: 12px; }
+  .next-project .np-label { font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+  .next-project .np-title { font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 6vw, 4rem); line-height: 1; letter-spacing: -0.025em; color: var(--ink); transition: color .2s ease; }
+  .next-project .np-arrow { font-family: var(--display); font-size: clamp(1.8rem, 5vw, 3rem); color: var(--ink-soft); transition: transform .3s cubic-bezier(.2,.7,.2,1), color .2s ease; flex: none; }
+  .next-project:hover .np-title { color: var(--accent); }
+  .next-project:hover .np-arrow { transform: translateX(12px); color: var(--accent); }
+
   /* ---------------------------------------------------------------- Footer */
   footer.site { border-top: 1px solid var(--line); padding-block: clamp(40px, 6vw, 72px) 40px; margin-top: clamp(48px, 8vw, 100px); }
   .foot-bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13.5px; color: var(--ink-soft); }
@@ -354,6 +364,17 @@
       designing that the team still builds on — evidence-led, brand-aware, and built to scale.</p>
     </div>
   </section>
+
+  <!-- ========================================================== NEXT PROJECT -->
+  <a class="next-project" href="project-multi-brand-redesign.html">
+    <div class="wrap next-inner">
+      <span class="np-meta">
+        <span class="np-label">Next project</span>
+        <span class="np-title">Multi-brand redesign</span>
+      </span>
+      <span class="np-arrow" aria-hidden="true">&rarr;</span>
+    </div>
+  </a>
 
   <!-- ========================================================== CTA -->
   <section class="block cta">
