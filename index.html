@@ -388,7 +388,7 @@
     letter-spacing: .01em; white-space: nowrap; color: var(--accent-ink);
     opacity: 0; transform: translateY(3px); transition: opacity .2s ease, transform .2s ease;
   }
-  #cursor.is-small { width: 16px; height: 16px; }
+  #cursor.is-grow { width: 64px; height: 64px; }
   #cursor.is-label {
     width: auto; height: auto; padding: 10px 15px; border-radius: 999px;
     background: var(--accent); mix-blend-mode: normal;
@@ -880,10 +880,10 @@
       requestAnimationFrame(tick);
     })();
 
-    // Shrink over links, buttons and form fields (the component's "sm" variant).
+    // Grow over links, buttons and form fields.
     document.querySelectorAll('a:not(.media), button, input, textarea, summary, [role="button"]').forEach((el) => {
-      el.addEventListener('mouseenter', () => dot.classList.add('is-small'));
-      el.addEventListener('mouseleave', () => dot.classList.remove('is-small'));
+      el.addEventListener('mouseenter', () => dot.classList.add('is-grow'));
+      el.addEventListener('mouseleave', () => dot.classList.remove('is-grow'));
     });
 
     // Morph into a labelled pill over work-card images (the demo's "View Project").
@@ -891,7 +891,7 @@
       el.addEventListener('mouseenter', () => {
         label.textContent = 'View project';
         dot.classList.add('is-label');
-        dot.classList.remove('is-small');
+        dot.classList.remove('is-grow');
       });
       el.addEventListener('mouseleave', () => {
         dot.classList.remove('is-label');
