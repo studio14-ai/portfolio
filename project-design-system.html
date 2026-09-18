@@ -23,6 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script>document.documentElement.classList.add('js');</script>
 
 <style>
   :root {
@@ -147,6 +148,24 @@
 
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
   .reveal.in { opacity: 1; transform: none; }
+
+  /* On-load staggered reveal for the case-study hero (gated on .js so content
+     stays visible when JavaScript is unavailable). */
+  html.js .backlink,
+  html.js .case-hero .case-kicker,
+  html.js .case-hero h1,
+  html.js .case-hero .intro,
+  html.js .case-hero .meta .cell { opacity: 0; transform: translateY(22px); }
+  html.js .case-hero .case-kicker.in, html.js .case-hero h1.in, html.js .case-hero .intro.in,
+  html.js .case-hero .meta .cell.in, html.js .backlink.in {
+    opacity: 1; transform: none; transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.js .backlink, html.js .case-hero .case-kicker, html.js .case-hero h1,
+    html.js .case-hero .intro, html.js .case-hero .meta .cell {
+      opacity: 1 !important; transform: none !important; transition: none !important;
+    }
+  }
 
   #cursor { position: fixed; top: 0; left: 0; z-index: 60; width: 32px; height: 32px; border-radius: 999px; background: #fff; mix-blend-mode: difference; display: flex; align-items: center; justify-content: center; pointer-events: none; will-change: transform; opacity: 0; transform: translate3d(-100px,-100px,0) translate(-50%,-50%); transition: width .3s cubic-bezier(.2,.7,.2,1), height .3s cubic-bezier(.2,.7,.2,1), padding .3s cubic-bezier(.2,.7,.2,1), background-color .25s ease, opacity .25s ease; }
   #cursor .cursor-label { font-family: var(--display); font-weight: 600; font-size: 12px; letter-spacing: .01em; white-space: nowrap; color: var(--accent-ink); opacity: 0; transform: translateY(3px); transition: opacity .2s ease, transform .2s ease; }
@@ -381,6 +400,21 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Case-study hero: staggered reveal on page load
+  (function () {
+    const reduceM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const heroEls = [
+      document.querySelector('.backlink'),
+      document.querySelector('.case-hero .case-kicker'),
+      document.querySelector('.case-hero h1'),
+      document.querySelector('.case-hero .intro'),
+      ...document.querySelectorAll('.case-hero .meta .cell')
+    ].filter(Boolean);
+    heroEls.forEach((el, i) => { el.style.transitionDelay = (i * 0.08).toFixed(2) + 's'; });
+    if (reduceM) { heroEls.forEach(el => el.classList.add('in')); }
+    else { requestAnimationFrame(() => requestAnimationFrame(() => heroEls.forEach(el => el.classList.add('in')))); }
+  })();
   (function () {
     const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
