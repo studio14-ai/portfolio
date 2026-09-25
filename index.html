@@ -250,6 +250,16 @@
   article.work a.media img, .portrait img {
     position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
   }
+  /* iOS Safari fix: the sticky header's backdrop-filter can drop large images that
+     scroll underneath from the render tree until a full repaint (e.g. scrolling to
+     the very top). Promoting the portrait's layers to their own GPU compositing
+     layer keeps it painted. translateZ(0) on these children does not affect the
+     .portrait container's sticky positioning. */
+  .portrait .ph, .portrait img {
+    -webkit-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden; backface-visibility: hidden;
+    will-change: transform;
+  }
 
   /* ---------------------------------------------------------------- Work grid */
   .work-grid {
