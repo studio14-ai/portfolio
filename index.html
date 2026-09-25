@@ -281,6 +281,27 @@
   article.work .view .arw { transition: transform .2s ease; }
   article.work .view:hover .arw { transform: translateX(4px); }
 
+  /* ---------------------------------------------------------------- Creative gallery
+     A display-only grid (no links) for additional creative work. Masonry via CSS
+     columns so tiles of different heights pack neatly. */
+  .creative { border-top: 1px solid var(--line); }
+  .creative-grid { column-count: 3; column-gap: clamp(16px, 2.4vw, 26px); }
+  .creative-grid figure { break-inside: avoid; margin: 0 0 clamp(16px, 2.4vw, 26px); }
+  .creative-grid .tile {
+    position: relative; border-radius: 14px; overflow: hidden; background: var(--ph-a);
+  }
+  .creative-grid .tile.a { aspect-ratio: 4 / 3; }
+  .creative-grid .tile.b { aspect-ratio: 3 / 4; }
+  .creative-grid .tile.c { aspect-ratio: 1 / 1; }
+  .creative-grid .tile.d { aspect-ratio: 4 / 5; }
+  .creative-grid .tile .ph { position: absolute; inset: 0; }
+  .creative-grid .tile img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .creative-grid figure:hover .tile img { transform: scale(1.04); }
+  .creative-grid figcaption { margin-top: 12px; font-size: 14px; font-weight: 500; color: var(--ink-soft); }
+
   /* ---------------------------------------------------------------- About */
   .about { border-top: 1px solid var(--line); }
   .about-grid {
@@ -411,6 +432,7 @@
   @media (max-width: 900px) {
     .statement .grid { grid-template-columns: 1fr; }
     .work-grid { grid-template-columns: 1fr; }
+    .creative-grid { column-count: 2; }
     .about-grid { grid-template-columns: 1fr; }
     .portrait { position: static; max-width: 420px; }
     .contact-grid { grid-template-columns: 1fr; }
@@ -436,6 +458,7 @@
     .job { grid-template-columns: 1fr; }
     .caps { grid-template-columns: 1fr; }
     .edu { grid-template-columns: 1fr; }
+    .creative-grid { column-count: 1; }
     .hero-lead { margin-left: 0; }
   }
 </style>
@@ -583,6 +606,68 @@
           </div>
         </article>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== CREATIVE GALLERY
+       Display-only (no links). Add images/creative-1.jpg … creative-6.jpg — a
+       labelled placeholder shows until each file exists. Edit the <figcaption>
+       text (or delete it) and add/remove <figure> tiles as needed. Tile aspect
+       ratio is set by the class on .tile: a=4:3, b=3:4, c=1:1, d=4:5. -->
+  <section id="creative" class="creative" aria-labelledby="creative-h">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow reveal">Beyond the case studies</p>
+          <h2 class="big reveal" id="creative-h">Various creative projects</h2>
+        </div>
+        <p class="reveal" style="margin:0;color:var(--ink-soft);font-size:14px;font-weight:500;">Branding · illustration · concepts · photography</p>
+      </div>
+
+      <div class="creative-grid">
+        <figure class="reveal">
+          <div class="tile a">
+            <span class="ph" data-label="Add images/creative-1.jpg"></span>
+            <img src="images/creative-1.jpg" alt="Creative project" onerror="this.remove()" />
+          </div>
+          <figcaption>Branding &amp; identity</figcaption>
+        </figure>
+        <figure class="reveal">
+          <div class="tile b">
+            <span class="ph" data-label="Add images/creative-2.jpg"></span>
+            <img src="images/creative-2.jpg" alt="Creative project" onerror="this.remove()" />
+          </div>
+          <figcaption>Illustration</figcaption>
+        </figure>
+        <figure class="reveal">
+          <div class="tile c">
+            <span class="ph" data-label="Add images/creative-3.jpg"></span>
+            <img src="images/creative-3.jpg" alt="Creative project" onerror="this.remove()" />
+          </div>
+          <figcaption>Poster design</figcaption>
+        </figure>
+        <figure class="reveal">
+          <div class="tile d">
+            <span class="ph" data-label="Add images/creative-4.jpg"></span>
+            <img src="images/creative-4.jpg" alt="Creative project" onerror="this.remove()" />
+          </div>
+          <figcaption>Photography</figcaption>
+        </figure>
+        <figure class="reveal">
+          <div class="tile a">
+            <span class="ph" data-label="Add images/creative-5.jpg"></span>
+            <img src="images/creative-5.jpg" alt="Creative project" onerror="this.remove()" />
+          </div>
+          <figcaption>Concept work</figcaption>
+        </figure>
+        <figure class="reveal">
+          <div class="tile b">
+            <span class="ph" data-label="Add images/creative-6.jpg"></span>
+            <img src="images/creative-6.jpg" alt="Creative project" onerror="this.remove()" />
+          </div>
+          <figcaption>Motion &amp; UI</figcaption>
+        </figure>
       </div>
     </div>
   </section>
