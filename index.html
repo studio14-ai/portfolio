@@ -108,8 +108,10 @@
   /* ---------------------------------------------------------------- Nav */
   header.site {
     position: sticky; top: 0; z-index: 50;
-    background: color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter: blur(10px);
+    /* Solid background (no backdrop-filter): on iOS Safari a blurred sticky header
+       drops images scrolling underneath it from the render tree until a full
+       repaint, which made the portrait disappear/reappear. */
+    background: var(--bg);
     border-bottom: 1px solid transparent;
     transition: border-color .3s ease;
   }
@@ -250,12 +252,12 @@
   article.work a.media img, .portrait img {
     position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
   }
-  /* iOS Safari fix: the sticky header's backdrop-filter can drop large images that
-     scroll underneath from the render tree until a full repaint (e.g. scrolling to
-     the very top). Promoting the portrait's layers to their own GPU compositing
-     layer keeps it painted. translateZ(0) on these children does not affect the
-     .portrait container's sticky positioning. */
-  .portrait .ph, .portrait img {
+  /* iOS Safari fix: keep the portrait on its own GPU compositing layer so it isn't
+     dropped from the render tree during scroll. The promotion goes on the .portrait
+     container (not its children) because its overflow:hidden + border-radius clip
+     rasterises the child <img> into the container's layer anyway. A transform on the
+     sticky element itself does not break its own sticky positioning. */
+  .portrait {
     -webkit-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0);
     -webkit-backface-visibility: hidden; backface-visibility: hidden;
     will-change: transform;
