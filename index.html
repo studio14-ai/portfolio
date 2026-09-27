@@ -265,13 +265,12 @@
     gap: clamp(24px, 3.5vw, 44px);
   }
   article.work { display: flex; flex-direction: column; }
-  article.work a.media {
+  article.work .media {
     position: relative;
     display: block; aspect-ratio: 4 / 3; border-radius: 16px; overflow: hidden;
-    background: var(--ph-a); text-decoration: none;
+    background: var(--ph-a);
   }
-  article.work a.media .ph, article.work a.media img { transition: transform .5s cubic-bezier(.2,.7,.2,1); }
-  article.work a.media:hover .ph, article.work a.media:hover img { transform: scale(1.03); }
+  article.work .media .ph, article.work .media img { transition: transform .5s cubic-bezier(.2,.7,.2,1); }
   article.work .meta { padding-top: 22px; display: flex; flex-direction: column; gap: 8px; }
   article.work .row {
     display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
@@ -288,6 +287,7 @@
   }
   article.work .view .arw { transition: transform .2s ease; }
   article.work .view:hover .arw { transform: translateX(4px); }
+  article.work .view.soon { color: var(--ink-soft); }
 
   /* ---------------------------------------------------------------- Creative gallery
      Display-only (no links). Column-masonry built from flex columns: a small script
@@ -553,11 +553,11 @@
       <div class="work-grid">
 
         <article class="work reveal">
-          <a class="media" href="project-ai-itinerary.html" aria-label="Cover-More, AI itinerary planner">
+          <div class="media">
             <!-- Add images/work-itinerary.jpg (4:3, ~1200×900). Placeholder shows until the file exists. -->
             <span class="ph" data-label="Add images/work-itinerary.jpg"></span>
             <img src="images/work-itinerary.jpg" alt="AI-powered itinerary planner app screens" onerror="this.remove()" />
-          </a>
+          </div>
           <div class="meta">
             <div class="row">
               <h3>AI itinerary planner</h3>
@@ -565,16 +565,16 @@
             </div>
             <p>A native leisure travel app with an AI-powered itinerary planner, leading
             UX/UI from discovery through release. Cover-More · Zurich.</p>
-            <a class="view" href="project-ai-itinerary.html">View project <span class="arw">&rarr;</span></a>
+            <span class="view soon">Coming soon</span>
           </div>
         </article>
 
         <article class="work reveal">
-          <a class="media" href="project-multi-brand-redesign.html" aria-label="Multi-brand website redesign">
+          <div class="media">
             <!-- Add images/work-redesign.jpg (4:3, ~1200×900). Placeholder shows until the file exists. -->
             <span class="ph" data-label="Add images/work-redesign.jpg"></span>
             <img src="images/work-redesign.jpg" alt="Multi-brand website redesign layouts" onerror="this.remove()" />
-          </a>
+          </div>
           <div class="meta">
             <div class="row">
               <h3>Multi-brand redesign</h3>
@@ -582,16 +582,16 @@
             </div>
             <p>End-to-end website redesigns across multiple brands, plus an insight-to-action
             research practice that cut bounce rates by 24%. PML.</p>
-            <a class="view" href="project-multi-brand-redesign.html">View project <span class="arw">&rarr;</span></a>
+            <span class="view soon">Coming soon</span>
           </div>
         </article>
 
         <article class="work reveal">
-          <a class="media" href="project-retail-digital.html" aria-label="Retail digital and in-store touchpoints">
+          <div class="media">
             <!-- Add images/work-retail.jpg (4:3, ~1200×900). Placeholder shows until the file exists. -->
             <span class="ph" data-label="Add images/work-retail.jpg"></span>
             <img src="images/work-retail.jpg" alt="Retail digital and in-store touchpoints" onerror="this.remove()" />
-          </a>
+          </div>
           <div class="meta">
             <div class="row">
               <h3>Retail digital experience</h3>
@@ -599,16 +599,16 @@
             </div>
             <p>Web and in-store digital touchpoints across major consumer brands, with a
             17% lift in user acquisition. Pacific Brands.</p>
-            <a class="view" href="project-retail-digital.html">View project <span class="arw">&rarr;</span></a>
+            <span class="view soon">Coming soon</span>
           </div>
         </article>
 
         <article class="work reveal">
-          <a class="media" href="project-design-system.html" aria-label="Journey-led design system">
+          <div class="media">
             <!-- Add images/work-design-system.jpg (4:3, ~1200×900). Placeholder shows until the file exists. -->
             <span class="ph" data-label="Add images/work-design-system.jpg"></span>
             <img src="images/work-design-system.jpg" alt="Journey-led design system components" onerror="this.remove()" />
-          </a>
+          </div>
           <div class="meta">
             <div class="row">
               <h3>Journey-led design system</h3>
@@ -616,7 +616,7 @@
             </div>
             <p>A reusable, journey-led product-design framework, shared React Native stack,
             multi-brand configuration, and design governance. Cover-More · Freely.</p>
-            <a class="view" href="project-design-system.html">View project <span class="arw">&rarr;</span></a>
+            <span class="view soon">Coming soon</span>
           </div>
         </article>
 
