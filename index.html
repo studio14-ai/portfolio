@@ -294,11 +294,17 @@
   article.work .view:hover .arw { transform: translateX(4px); }
 
   /* ---------------------------------------------------------------- Creative gallery
-     A display-only grid (no links) for additional creative work. Masonry via CSS
-     columns so tiles of different heights pack neatly. */
+     A display-only grid (no links) for additional creative work. Uses CSS Grid (not
+     multi-column) so the layout is identical across browsers and never re-flows on
+     hover — Safari balances/​fragments CSS columns differently from Chrome, which made
+     tiles misalign and jump on hover. Rows are top-aligned; tiles keep their own
+     aspect ratios, so bottoms stagger for a masonry-like feel. */
   .creative { border-top: 1px solid var(--line); }
-  .creative-grid { column-count: 3; column-gap: clamp(16px, 2.4vw, 26px); }
-  .creative-grid figure { break-inside: avoid; margin: 0 0 clamp(16px, 2.4vw, 26px); }
+  .creative-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: clamp(16px, 2.4vw, 26px); align-items: start;
+  }
+  .creative-grid figure { margin: 0; }
   .creative-grid .tile {
     position: relative; border-radius: 14px; overflow: hidden; background: var(--ph-a);
     /* Scale the whole rounded tile on hover (see hover rule below) rather than the
@@ -447,7 +453,7 @@
   @media (max-width: 900px) {
     .statement .grid { grid-template-columns: 1fr; }
     .work-grid { grid-template-columns: 1fr; }
-    .creative-grid { column-count: 2; }
+    .creative-grid { grid-template-columns: repeat(2, 1fr); }
     .about-grid { grid-template-columns: 1fr; }
     .portrait { position: static; max-width: 420px; }
     .contact-grid { grid-template-columns: 1fr; }
@@ -473,7 +479,7 @@
     .job { grid-template-columns: 1fr; }
     .caps { grid-template-columns: 1fr; }
     .edu { grid-template-columns: 1fr; }
-    .creative-grid { column-count: 1; }
+    .creative-grid { grid-template-columns: 1fr; }
     .hero-lead { margin-left: 0; }
   }
 </style>
