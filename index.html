@@ -939,8 +939,12 @@
   })();
 
   // Work-card links are disabled until the standalone project pages are ready.
-  // (Markup/hrefs are kept intact — remove this block to re-enable navigation.)
+  // The href is moved to data-href so there is no live URL to open by any means
+  // (left/middle/right-click "open in new tab", keyboard). The source markup keeps
+  // its href — remove this block to re-enable navigation.
   document.querySelectorAll('article.work a[href^="project-"]').forEach((a) => {
+    a.dataset.href = a.getAttribute('href');
+    a.removeAttribute('href');
     a.addEventListener('click', (e) => e.preventDefault());
   });
 
