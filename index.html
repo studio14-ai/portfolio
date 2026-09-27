@@ -301,6 +301,10 @@
   .creative-grid figure { break-inside: avoid; margin: 0 0 clamp(16px, 2.4vw, 26px); }
   .creative-grid .tile {
     position: relative; border-radius: 14px; overflow: hidden; background: var(--ph-a);
+    /* Scale the whole rounded tile on hover (see hover rule below) rather than the
+       inner image — a transformed child inside an overflow/border-radius box makes
+       the corners flash square in some browsers, but scaling the box keeps them round. */
+    transition: transform .6s cubic-bezier(.2, .7, .2, 1);
   }
   .creative-grid .tile.a { aspect-ratio: 4 / 3; }
   .creative-grid .tile.b { aspect-ratio: 3 / 4; }
@@ -309,9 +313,8 @@
   .creative-grid .tile .ph { position: absolute; inset: 0; }
   .creative-grid .tile img {
     position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
-    transition: transform .6s cubic-bezier(.2,.7,.2,1);
   }
-  .creative-grid figure:hover .tile img { transform: scale(1.04); }
+  .creative-grid figure:hover .tile { transform: scale(1.04); }
   .creative-grid figcaption { margin-top: 12px; font-size: 14px; font-weight: 500; color: var(--ink-soft); }
 
   /* ---------------------------------------------------------------- About */
