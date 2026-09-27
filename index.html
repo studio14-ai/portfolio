@@ -809,10 +809,11 @@
         </div>
 
         <!--
-          Contact form: replace "your-id" with your Formspree form ID to receive
-          submissions (https://formspree.io). No email address is exposed on the page.
+          Contact form: on submit, the script builds a mailto: link and opens the
+          visitor's email client pre-filled to jonathan@studio14.com.au. Nothing is
+          sent automatically — the visitor reviews and presses send in their own app.
         -->
-        <form class="contact-form reveal" action="https://formspree.io/f/your-id" method="POST" novalidate>
+        <form class="contact-form reveal" novalidate>
           <div class="field">
             <label for="cf-name">Name</label>
             <input id="cf-name" name="name" type="text" autocomplete="name" required />
@@ -943,46 +944,37 @@
     a.addEventListener('click', (e) => e.preventDefault());
   });
 
-  // Contact form, graceful AJAX submit + success state
+  // Contact form: opens the visitor's email client pre-filled to Jonathan.
   const form = document.querySelector('.contact-form');
   const status = form.querySelector('.form-status');
-  form.addEventListener('submit', async (e) => {
+  const RECIPIENT = 'jonathan@studio14.com.au';
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
     status.className = 'form-status';
     status.textContent = '';
 
     if (!form.checkValidity()) {
+      form.reportValidity();
       status.classList.add('err');
       status.textContent = 'Please complete all fields with a valid email.';
       return;
     }
 
-    // If the placeholder endpoint hasn't been configured yet, show a friendly note
-    // instead of attempting a broken request.
-    if (form.action.includes('your-id')) {
-      status.classList.add('ok');
-      status.textContent = 'Thanks! (Demo mode, connect a form service to receive this.)';
-      form.reset();
-      return;
-    }
+    const name = document.getElementById('cf-name').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    const message = document.getElementById('cf-msg').value.trim();
 
-    try {
-      const res = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      });
-      if (res.ok) {
-        status.classList.add('ok');
-        status.textContent = 'Thanks, your message is on its way.';
-        form.reset();
-      } else {
-        throw new Error('Bad response');
-      }
-    } catch (err) {
-      status.classList.add('err');
-      status.textContent = 'Something went wrong. Please try again.';
-    }
+    const subject = 'Portfolio enquiry from ' + name;
+    const body = 'Name: ' + name + '\nEmail: ' + email + '\n\n' + message;
+    const mailto = 'mailto:' + RECIPIENT +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+
+    // Opens the visitor's default email app with everything pre-filled; they press send.
+    window.location.href = mailto;
+
+    status.classList.add('ok');
+    status.textContent = 'Opening your email app…';
   });
 
   // Playful custom cursor, native port of the React/motion component.
