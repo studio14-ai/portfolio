@@ -937,6 +937,12 @@
     window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(layout, 150); });
   })();
 
+  // Work-card links are disabled until the standalone project pages are ready.
+  // (Markup/hrefs are kept intact — remove this block to re-enable navigation.)
+  document.querySelectorAll('article.work a[href^="project-"]').forEach((a) => {
+    a.addEventListener('click', (e) => e.preventDefault());
+  });
+
   // Contact form, graceful AJAX submit + success state
   const form = document.querySelector('.contact-form');
   const status = form.querySelector('.form-status');
