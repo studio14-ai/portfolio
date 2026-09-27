@@ -294,16 +294,14 @@
   article.work .view:hover .arw { transform: translateX(4px); }
 
   /* ---------------------------------------------------------------- Creative gallery
-     A display-only grid (no links) for additional creative work. Uses CSS Grid (not
-     multi-column) so the layout is identical across browsers and never re-flows on
-     hover — Safari balances/​fragments CSS columns differently from Chrome, which made
-     tiles misalign and jump on hover. Rows are top-aligned; tiles keep their own
-     aspect ratios, so bottoms stagger for a masonry-like feel. */
+     Display-only (no links). Column-masonry built from flex columns: a small script
+     below splits the tiles into 1/2/3 columns and fills them in order. This keeps the
+     masonry look but makes it deterministic and identical across browsers, and it
+     never re-flows on hover — unlike CSS multi-column, which mis-balanced and jumped
+     on hover in Safari. */
   .creative { border-top: 1px solid var(--line); }
-  .creative-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: clamp(16px, 2.4vw, 26px); align-items: start;
-  }
+  .creative-grid { display: flex; align-items: flex-start; gap: clamp(16px, 2.4vw, 26px); }
+  .cg-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: clamp(16px, 2.4vw, 26px); }
   .creative-grid figure { margin: 0; }
   .creative-grid .tile {
     position: relative; border-radius: 14px; overflow: hidden; background: var(--ph-a);
@@ -453,7 +451,6 @@
   @media (max-width: 900px) {
     .statement .grid { grid-template-columns: 1fr; }
     .work-grid { grid-template-columns: 1fr; }
-    .creative-grid { grid-template-columns: repeat(2, 1fr); }
     .about-grid { grid-template-columns: 1fr; }
     .portrait { position: static; max-width: 420px; }
     .contact-grid { grid-template-columns: 1fr; }
@@ -479,7 +476,6 @@
     .job { grid-template-columns: 1fr; }
     .caps { grid-template-columns: 1fr; }
     .edu { grid-template-columns: 1fr; }
-    .creative-grid { grid-template-columns: 1fr; }
     .hero-lead { margin-left: 0; }
   }
 </style>
@@ -910,6 +906,34 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   // The hero paragraph is revealed manually after the hero heading finishes; exclude it here.
   document.querySelectorAll('.reveal:not(.hero-lead)').forEach(el => io.observe(el));
+
+  // Creative gallery: column-masonry via flex columns (deterministic + stable across
+  // browsers, no hover re-flow). Splits the tiles into 1/2/3 columns in DOM order.
+  (function () {
+    const grid = document.querySelector('.creative-grid');
+    if (!grid) return;
+    const figures = Array.from(grid.querySelectorAll('figure'));
+    let currentCols = -1;
+    const colCount = () => (window.innerWidth <= 720 ? 1 : window.innerWidth <= 900 ? 2 : 3);
+    function layout() {
+      const n = colCount();
+      if (n === currentCols) return;
+      currentCols = n;
+      const cols = [];
+      grid.textContent = '';
+      for (let i = 0; i < n; i++) {
+        const c = document.createElement('div');
+        c.className = 'cg-col';
+        grid.appendChild(c);
+        cols.push(c);
+      }
+      const per = Math.ceil(figures.length / n);
+      figures.forEach((fig, i) => cols[Math.min(n - 1, Math.floor(i / per))].appendChild(fig));
+    }
+    layout();
+    let t;
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(layout, 150); });
+  })();
 
   // Contact form — graceful AJAX submit + success state
   const form = document.querySelector('.contact-form');
