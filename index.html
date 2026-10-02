@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Jonathan Jalotjot, Lead Product Designer</title>
+<title>Jonathan Jalotjot · Strategic Lead Product Designer</title>
 <meta name="description" content="Jonathan Jalotjot, Lead Product Designer with 15+ years transforming brands into digital products across insurance and retail." />
 
 <!--
@@ -549,7 +549,7 @@
       <p class="eyebrow reveal">Strategic Lead Product Designer</p>
       <h1 id="hero-h">I design digital products people can trust.</h1>
       <div class="hero-lead reveal">
-        <p>I'm Jonathan Jalotjot, a Strategic Lead Product Designer with 15 years of experience
+        <p>I'm Jonathan, a Strategic Lead Product Designer with 15 years of experience
         turning complex customer journeys into clear, scalable digital products across insurance,
         retail, web, and mobile. I connect research, product strategy, UX/UI, and delivery to help
         teams make better decisions and launch experiences that improve engagement, conversion,
@@ -557,7 +557,7 @@
       </div>
       <div class="hero-cta reveal">
         <a class="pill" href="#work">View selected work</a>
-        <a class="ghost" href="#contact">Contact Jonathan</a>
+        <a class="ghost" href="#contact">Get in touch</a>
       </div>
       <ul class="hero-stats reveal">
         <li>15 years experience</li>
@@ -766,7 +766,7 @@
         </div>
 
         <div class="about-body">
-          <h2 class="big reveal" id="about-h" style="margin-bottom:28px;">About Jonathan</h2>
+          <h2 class="big reveal" id="about-h" style="margin-bottom:28px;">About me</h2>
           <p class="reveal">I'm a Strategic Lead Product Designer with 15 years of experience driving
           digital transformation across insurance and retail. My strength is turning complex problems
           into scalable digital experiences through customer-led strategy, research, UX/UI design, and
@@ -945,7 +945,10 @@
   // Hero: split into words and reveal them one-by-one on load (matches reference)
   const heroH = document.getElementById('hero-h');
   const heroLead = document.querySelector('.hero-lead');
+  const heroExtras = [document.querySelector('.hero-cta'), document.querySelector('.hero-stats')].filter(Boolean);
+  const heroMobile = window.matchMedia('(max-width: 720px)').matches;
   const revealHeroLead = () => { if (heroLead) heroLead.classList.add('in'); };
+  const revealHeroExtras = () => heroExtras.forEach((el) => el.classList.add('in'));
   if (heroH) {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const stagger = 0.05;   // seconds between each word
@@ -963,15 +966,24 @@
     if (reduceMotion) {
       heroH.classList.add('revealed');
       revealHeroLead();
+      revealHeroExtras();
     } else {
       // Double rAF so the initial (hidden) state paints before we transition in.
       requestAnimationFrame(() => requestAnimationFrame(() => heroH.classList.add('revealed')));
       // Reveal the lead paragraph once the last word has finished animating in.
       const total = (words.length - 1) * stagger + wordDur;
       setTimeout(revealHeroLead, total * 1000 + 120);
+      // On mobile, the CTA buttons + stat strip appear after the intro paragraph;
+      // on larger screens they reveal up front.
+      if (heroMobile) {
+        setTimeout(revealHeroExtras, total * 1000 + 120 + 320);
+      } else {
+        requestAnimationFrame(() => requestAnimationFrame(revealHeroExtras));
+      }
     }
   } else {
     revealHeroLead();
+    revealHeroExtras();
   }
 
   // Nav: shadow on scroll + mobile toggle
@@ -997,8 +1009,9 @@
       if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  // The hero paragraph is revealed manually after the hero heading finishes; exclude it here.
-  document.querySelectorAll('.reveal:not(.hero-lead)').forEach(el => io.observe(el));
+  // The hero paragraph and CTA/stats are revealed manually (sequenced with the heading);
+  // exclude them from the scroll observer.
+  document.querySelectorAll('.reveal:not(.hero-lead):not(.hero-cta):not(.hero-stats)').forEach(el => io.observe(el));
 
   // Creative gallery: column-masonry via flex columns (deterministic + stable across
   // browsers, no hover re-flow). Splits the tiles into 1/2/3 columns in DOM order.
