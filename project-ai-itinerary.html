@@ -90,6 +90,8 @@
   .case-hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(28px, 6vw, 80px); align-items: end; }
   .case-hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(2.6rem, 7vw, 5.4rem); line-height: 0.98; letter-spacing: -0.025em; margin: 0; }
   .case-hero .intro { font-size: clamp(1.05rem, 1.9vw, 1.3rem); color: var(--ink-soft); margin: 0; }
+  .case-hero .intro p { margin: 0 0 16px; }
+  .case-hero .intro p:last-child { margin-bottom: 0; }
 
   /* Meta row */
   .meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: clamp(36px, 6vw, 64px); padding-top: 26px; border-top: 1px solid var(--line); }
@@ -120,8 +122,10 @@
   /* Feature: heading + copy + media */
   .feature { border-top: 1px solid var(--line); }
   .feature .lede { max-width: 760px; }
-  .feature h3 { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.06; letter-spacing: -0.015em; margin: 0 0 18px; }
+  .feature .lede .label { margin-bottom: 16px; }
+  .feature h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.06; letter-spacing: -0.015em; margin: 0 0 18px; }
   .feature p { font-size: clamp(1.02rem, 1.6vw, 1.18rem); color: var(--ink-soft); margin: 0; max-width: 62ch; }
+  .feature .lede p + p { margin-top: 18px; }
   .feature .band { margin-top: clamp(28px, 5vw, 52px); }
   .two-up { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 36px); margin-top: clamp(28px, 5vw, 52px); }
   .two-up .band { margin-top: 0; }
@@ -247,16 +251,22 @@
   <!-- ========================================================== HERO -->
   <section class="case-hero">
     <div class="wrap">
-      <p class="case-kicker">Cover-More · Zurich, Native leisure app</p>
+      <p class="case-kicker">Cover-More · Zurich · Native leisure app</p>
       <div class="case-hero-grid">
         <h1>AI itinerary planner</h1>
-        <p class="intro">As the design lead on a new native leisure travel app, I designed
-        an AI-powered itinerary planner from discovery to release, lifting user engagement
-        <strong>22%</strong> and helping consolidate two brands onto one platform.</p>
+        <div class="intro">
+          <p>As design lead on a new native leisure travel app, I led the UX/UI from discovery
+          through release, shaping an AI-powered itinerary planner that increased user engagement
+          by <strong>22%</strong> and helped support the consolidation of two brands onto one
+          shared platform.</p>
+          <p>The opportunity was to make travel insurance feel more useful, timely, and relevant
+          by meeting travellers earlier in their journey, when they were planning trips rather
+          than thinking about policies.</p>
+        </div>
       </div>
 
       <div class="meta">
-        <div class="cell"><p class="k">Timeline</p><p class="v">2022, Present</p></div>
+        <div class="cell"><p class="k">Timeline</p><p class="v">2022-Present</p></div>
         <div class="cell"><p class="k">Role</p><p class="v">Lead Product Designer</p></div>
         <div class="cell"><p class="k">Scope</p><p class="v">Product strategy, UX/UI, Research, Prototyping, Design system</p></div>
         <div class="cell"><p class="k">Platform</p><p class="v">iOS &amp; Android (React Native)</p></div>
@@ -278,30 +288,54 @@
       <p class="label reveal">Challenge</p>
       <div class="block-body reveal">
         <h2>Turn a complex travel-insurance journey into something people actually want to use.</h2>
-        <p>Leisure travellers don't think in policies and cover tiers, they think in trips.
-        The opportunity was to meet them where they already were: planning where to go and
-        what to do. But the underlying journeys were complex, spanning business, customer,
-        and technical requirements across insurance and travel.</p>
-        <p>I was brought in as a design lead to define the UX/UI direction for a brand-new
-        native app and prove that a smarter, AI-assisted planning experience could drive
-        real engagement, not just add features.</p>
+        <p>Leisure travellers do not think in policies, cover tiers, or internal product
+        structures. They think in destinations, activities, and the practical steps involved in
+        planning a trip.</p>
+        <p>That created a clear product opportunity: shift the experience from a transactional
+        insurance utility to something more helpful and engaging within the broader travel
+        journey. At the same time, the work had to respond to complex customer, business, brand,
+        and technical requirements across both travel and insurance.</p>
+        <p>I was brought in to define the UX/UI direction for a brand-new native app and prove
+        that a smarter, AI-assisted planning experience could drive meaningful engagement rather
+        than simply adding another feature.</p>
       </div>
     </div>
   </section>
 
-  <!-- ========================================================== APPROACH -->
+  <!-- ========================================================== ROLE AND SCOPE -->
   <section class="block" style="padding-top:0;">
     <div class="wrap block-grid">
-      <p class="label reveal">Approach</p>
+      <p class="label reveal">Role and scope</p>
+      <div class="block-body reveal">
+        <h2>Define the product direction, shape the experience, and help the team align around it.</h2>
+        <p>I led customer-centred design across the app's core journeys, owning the UX/UI
+        direction from early discovery through to production-ready design. That included
+        translating business needs, customer needs, and technical constraints into flows,
+        prototypes, interface patterns, and delivery-ready experiences.</p>
+        <p>I worked closely with Product and Engineering throughout the project, using prototypes,
+        working sessions, and strategic narratives to bring clarity to complex decisions and help
+        the team move faster with more confidence.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== RESEARCH AND APPROACH -->
+  <section class="block">
+    <div class="wrap block-grid">
+      <p class="label reveal">Research and approach</p>
       <div class="block-body reveal">
         <h2>Research first, then prototype relentlessly.</h2>
-        <p>I led customer-centred design across the app's core journeys, translating business,
-        customer, and technical requirements into clear flows, prototypes, and production-ready
-        experiences. I worked closely with Product and Engineering from discovery through
-        release to accelerate time to market.</p>
-        <p>To secure executive buy-in for a more ambitious direction, I facilitated workshops
-        and communicated complex concepts through user flows, sketches, prototypes, and
-        strategic narratives, aligning the team around a single, evidence-led vision.</p>
+        <p>The early challenge was not just designing a feature. It was identifying where the
+        product could create the most value for travellers in a way that also made sense
+        commercially.</p>
+        <p>I used customer-centred design practices to map the broader journey, understand where
+        traveller intent was strongest, and identify how the app could become useful earlier in
+        the trip-planning process. Rather than designing around internal structures or feature
+        requests, I focused on how people actually think when preparing for travel.</p>
+        <p>To secure buy-in for a more ambitious direction, I facilitated workshops and used flows,
+        sketches, prototypes, and narrative framing to align stakeholders around a shared product
+        vision. This helped move the conversation from opinion-led debate toward a clearer,
+        evidence-led direction.</p>
       </div>
     </div>
   </section>
@@ -310,11 +344,18 @@
   <section class="block feature">
     <div class="wrap">
       <div class="lede reveal">
-        <h3>An AI planner that turns intent into an itinerary</h3>
-        <p>The centrepiece: an AI-powered itinerary planner that helps travellers shape a trip
-        in minutes. By designing the planner around real usecases rather than raw inputs, the
-        experience felt effortless, and drove a <strong>22% increase in user engagement</strong>
+        <p class="label">Key product decision</p>
+        <h2>Design the planner around traveller intent, not raw inputs.</h2>
+        <p>The central product decision was to make the itinerary planner feel like a practical
+        trip-planning tool rather than a generic AI interaction. Travellers needed help turning an
+        intention to travel into something concrete, quickly and with low effort.</p>
+        <p>I designed the planner around real travel use cases, helping users move from broad
+        intent to a more structured itinerary in minutes. That made the experience feel more
+        intuitive and useful, and contributed to a <strong>22% increase in user engagement</strong>
         across the app.</p>
+        <p>Instead of asking users to do heavy cognitive work up front, the experience reduced
+        friction by giving the planner a clearer role: help me shape a trip, not just fill in
+        information.</p>
       </div>
       <div class="band tall reveal">
         <span class="ph" data-label="Add images/itinerary-planner.jpg"></span>
@@ -327,11 +368,17 @@
   <section class="block feature">
     <div class="wrap">
       <div class="lede reveal">
-        <h3>Decisions validated with evidence, not opinion</h3>
-        <p>I de-risked design decisions and optimised the experience through qualitative
-        research, analytics, and KPI tracking, achieving a <strong>16% uplift in
-        cross-platform conversions</strong>. Weekly insight loops kept the team focused on
-        what actually moved the needle.</p>
+        <p class="label">Validation and iteration</p>
+        <h2>Decisions validated with evidence, not opinion.</h2>
+        <p>I used qualitative research, analytics, and KPI tracking to de-risk design decisions
+        and refine the experience over time. This gave the team a stronger basis for prioritisation
+        and helped focus effort on changes that had a measurable impact.</p>
+        <p>Weekly research and analytics reviews created a repeatable feedback loop between insight
+        and delivery. That process contributed to a <strong>16% uplift in cross-platform
+        conversions</strong> while keeping the team focused on what was actually improving the
+        experience.</p>
+        <p>This was especially important in a space where customer expectations, commercial goals,
+        and technical realities all had to be balanced carefully.</p>
       </div>
       <div class="two-up">
         <div class="band tall reveal">
@@ -350,13 +397,18 @@
   <section class="block feature">
     <div class="wrap">
       <div class="lede reveal">
-        <h3>Turning success into a system, two brands, one platform</h3>
-        <p>I contributed to the strategic consolidation of the Freely and Cover-More app
-        experiences onto a shared React Native technology stack while preserving distinct
-        brand expressions. To support it, I developed a journey-led product-design framework
-       , reusable patterns, per-brand feature configuration, incremental migration,
-        measurement, and design governance, so the team could scale without losing
-        consistency.</p>
+        <p class="label">Platform and systems impact</p>
+        <h2>Turn a successful feature into a scalable product foundation.</h2>
+        <p>The work extended beyond a single feature. I also contributed to the strategic
+        consolidation of the Freely and Cover-More app experiences onto a shared React Native
+        platform while preserving distinct brand expressions.</p>
+        <p>To support that shift, I developed a journey-led product design framework, reusable
+        patterns, per-brand feature configuration, incremental migration thinking, measurement
+        principles, and design governance. This helped the team scale more consistently without
+        flattening the identity of each brand.</p>
+        <p>What began as a product opportunity also became a systems opportunity: use a successful
+        customer-facing experience to help establish more reusable foundations for future
+        delivery.</p>
       </div>
     </div>
   </section>
@@ -364,7 +416,7 @@
   <!-- ========================================================== OUTCOMES -->
   <section class="block outcomes">
     <div class="wrap">
-      <p class="label reveal" style="margin-bottom:36px;">Outcomes</p>
+      <h2 class="label reveal" style="margin-bottom:36px;">Outcomes</h2>
       <div class="stats">
         <div class="stat reveal">
           <p class="n"><span class="accent">+22%</span></p>
@@ -372,15 +424,34 @@
         </div>
         <div class="stat reveal">
           <p class="n"><span class="accent">+16%</span></p>
-          <p class="d">Uplift in cross-platform conversions</p>
+          <p class="d">Uplift in cross-platform conversions through evidence-led optimisation</p>
         </div>
         <div class="stat reveal">
           <p class="n">2&rarr;1</p>
           <p class="d">Two brands consolidated onto one shared React Native platform</p>
         </div>
       </div>
-      <p class="closing reveal">Beyond the numbers, the work established a journey-led way of
-      designing that the team still builds on, evidence-led, brand-aware, and built to scale.</p>
+      <p class="closing reveal">Beyond the headline metrics, the project helped establish a more
+      journey-led, evidence-led, and scalable way of designing across the app experience. The team
+      gained not only a stronger product feature, but also stronger foundations for future
+      delivery.</p>
+    </div>
+  </section>
+
+  <!-- ========================================================== REFLECTION -->
+  <section class="block" style="border-top:1px solid var(--line);">
+    <div class="wrap block-grid">
+      <p class="label reveal">Reflection</p>
+      <div class="block-body reveal">
+        <h2>What this work proved</h2>
+        <p>This project showed that travel insurance could become more useful and engaging when
+        designed around traveller intent rather than policy structures. It also reinforced the
+        value of combining product thinking, prototyping, evidence, and systems design to create
+        outcomes that work at both feature level and platform level.</p>
+        <p>For me, the most valuable part of the work was not only shipping the planner, but helping
+        shape a design approach the team could keep building on: clearer journeys, stronger
+        alignment, better evidence, and more scalable delivery.</p>
+      </div>
     </div>
   </section>
 
