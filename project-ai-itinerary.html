@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI Itinerary Planner, Jonathan Jalotjot</title>
-<meta name="description" content="Case study: designing an AI-powered itinerary planner for a native leisure travel app at Cover-More (Zurich), +22% engagement." />
+<title>Designing an AI Itinerary Planner · Jonathan Jalotjot</title>
+<meta name="description" content="Case study: designing an AI-powered itinerary planner for Cover-More's native travel app (Zurich). +22% engagement and a 16% uplift in completed insurance purchases." />
 
 <!--
   ============================================================================
@@ -118,6 +118,9 @@
   .block-body p { font-size: clamp(1.05rem, 1.7vw, 1.25rem); color: var(--ink-soft); margin: 0 0 20px; max-width: 62ch; }
   .block-body p:last-child { margin-bottom: 0; }
   .block-body p strong { color: var(--ink); font-weight: 600; }
+  .block-body ul, .block-body ol { margin: 0 0 20px; padding-left: 22px; color: var(--ink-soft); font-size: clamp(1rem, 1.6vw, 1.12rem); line-height: 1.5; max-width: 62ch; }
+  .block-body li { margin-top: 8px; }
+  .block-body li:first-child { margin-top: 0; }
 
   /* Feature: heading + copy + media */
   .feature { border-top: 1px solid var(--line); }
@@ -126,12 +129,17 @@
   .feature h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.06; letter-spacing: -0.015em; margin: 0 0 18px; }
   .feature p { font-size: clamp(1.02rem, 1.6vw, 1.18rem); color: var(--ink-soft); margin: 0; max-width: 62ch; }
   .feature .lede p + p { margin-top: 18px; }
+  .feature .lede ul, .feature .lede ol { margin: 18px 0 0; padding-left: 22px; color: var(--ink-soft); font-size: clamp(1rem, 1.6vw, 1.12rem); line-height: 1.5; max-width: 62ch; }
+  .feature .lede li { margin-top: 8px; }
+  .feature .lede li:first-child { margin-top: 0; }
+  .feature .lede ul + p, .feature .lede ol + p { margin-top: 18px; }
   .feature .band { margin-top: clamp(28px, 5vw, 52px); }
   .two-up { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 36px); margin-top: clamp(28px, 5vw, 52px); }
   .two-up .band { margin-top: 0; }
 
   /* ---------------------------------------------------------------- Outcomes */
   .outcomes { border-top: 1px solid var(--line); }
+  .outcomes h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.7rem, 3.4vw, 2.6rem); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 clamp(32px, 5vw, 48px); max-width: 26ch; }
   .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 4vw, 48px); margin-bottom: clamp(36px, 6vw, 60px); }
   .stat .n { font-family: var(--display); font-weight: 700; font-size: clamp(2.6rem, 6vw, 4.4rem); line-height: 1; letter-spacing: -0.03em; margin: 0; }
   .stat .n .accent { color: var(--accent); }
@@ -251,14 +259,15 @@
   <!-- ========================================================== HERO -->
   <section class="case-hero">
     <div class="wrap">
-      <p class="case-kicker">Cover-More · Zurich · Native leisure app</p>
+      <p class="case-kicker">Cover-More · Zurich · Native leisure travel app</p>
       <div class="case-hero-grid">
-        <h1>AI itinerary planner</h1>
+        <h1>Designing an AI Itinerary Planner for a More Useful Travel App</h1>
         <div class="intro">
-          <p>As design lead on a new native leisure travel app, I led the UX/UI from discovery
-          through release, shaping an AI-powered itinerary planner that increased user engagement
-          by <strong>22%</strong> and helped support the consolidation of two brands onto one
-          shared platform.</p>
+          <p>As Lead Product Designer, I led the design of an AI-powered itinerary planner for
+          Cover-More's native travel app, launched in August 2025. The experience helped increase
+          app engagement by <strong>22%</strong>, supported a <strong>16% uplift in completed
+          insurance purchases</strong>, and contributed to the consolidation of Cover-More and
+          Travelex experiences onto one shared React Native platform.</p>
           <p>The opportunity was to make travel insurance feel more useful, timely, and relevant
           by meeting travellers earlier in their journey, when they were planning trips rather
           than thinking about policies.</p>
@@ -287,17 +296,16 @@
     <div class="wrap block-grid">
       <p class="label reveal">Challenge</p>
       <div class="block-body reveal">
-        <h2>Turn a complex travel-insurance journey into something people actually want to use.</h2>
-        <p>Leisure travellers do not think in policies, cover tiers, or internal product
-        structures. They think in destinations, activities, and the practical steps involved in
-        planning a trip.</p>
-        <p>That created a clear product opportunity: shift the experience from a transactional
-        insurance utility to something more helpful and engaging within the broader travel
-        journey. At the same time, the work had to respond to complex customer, business, brand,
-        and technical requirements across both travel and insurance.</p>
-        <p>I was brought in to define the UX/UI direction for a brand-new native app and prove
-        that a smarter, AI-assisted planning experience could drive meaningful engagement rather
-        than simply adding another feature.</p>
+        <h2>Turn a travel-insurance app into something people want to use before they travel.</h2>
+        <p>Travellers do not naturally think in policies, cover tiers, or internal product
+        structures. They think about where they want to go, how long they will stay, who they are
+        travelling with, and what kind of experience they want to have.</p>
+        <p>That created a clear product opportunity: shift the app from a primarily transactional
+        insurance utility into a more helpful travel companion. The experience needed to support
+        travel planning while also contributing to stronger engagement, brand differentiation, and
+        completed insurance purchases.</p>
+        <p>The work also had to respond to complex customer, business, brand, technical, and
+        platform requirements across Cover-More and Travelex.</p>
       </div>
     </div>
   </section>
@@ -307,14 +315,25 @@
     <div class="wrap block-grid">
       <p class="label reveal">Role and scope</p>
       <div class="block-body reveal">
-        <h2>Define the product direction, shape the experience, and help the team align around it.</h2>
-        <p>I led customer-centred design across the app's core journeys, owning the UX/UI
-        direction from early discovery through to production-ready design. That included
-        translating business needs, customer needs, and technical constraints into flows,
-        prototypes, interface patterns, and delivery-ready experiences.</p>
-        <p>I worked closely with Product and Engineering throughout the project, using prototypes,
-        working sessions, and strategic narratives to bring clarity to complex decisions and help
-        the team move faster with more confidence.</p>
+        <h2>Lead the product direction, shape the experience, and align the team around a shared vision.</h2>
+        <p>As Lead Product Designer, I owned the UX/UI direction across the project, from discovery
+        through to production-ready design and launch.</p>
+        <p>My responsibilities included:</p>
+        <ul>
+          <li>Customer research and journey mapping.</li>
+          <li>Workshop facilitation and stakeholder alignment.</li>
+          <li>Product and feature definition.</li>
+          <li>Information architecture and user flows.</li>
+          <li>Interaction and visual design.</li>
+          <li>Prototyping and usability validation.</li>
+          <li>Design-system and reusable-pattern development.</li>
+          <li>Analytics and KPI reviews.</li>
+          <li>Design handover and delivery support.</li>
+          <li>Post-launch optimisation.</li>
+        </ul>
+        <p>I worked closely with the Product Owner, Business Analyst, iOS and Android developers,
+        platform engineers, quality engineers, and business stakeholders throughout the
+        three-month project.</p>
       </div>
     </div>
   </section>
@@ -325,17 +344,23 @@
       <p class="label reveal">Research and approach</p>
       <div class="block-body reveal">
         <h2>Research first, then prototype relentlessly.</h2>
-        <p>The early challenge was not just designing a feature. It was identifying where the
-        product could create the most value for travellers in a way that also made sense
-        commercially.</p>
-        <p>I used customer-centred design practices to map the broader journey, understand where
-        traveller intent was strongest, and identify how the app could become useful earlier in
-        the trip-planning process. Rather than designing around internal structures or feature
-        requests, I focused on how people actually think when preparing for travel.</p>
-        <p>To secure buy-in for a more ambitious direction, I facilitated workshops and used flows,
-        sketches, prototypes, and narrative framing to align stakeholders around a shared product
-        vision. This helped move the conversation from opinion-led debate toward a clearer,
-        evidence-led direction.</p>
+        <p>The initial challenge was not simply to add an AI feature. It was to identify where the
+        app could create meaningful value for travellers while also supporting the business.</p>
+        <p>I combined unmoderated qualitative research with analytics, customer-journey mapping,
+        workshops, and iterative prototyping. The research focused on how people prepare for
+        travel, where planning becomes difficult, and what information helps them feel more
+        confident before a trip.</p>
+        <p>Several themes shaped the direction:</p>
+        <ul>
+          <li>Travellers often begin with a broad intention rather than a fully formed itinerary.</li>
+          <li>Planning involves balancing destination, time, budget, travel companions, and preferred activities.</li>
+          <li>People value practical recommendations more than an abstract conversational AI experience.</li>
+          <li>Trust depends on the relevance, accuracy, and currency of the information provided.</li>
+          <li>A useful planning experience could give Cover-More a more meaningful role earlier in the customer journey.</li>
+        </ul>
+        <p>To secure alignment around the opportunity, I used flows, sketches, prototypes, and
+        strategic narrative framing to move conversations from feature opinions toward a clearer,
+        evidence-led product direction.</p>
       </div>
     </div>
   </section>
@@ -346,49 +371,81 @@
       <div class="lede reveal">
         <p class="label">Key product decision</p>
         <h2>Design the planner around traveller intent, not raw inputs.</h2>
-        <p>The central product decision was to make the itinerary planner feel like a practical
-        trip-planning tool rather than a generic AI interaction. Travellers needed help turning an
-        intention to travel into something concrete, quickly and with low effort.</p>
-        <p>I designed the planner around real travel use cases, helping users move from broad
-        intent to a more structured itinerary in minutes. That made the experience feel more
-        intuitive and useful, and contributed to a <strong>22% increase in user engagement</strong>
-        across the app.</p>
-        <p>Instead of asking users to do heavy cognitive work up front, the experience reduced
-        friction by giving the planner a clearer role: help me shape a trip, not just fill in
-        information.</p>
+        <p>The central product decision was to make the experience feel like a practical
+        trip-planning tool rather than a generic AI interaction.</p>
+        <p>The planner asks travellers for a small number of meaningful preferences:</p>
+        <ol>
+          <li>Destination.</li>
+          <li>Trip duration.</li>
+          <li>Travel companions.</li>
+          <li>Budget.</li>
+          <li>Type of travel.</li>
+        </ol>
+        <p>The AI then uses those inputs to generate a personalised itinerary. Recommended places
+        are validated against Google to retrieve supporting information such as opening times,
+        addresses, phone numbers, and other destination details.</p>
+        <p>This approach reduced the cognitive effort required to start planning. Rather than
+        asking users to write a detailed prompt, the experience helped them move from a broad
+        travel intention to a structured itinerary in minutes.</p>
+        <p>The planner also connected directly to Cover-More's mission to help customers travel
+        <strong>safer, smarter, supported, and rewarded</strong>. Users could save and share their
+        itineraries, creating value beyond the immediate insurance transaction.</p>
       </div>
       <div class="band tall reveal">
         <span class="ph" data-label="Add images/itinerary-planner.jpg"></span>
-        <img src="images/itinerary-planner.jpg" alt="AI itinerary planner flow" onerror="this.remove()" />
+        <img src="images/itinerary-planner.jpg" alt="AI itinerary planner input flow and generated itinerary" onerror="this.remove()" />
       </div>
     </div>
   </section>
 
-  <!-- ========================================================== FEATURE 2 -->
+  <!-- ========================================================== DESIGNING FOR AI TRUST -->
+  <section class="block feature">
+    <div class="wrap">
+      <div class="lede reveal">
+        <p class="label">Designing for AI trust</p>
+        <h2>Make the output more useful without pretending it is infallible.</h2>
+        <p>One of the biggest challenges was the reliability of AI-generated information. The model
+        could hallucinate details or return information that had become outdated, creating a risk
+        to customer trust.</p>
+        <p>I helped address this by treating the AI output as a starting point that required
+        validation rather than as an unquestionable source of truth. Google was used to enrich and
+        verify recommended places with more current practical information.</p>
+        <p>Performance was another important consideration. Generating a complete itinerary could
+        take time, so the experience needed to set appropriate expectations and make the waiting
+        period feel intentional rather than broken.</p>
+        <p>For the MVP, users could save and share an itinerary, but not edit it directly. Editing
+        was identified as an important roadmap opportunity because travellers may want to adapt
+        recommendations as their plans evolve.</p>
+      </div>
+      <div class="band tall reveal">
+        <span class="ph" data-label="Add images/itinerary-trust.jpg"></span>
+        <img src="images/itinerary-trust.jpg" alt="Itinerary recommendations enriched with validated place details" onerror="this.remove()" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== VALIDATION AND ITERATION -->
   <section class="block feature">
     <div class="wrap">
       <div class="lede reveal">
         <p class="label">Validation and iteration</p>
-        <h2>Decisions validated with evidence, not opinion.</h2>
-        <p>I used qualitative research, analytics, and KPI tracking to de-risk design decisions
-        and refine the experience over time. This gave the team a stronger basis for prioritisation
-        and helped focus effort on changes that had a measurable impact.</p>
-        <p>Weekly research and analytics reviews created a repeatable feedback loop between insight
-        and delivery. That process contributed to a <strong>16% uplift in cross-platform
-        conversions</strong> while keeping the team focused on what was actually improving the
-        experience.</p>
-        <p>This was especially important in a space where customer expectations, commercial goals,
-        and technical realities all had to be balanced carefully.</p>
-      </div>
-      <div class="two-up">
-        <div class="band tall reveal">
-          <span class="ph" data-label="Add images/itinerary-topup.jpg"></span>
-          <img src="images/itinerary-topup.jpg" alt="Key journey detail" onerror="this.remove()" />
-        </div>
-        <div class="band tall reveal">
-          <span class="ph" data-label="Add images/itinerary-system.jpg"></span>
-          <img src="images/itinerary-system.jpg" alt="Design system components" onerror="this.remove()" />
-        </div>
+        <h2>Use research and measurement to connect customer value with commercial outcomes.</h2>
+        <p>I used qualitative feedback, analytics, and KPI tracking to refine the experience and
+        understand whether it was creating meaningful value after launch.</p>
+        <p>The measurement framework considered:</p>
+        <ul>
+          <li>Session frequency.</li>
+          <li>Time spent in the app.</li>
+          <li>Itinerary planner usage.</li>
+          <li>Feature adoption.</li>
+          <li>Completed insurance purchases.</li>
+        </ul>
+        <p>Weekly research and analytics reviews created a repeatable feedback loop between customer
+        insight, design decisions, and delivery priorities. This helped the team focus on
+        improvements that were not only more usable, but also more likely to support the broader
+        product and commercial goals.</p>
+        <p>The work contributed to a <strong>22% increase in user engagement</strong> and a
+        <strong>16% uplift in completed insurance purchases</strong>.</p>
       </div>
     </div>
   </section>
@@ -399,16 +456,26 @@
       <div class="lede reveal">
         <p class="label">Platform and systems impact</p>
         <h2>Turn a successful feature into a scalable product foundation.</h2>
-        <p>The work extended beyond a single feature. I also contributed to the strategic
-        consolidation of the Freely and Cover-More app experiences onto a shared React Native
-        platform while preserving distinct brand expressions.</p>
-        <p>To support that shift, I developed a journey-led product design framework, reusable
-        patterns, per-brand feature configuration, incremental migration thinking, measurement
-        principles, and design governance. This helped the team scale more consistently without
-        flattening the identity of each brand.</p>
-        <p>What began as a product opportunity also became a systems opportunity: use a successful
-        customer-facing experience to help establish more reusable foundations for future
-        delivery.</p>
+        <p>The project extended beyond the itinerary planner itself. Cover-More and Travelex shared
+        the same underlying codebase, creating an opportunity to consolidate two branded app
+        experiences onto a shared React Native platform.</p>
+        <p>I contributed to the design foundations needed to support that direction while preserving
+        the distinct expression of each brand. This included:</p>
+        <ul>
+          <li>A journey-led product design framework.</li>
+          <li>Reusable interface patterns.</li>
+          <li>Brand-specific feature configuration.</li>
+          <li>Incremental migration thinking.</li>
+          <li>Measurement principles.</li>
+          <li>Design governance.</li>
+          <li>More consistent design and delivery practices.</li>
+        </ul>
+        <p>The result was not simply a new customer-facing feature. It also helped establish a more
+        scalable way of designing and evolving experiences across brands.</p>
+      </div>
+      <div class="band tall reveal">
+        <span class="ph" data-label="Add images/itinerary-system.jpg"></span>
+        <img src="images/itinerary-system.jpg" alt="Shared design system and patterns across the Cover-More and Travelex apps" onerror="this.remove()" />
       </div>
     </div>
   </section>
@@ -416,25 +483,26 @@
   <!-- ========================================================== OUTCOMES -->
   <section class="block outcomes">
     <div class="wrap">
-      <h2 class="label reveal" style="margin-bottom:36px;">Outcomes</h2>
+      <p class="label reveal" style="margin-bottom:18px;">Outcomes</p>
+      <h2 class="reveal">Create value at feature, product, and platform level.</h2>
       <div class="stats">
         <div class="stat reveal">
           <p class="n"><span class="accent">+22%</span></p>
-          <p class="d">User engagement, driven by the AI itinerary planner</p>
+          <p class="d">User engagement, following the introduction of the AI itinerary planner</p>
         </div>
         <div class="stat reveal">
           <p class="n"><span class="accent">+16%</span></p>
-          <p class="d">Uplift in cross-platform conversions through evidence-led optimisation</p>
+          <p class="d">Uplift in completed insurance purchases through evidence-led optimisation</p>
         </div>
         <div class="stat reveal">
           <p class="n">2&rarr;1</p>
-          <p class="d">Two brands consolidated onto one shared React Native platform</p>
+          <p class="d">Cover-More and Travelex experiences supported through one shared React Native codebase</p>
         </div>
       </div>
-      <p class="closing reveal">Beyond the headline metrics, the project helped establish a more
-      journey-led, evidence-led, and scalable way of designing across the app experience. The team
-      gained not only a stronger product feature, but also stronger foundations for future
-      delivery.</p>
+      <p class="closing reveal">Beyond the headline metrics, the project delivered a more useful
+      travel-planning experience connected to Cover-More's insurance offering, and established
+      reusable patterns, governance, and measurement principles for future delivery. Together, this
+      became a more journey-led, evidence-led, and scalable way of designing the app experience.</p>
     </div>
   </section>
 
@@ -443,14 +511,16 @@
     <div class="wrap block-grid">
       <p class="label reveal">Reflection</p>
       <div class="block-body reveal">
-        <h2>What this work proved</h2>
-        <p>This project showed that travel insurance could become more useful and engaging when
-        designed around traveller intent rather than policy structures. It also reinforced the
-        value of combining product thinking, prototyping, evidence, and systems design to create
-        outcomes that work at both feature level and platform level.</p>
-        <p>For me, the most valuable part of the work was not only shipping the planner, but helping
-        shape a design approach the team could keep building on: clearer journeys, stronger
-        alignment, better evidence, and more scalable delivery.</p>
+        <h2>What this work proved.</h2>
+        <p>This project showed that travel insurance can become more useful and engaging when it is
+        designed around traveller intent rather than policy structures.</p>
+        <p>It also reinforced the importance of treating AI as part of a broader product experience,
+        not as the product itself. The value came from combining a simple input flow, relevant
+        itinerary generation, external information validation, clear customer value, and a roadmap
+        for improving control over the output.</p>
+        <p>For me, the most valuable part of the work was not only shipping the planner. It was
+        helping connect customer research, AI product thinking, commercial outcomes, and platform
+        strategy into a clearer direction the team could continue building on.</p>
       </div>
     </div>
   </section>
