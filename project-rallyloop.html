@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Designing a Pickleball Scoring App · Jonathan Jalotjot</title>
+<meta name="description" content="Case study: RallyLoop, a native iOS pickleball scoring app designed for faster, more trustworthy live match play — rule accuracy, instant recovery, and offline reliability." />
+
+<!--
+  ============================================================================
+  CASE STUDY — RALLYLOOP (Native iOS pickleball scoring app)
+  ============================================================================
+  Self-contained page. Reuses the site's design system (tokens, fonts, nav,
+  footer, custom cursor), matching project-ai-itinerary.html.
+
+  IMAGES (drop into images/ with these names; a labelled placeholder shows until then):
+      images/rallyloop-hero.jpg         wide hero band     16:9   ~1600×900
+      images/rallyloop-score.jpg        feature mockup     4:3    ~1200×900
+      images/rallyloop-reliability.jpg  feature mockup     4:3    ~1200×900
+      images/rallyloop-platform.jpg     feature mockup     4:3    ~1200×900
+  All images are cropped to fill (object-fit: cover); keep key content centred.
+  ============================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script>document.documentElement.classList.add('js');</script>
+
+<style>
+  :root {
+    --bg:        #FAFAF8;
+    --ink:       #0A0A0A;
+    --ink-soft:  #4A4A46;
+    --line:      #E6E5DF;
+    --accent:    #FF4A1C;
+    --accent-ink:#FFFFFF;
+    --ph-a:      #EDECE6;
+    --ph-b:      #DAD8CF;
+    --display: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --body:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --maxw: 1240px;
+    --gutter: clamp(16px, 5vw, 64px);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--body); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--gutter); }
+
+  .skip { position: absolute; left: -9999px; top: 0; background: var(--ink); color: var(--bg); padding: 10px 16px; z-index: 100; border-radius: 0 0 8px 0; }
+  .skip:focus { left: 0; }
+
+  /* ---------------------------------------------------------------- Nav */
+  header.site {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .3s ease;
+  }
+  header.site.scrolled { border-color: var(--line); }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 18px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .brand .mark { position: relative; width: 34px; height: 34px; overflow: hidden; flex: none; }
+  .brand .mark img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
+  .brand .mark .mark-fallback { position: absolute; inset: 0; background: var(--ink); color: var(--bg); display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 17px; }
+  .brand .mark.has-logo .mark-fallback { display: none; }
+
+  .nav-links { display: flex; align-items: center; gap: clamp(14px, 3vw, 34px); }
+  .nav-links a.link { text-decoration: none; font-weight: 500; font-size: 15px; color: var(--ink); position: relative; padding: 4px 0; }
+  .nav-links a.link::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -2px; height: 1.5px; background: var(--ink); transition: right .25s ease; }
+  .nav-links a.link:hover::after { right: 0; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: var(--accent-ink); text-decoration: none; font-weight: 600; font-size: 14px; padding: 11px 20px; border-radius: 999px; transition: transform .2s ease, background .2s ease; border: none; cursor: pointer; }
+  .pill:hover { transform: translateY(-1px); background: #e8390d; }
+  .nav-toggle { display: none; }
+
+  /* ---------------------------------------------------------------- Back link */
+  .backlink { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 14px; color: var(--ink-soft); padding-top: clamp(28px, 5vw, 48px); transition: color .2s ease; }
+  .backlink .arw { transition: transform .2s ease; }
+  .backlink:hover { color: var(--ink); }
+  .backlink:hover .arw { transform: translateX(-4px); }
+
+  /* ---------------------------------------------------------------- Case hero */
+  .case-hero { padding-block: clamp(28px, 5vw, 44px) clamp(36px, 6vw, 64px); }
+  .case-kicker { font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin: 0 0 20px; }
+  .case-hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(28px, 6vw, 80px); align-items: end; }
+  .case-hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(2.6rem, 7vw, 5.4rem); line-height: 0.98; letter-spacing: -0.025em; margin: 0; }
+  .case-hero .intro { font-size: clamp(1.05rem, 1.9vw, 1.3rem); color: var(--ink-soft); margin: 0; }
+  .case-hero .intro p { margin: 0 0 16px; }
+  .case-hero .intro p:last-child { margin-bottom: 0; }
+
+  /* Meta row */
+  .meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: clamp(36px, 6vw, 64px); padding-top: 26px; border-top: 1px solid var(--line); }
+  .meta .cell .k { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 8px; }
+  .meta .cell .v { font-family: var(--display); font-weight: 500; font-size: 15px; margin: 0; color: var(--ink); }
+
+  /* ---------------------------------------------------------------- Media bands */
+  .band { width: 100%; border-radius: 18px; overflow: hidden; background: var(--ph-a); position: relative; }
+  .band.wide { aspect-ratio: 16 / 9; }
+  .band.tall { aspect-ratio: 4 / 3; }
+  .band .ph { position: absolute; inset: 0; }
+  .band img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ph { width: 100%; height: 100%; background: linear-gradient(135deg, var(--ph-a), var(--ph-b)); display: grid; place-items: center; color: var(--ink-soft); }
+  .ph::after { content: attr(data-label); font-size: 12px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; opacity: .7; padding: 8px 14px; border: 1px dashed color-mix(in srgb, var(--ink-soft) 45%, transparent); border-radius: 999px; text-align: center; }
+
+  .hero-band { margin-top: clamp(24px, 4vw, 40px); }
+
+  /* ---------------------------------------------------------------- Content blocks */
+  section.block { padding-block: clamp(48px, 8vw, 100px); }
+  .block-grid { display: grid; grid-template-columns: 260px 1fr; gap: clamp(24px, 5vw, 64px); align-items: start; }
+  .label { font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); margin: 0; display: flex; align-items: center; gap: 10px; }
+  .label::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; }
+  .block-body h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.7rem, 3.4vw, 2.6rem); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 24px; max-width: 22ch; }
+  .block-body p { font-size: clamp(1.05rem, 1.7vw, 1.25rem); color: var(--ink-soft); margin: 0 0 20px; max-width: 62ch; }
+  .block-body p:last-child { margin-bottom: 0; }
+  .block-body p strong { color: var(--ink); font-weight: 600; }
+  .block-body ul, .block-body ol { margin: 0 0 20px; padding-left: 22px; color: var(--ink-soft); font-size: clamp(1rem, 1.6vw, 1.12rem); line-height: 1.5; max-width: 62ch; }
+  .block-body li { margin-top: 8px; }
+  .block-body li:first-child { margin-top: 0; }
+
+  /* Feature: heading + copy + media */
+  .feature { border-top: 1px solid var(--line); }
+  .feature .lede { max-width: 760px; }
+  .feature .lede .label { margin-bottom: 16px; }
+  .feature h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.06; letter-spacing: -0.015em; margin: 0 0 18px; }
+  .feature p { font-size: clamp(1.02rem, 1.6vw, 1.18rem); color: var(--ink-soft); margin: 0; max-width: 62ch; }
+  .feature .lede p + p { margin-top: 18px; }
+  .feature .lede ul, .feature .lede ol { margin: 18px 0 0; padding-left: 22px; color: var(--ink-soft); font-size: clamp(1rem, 1.6vw, 1.12rem); line-height: 1.5; max-width: 62ch; }
+  .feature .lede li { margin-top: 8px; }
+  .feature .lede li:first-child { margin-top: 0; }
+  .feature .lede ul + p, .feature .lede ol + p { margin-top: 18px; }
+  .feature .band { margin-top: clamp(28px, 5vw, 52px); }
+
+  /* ---------------------------------------------------------------- Outcomes */
+  .outcomes { border-top: 1px solid var(--line); }
+  .outcomes h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.7rem, 3.4vw, 2.6rem); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 clamp(32px, 5vw, 48px); max-width: 26ch; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(28px, 4vw, 48px); margin-bottom: clamp(36px, 6vw, 60px); }
+  .stat::before { content: ""; display: block; width: 40px; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 20px; }
+  .stat .t { font-family: var(--display); font-weight: 700; font-size: clamp(1.45rem, 2.5vw, 2rem); line-height: 1.08; letter-spacing: -0.02em; margin: 0; color: var(--ink); }
+  .stat .d { margin: 14px 0 0; color: var(--ink-soft); font-size: 15px; line-height: 1.5; max-width: 32ch; }
+  .outcomes .closing { font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--ink); max-width: 60ch; margin: 0; }
+
+  /* ---------------------------------------------------------------- Next / CTA */
+  .cta { border-top: 1px solid var(--line); text-align: center; }
+  .cta h2 { font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 6vw, 4rem); line-height: 1.02; letter-spacing: -0.025em; margin: 0 auto clamp(28px, 4vw, 40px); max-width: 16ch; }
+  .cta .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .cta .pill.lg { padding: 15px 26px; font-size: 15px; }
+  .cta .ghost { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 15px; padding: 15px 26px; border: 1px solid var(--line); border-radius: 999px; background: #fff; transition: border-color .2s ease; }
+  .cta .ghost:hover { border-color: var(--ink); }
+
+  /* Next project row */
+  .next-project { display: block; border-top: 1px solid var(--line); text-decoration: none; }
+  .next-project .next-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: clamp(40px, 7vw, 88px); }
+  .next-project .np-meta { display: flex; flex-direction: column; gap: 12px; }
+  .next-project .np-label { font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+  .next-project .np-title { font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 6vw, 4rem); line-height: 1; letter-spacing: -0.025em; color: var(--ink); transition: color .2s ease; }
+  .next-project .np-arrow { font-family: var(--display); font-size: clamp(1.8rem, 5vw, 3rem); color: var(--ink-soft); transition: transform .3s cubic-bezier(.2,.7,.2,1), color .2s ease; flex: none; }
+  .next-project:hover .np-title { color: var(--accent); }
+  .next-project:hover .np-arrow { transform: translateX(12px); color: var(--accent); }
+
+  /* ---------------------------------------------------------------- Footer */
+  footer.site { border-top: 1px solid var(--line); padding-block: clamp(40px, 6vw, 72px) 40px; margin-top: clamp(48px, 8vw, 100px); }
+  .foot-bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13.5px; color: var(--ink-soft); }
+  .foot-bottom a { text-decoration: none; font-weight: 500; }
+  .foot-bottom a:hover { color: var(--ink); }
+
+  /* ---------------------------------------------------------------- Reveal */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  html.js .backlink,
+  html.js .case-hero .case-kicker,
+  html.js .case-hero h1,
+  html.js .case-hero .intro,
+  html.js .case-hero .meta .cell { opacity: 0; transform: translateY(22px); }
+  html.js .case-hero .case-kicker.in, html.js .case-hero h1.in, html.js .case-hero .intro.in,
+  html.js .case-hero .meta .cell.in, html.js .backlink.in {
+    opacity: 1; transform: none; transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.js .backlink, html.js .case-hero .case-kicker, html.js .case-hero h1,
+    html.js .case-hero .intro, html.js .case-hero .meta .cell {
+      opacity: 1 !important; transform: none !important; transition: none !important;
+    }
+  }
+
+  /* ---------------------------------------------------------------- Custom cursor */
+  #cursor { position: fixed; top: 0; left: 0; z-index: 60; width: 32px; height: 32px; border-radius: 999px; background: #fff; mix-blend-mode: difference; display: flex; align-items: center; justify-content: center; pointer-events: none; will-change: transform; opacity: 0; transform: translate3d(-100px,-100px,0) translate(-50%,-50%); transition: width .3s cubic-bezier(.2,.7,.2,1), height .3s cubic-bezier(.2,.7,.2,1), padding .3s cubic-bezier(.2,.7,.2,1), background-color .25s ease, opacity .25s ease; }
+  #cursor .cursor-label { font-family: var(--display); font-weight: 600; font-size: 12px; letter-spacing: .01em; white-space: nowrap; color: var(--accent-ink); opacity: 0; transform: translateY(3px); transition: opacity .2s ease, transform .2s ease; }
+  #cursor.is-grow { width: 64px; height: 64px; }
+  #cursor.is-label { width: auto; height: auto; padding: 10px 15px; border-radius: 999px; background: var(--accent); mix-blend-mode: normal; }
+  #cursor.is-label .cursor-label { opacity: 1; transform: none; }
+  @media (hover: hover) and (pointer: fine) { html.cursor-custom, html.cursor-custom * { cursor: none !important; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    * { animation: none !important; }
+  }
+
+  /* ---------------------------------------------------------------- Responsive */
+  @media (max-width: 900px) {
+    .case-hero-grid { grid-template-columns: 1fr; align-items: start; }
+    .meta { grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .block-grid { grid-template-columns: 1fr; gap: 20px; }
+    .stats { grid-template-columns: 1fr; gap: 28px; }
+  }
+  @media (max-width: 720px) {
+    .nav-links { display: none; }
+    .nav-links.open { display: flex; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: flex-start; gap: 4px; background: var(--bg); border-bottom: 1px solid var(--line); padding: 16px var(--gutter) 24px; }
+    .nav-links.open a.link { font-size: 20px; padding: 8px 0; }
+    .nav-links.open .pill { margin-top: 8px; }
+    .nav-toggle { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 40px; border: 1px solid var(--line); border-radius: 10px; background: #fff; cursor: pointer; gap: 4px; flex-direction: column; }
+    .nav-toggle span { display: block; width: 18px; height: 2px; background: var(--ink); transition: .25s; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(4px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { transform: translateY(-2px) rotate(-45deg); }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#challenge">Skip to content</a>
+
+<!-- ============================================================ NAV -->
+<header class="site" id="top">
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="Jonathan Jalotjot, home">
+      <span class="mark">
+        <img src="images/logo.svg" alt="Jonathan Jalotjot logo" onload="this.closest('.mark').classList.add('has-logo')" onerror="this.remove()" />
+        <span class="mark-fallback">JJ</span>
+      </span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
+      <span></span><span></span>
+    </button>
+    <nav class="nav-links" id="navlinks">
+      <a class="link" href="index.html#work">Work</a>
+      <a class="link" href="index.html#about">About</a>
+      <a class="link" href="index.html#contact">Contact</a>
+      <a class="pill" href="index.html#contact">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <a class="backlink" href="index.html#work"><span class="arw">&larr;</span> All work</a>
+  </div>
+
+  <!-- ========================================================== HERO -->
+  <section class="case-hero">
+    <div class="wrap">
+      <p class="case-kicker">RallyLoop · Native iOS app · Pickleball scoring</p>
+      <div class="case-hero-grid">
+        <h1>Designing a Pickleball Scoring App for Faster, More Trustworthy Match Play</h1>
+        <div class="intro">
+          <p>As product designer, I led the design of a native iOS pickleball scoring app built to
+          make live scoring clearer, faster, and easier to trust during play. The app was designed
+          around a simple goal: help players know the score, know who is serving, and know where to
+          stand, without needing to remember rules mid-game.</p>
+          <p>The opportunity was to turn a frustrating, error-prone part of recreational sport into a
+          calm, reliable mobile experience. Instead of creating another generic score tracker, the
+          product focused on rule accuracy, instant recovery from mistakes, offline reliability, and
+          a visual court model that reduces confusion in real time.</p>
+        </div>
+      </div>
+
+      <div class="meta">
+        <div class="cell"><p class="k">Role</p><p class="v">Product Designer</p></div>
+        <div class="cell"><p class="k">Platform</p><p class="v">Native iOS</p></div>
+        <div class="cell"><p class="k">Scope</p><p class="v">Product definition, UX/UI, Interaction, Onboarding, Launch</p></div>
+        <div class="cell"><p class="k">Formats</p><p class="v">Side-out &amp; rally scoring</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hero showcase band -->
+  <div class="wrap hero-band reveal">
+    <div class="band wide">
+      <span class="ph" data-label="Add images/rallyloop-hero.jpg"></span>
+      <img src="images/rallyloop-hero.jpg" alt="RallyLoop live scoring screen with score, server, and court position" onerror="this.remove()" />
+    </div>
+  </div>
+
+  <!-- ========================================================== CHALLENGE -->
+  <section class="block" id="challenge">
+    <div class="wrap block-grid">
+      <p class="label reveal">Challenge</p>
+      <div class="block-body reveal">
+        <h2>Turn a confusing scoring task into a fast, trustworthy courtside tool.</h2>
+        <p>Pickleball scoring becomes surprisingly complex once players move beyond casual play,
+        especially across side-out doubles, rally scoring, server identity, and court positioning.
+        Existing apps were falling short in three ways: they were incomplete on rules, weak on error
+        recovery, and often introduced friction through subscriptions, paywalls, or unnecessary
+        setup.</p>
+        <p>That created a clear product opportunity: build a scoring experience that works in real
+        playing conditions, supports both traditional and emerging formats, and helps players stay
+        focused on the game instead of the app.</p>
+        <p>The work also had to handle bright sunlight, one-thumb use, accidental taps, offline
+        usage, and the mental load of live decision-making during sport.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== ROLE AND SCOPE -->
+  <section class="block" style="padding-top:0;">
+    <div class="wrap block-grid">
+      <p class="label reveal">Role and scope</p>
+      <div class="block-body reveal">
+        <h2>Lead the product direction and shape the end-to-end scoring experience.</h2>
+        <p>I owned the UX and product design direction from problem framing through to
+        production-ready behaviour, interaction design, and launch support. That included:</p>
+        <ul>
+          <li>Product definition and feature scope.</li>
+          <li>User flows and information architecture.</li>
+          <li>Interaction and interface design.</li>
+          <li>Onboarding.</li>
+          <li>System thinking around scoring logic.</li>
+          <li>Design decisions for match history, recovery, and edge cases.</li>
+        </ul>
+        <p>The work also extended into analytics thinking, launch readiness, App Store positioning,
+        and release quality. That meant aligning the product experience not only around usability,
+        but also around instrumentation, trust signals, and a clear go-to-market story.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== RESEARCH AND APPROACH -->
+  <section class="block">
+    <div class="wrap block-grid">
+      <p class="label reveal">Research and approach</p>
+      <div class="block-body reveal">
+        <h2>Start with real player pain points, then design for live play.</h2>
+        <p>The challenge was not simply to make scorekeeping digital. It was to understand what
+        breaks down for players during a real match, and how the product could reduce confusion
+        without adding friction. The direction was shaped around recurring pain points such as
+        accidental score taps, uncertainty around player positioning, weak support for rally
+        scoring, and poor continuity in existing apps.</p>
+        <p>Several principles anchored the design approach:</p>
+        <ul>
+          <li>Every core action had to be achievable quickly.</li>
+          <li>The app could not depend on connectivity.</li>
+          <li>The interface should never force users to recall rules from memory.</li>
+        </ul>
+        <p>Those principles translated into large tap targets, no loading states in the scoring
+        flow, offline-first persistence, and a court diagram that derives and displays positions
+        automatically.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== KEY PRODUCT DECISION -->
+  <section class="block feature">
+    <div class="wrap">
+      <div class="lede reveal">
+        <p class="label">Key product decision</p>
+        <h2>Design the app around trust and clarity, not just score entry.</h2>
+        <p>The central product decision was to make the app do more than record points. It needed to
+        actively reduce disputes and uncertainty by showing score state, server identity, and court
+        position together in one live surface.</p>
+        <p>That led to several core decisions:</p>
+        <ul>
+          <li>Support both side-out and rally scoring from match setup.</li>
+          <li>Make smart undo always available, including immediately after the game-winning point.</li>
+          <li>Use a game-end overlay rather than a hard final state, so accidental winning taps remain reversible.</li>
+          <li>Derive player positions from score parity and highlight the active server visually, so players do not have to remember rotation rules themselves.</li>
+        </ul>
+        <p>This shifted the app from a passive score display into an active in-game guidance tool.
+        Rather than asking users to interpret rules under pressure, the product translates scoring
+        logic into something visible and immediate.</p>
+      </div>
+      <div class="band tall reveal">
+        <span class="ph" data-label="Add images/rallyloop-score.jpg"></span>
+        <img src="images/rallyloop-score.jpg" alt="Live scoring surface showing score, active server, and court positions" onerror="this.remove()" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== DESIGNING FOR RELIABILITY -->
+  <section class="block feature">
+    <div class="wrap">
+      <div class="lede reveal">
+        <p class="label">Designing for reliability</p>
+        <h2>Make mistakes recoverable and complex rules easier to understand.</h2>
+        <p>One of the biggest usability risks was trust. In a live game, even a single mistaken tap
+        can create friction between players, and most competitor apps treated the final point as
+        irreversible. The product addressed this by making undo a first-class interaction, backed by
+        persistent state recovery and an endgame flow that keeps the active score screen mounted
+        until the result is confirmed.</p>
+        <p>The other major trust issue was rule complexity. Side-out doubles, in particular,
+        introduces a three-number format, server-number logic, and position rotation that many
+        casual players do not fully remember under pressure. The solution was not to explain more
+        text, but to design a UI that externalises the logic through onboarding, a computed score
+        display, and an auto-updating court diagram.</p>
+      </div>
+      <div class="band tall reveal">
+        <span class="ph" data-label="Add images/rallyloop-reliability.jpg"></span>
+        <img src="images/rallyloop-reliability.jpg" alt="Undo interaction and auto-updating court diagram that externalise scoring rules" onerror="this.remove()" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== VALIDATION AND ITERATION -->
+  <section class="block feature">
+    <div class="wrap">
+      <div class="lede reveal">
+        <p class="label">Validation and iteration</p>
+        <h2>Use testability, instrumentation, and release discipline to support quality.</h2>
+        <p>Validation was built into the product at both the logic and release level. The scoring
+        engine was specified through explicit rule contracts and test scenarios covering scoring
+        transitions, win conditions, server identity, court-side derivation, invariants, and undo
+        behaviour across formats.</p>
+        <p>The measurement model also connected product quality to user behaviour after launch.
+        Success criteria included:</p>
+        <ul>
+          <li>Weekly active scorers and match completion.</li>
+          <li>Undo usage and rally scoring adoption.</li>
+          <li>Retention and crash-free sessions.</li>
+          <li>Court diagram engagement.</li>
+        </ul>
+        <p>Alongside these, anti-metrics were defined to catch early signs of setup friction or weak
+        onboarding timing, so the team could tell the difference between genuine adoption and
+        surface-level activity.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== PLATFORM AND SYSTEMS IMPACT -->
+  <section class="block feature">
+    <div class="wrap">
+      <div class="lede reveal">
+        <p class="label">Platform and systems impact</p>
+        <h2>Build a product foundation that can scale beyond v1 scorekeeping.</h2>
+        <p>Although v1 focused on fast, reliable scoring, the product was structured with broader
+        expansion in mind. The scope deliberately prioritised free core scoring, local persistence,
+        and offline continuity, while deferring the following to later phases:</p>
+        <ul>
+          <li>Club management.</li>
+          <li>Social features.</li>
+          <li>Analytics dashboards.</li>
+          <li>Cloud sync.</li>
+          <li>Tournament workflows.</li>
+        </ul>
+        <p>This created a clearer product foundation: one that solved the most frequent in-game
+        problems first, while leaving space for future organiser features, premium utilities, Apple
+        Watch extensions, and club-tier workflows. The result was a more disciplined product
+        strategy, where future growth builds on trust and utility rather than feature sprawl.</p>
+      </div>
+      <div class="band tall reveal">
+        <span class="ph" data-label="Add images/rallyloop-platform.jpg"></span>
+        <img src="images/rallyloop-platform.jpg" alt="Product roadmap from core scoring toward organiser and premium features" onerror="this.remove()" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== OUTCOMES -->
+  <section class="block outcomes">
+    <div class="wrap">
+      <p class="label reveal" style="margin-bottom:18px;">Outcomes</p>
+      <h2 class="reveal">Create value at gameplay, product, and launch level.</h2>
+      <div class="stats">
+        <div class="stat reveal">
+          <p class="t">Side-out + rally scoring</p>
+          <p class="d">Built to support both traditional and emerging pickleball scoring formats in one product experience.</p>
+        </div>
+        <div class="stat reveal">
+          <p class="t">Offline-first core flow</p>
+          <p class="d">Designed to work on court with no login, no signal dependency, and no interruption to live play.</p>
+        </div>
+        <div class="stat reveal">
+          <p class="t">App Store launch readiness</p>
+          <p class="d">Shaped through release planning, analytics, App Store positioning, and quality checks for production release.</p>
+        </div>
+      </div>
+      <p class="closing reveal">Beyond feature delivery, the project established a stronger product
+      foundation for future match history, organiser workflows, Apple Watch utility, and premium
+      extensions.</p>
+    </div>
+  </section>
+
+  <!-- ========================================================== REFLECTION -->
+  <section class="block" style="border-top:1px solid var(--line);">
+    <div class="wrap block-grid">
+      <p class="label reveal">Reflection</p>
+      <div class="block-body reveal">
+        <h2>What this work proved.</h2>
+        <p>This project showed that even a simple sports utility can become a strong product-design
+        case study when the real challenge is trust, clarity, and rule translation under pressure.</p>
+        <p>It also reinforced the value of designing around real-world conditions instead of ideal
+        flows. Bright sunlight, sweaty hands, one-thumb use, no signal, and accidental taps were not
+        edge cases to tidy up later; they were the core context that shaped the product from the
+        beginning.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== NEXT PROJECT -->
+  <a class="next-project" href="project-ai-itinerary.html">
+    <div class="wrap next-inner">
+      <span class="np-meta">
+        <span class="np-label">Next project</span>
+        <span class="np-title">AI itinerary planner</span>
+      </span>
+      <span class="np-arrow" aria-hidden="true">&rarr;</span>
+    </div>
+  </a>
+
+  <!-- ========================================================== CTA -->
+  <section class="block cta">
+    <div class="wrap">
+      <h2 class="reveal">Have a product that needs shaping?</h2>
+      <div class="actions reveal">
+        <a class="pill lg" href="index.html#contact">Get in touch &rarr;</a>
+        <a class="ghost" href="index.html#work">See more work</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================================================ FOOTER -->
+<footer class="site">
+  <div class="wrap foot-bottom">
+    <span>&copy; <span id="year"></span> Jonathan Jalotjot · Lead Product Designer</span>
+    <a href="#top">Back to top &uarr;</a>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Nav shadow + mobile toggle
+  const header = document.querySelector('header.site');
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.getElementById('navlinks');
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    links.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false');
+  }));
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Case-study hero: staggered reveal on page load
+  (function () {
+    const reduceM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const heroEls = [
+      document.querySelector('.backlink'),
+      document.querySelector('.case-hero .case-kicker'),
+      document.querySelector('.case-hero h1'),
+      document.querySelector('.case-hero .intro'),
+      ...document.querySelectorAll('.case-hero .meta .cell')
+    ].filter(Boolean);
+    heroEls.forEach((el, i) => { el.style.transitionDelay = (i * 0.08).toFixed(2) + 's'; });
+    if (reduceM) { heroEls.forEach(el => el.classList.add('in')); }
+    else { requestAnimationFrame(() => requestAnimationFrame(() => heroEls.forEach(el => el.classList.add('in')))); }
+  })();
+
+  // Playful custom cursor (desktop / fine-pointer only, skipped for reduced motion)
+  (function () {
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!fine || reduce) return;
+    const dot = document.createElement('div');
+    dot.id = 'cursor'; dot.setAttribute('aria-hidden', 'true');
+    const label = document.createElement('span'); label.className = 'cursor-label';
+    dot.appendChild(label); document.body.appendChild(dot);
+    document.documentElement.classList.add('cursor-custom');
+    let x = -100, y = -100, tx = -100, ty = -100, shown = false;
+    const ease = 0.18;
+    window.addEventListener('mousemove', (e) => {
+      tx = e.clientX; ty = e.clientY;
+      if (!shown) { shown = true; dot.style.opacity = '1'; }
+    }, { passive: true });
+    document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; });
+    document.addEventListener('mouseenter', () => { if (shown) dot.style.opacity = '1'; });
+    (function tick() {
+      x += (tx - x) * ease; y += (ty - y) * ease;
+      dot.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0) translate(-50%,-50%)';
+      requestAnimationFrame(tick);
+    })();
+    document.querySelectorAll('a, button, input, textarea, summary, [role="button"]').forEach((el) => {
+      el.addEventListener('mouseenter', () => dot.classList.add('is-grow'));
+      el.addEventListener('mouseleave', () => dot.classList.remove('is-grow'));
+    });
+  })();
+</script>
+</body>
+</html>
