@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Designing a Pickleball Scoring App · Jonathan Jalotjot</title>
-<meta name="description" content="Case study: RallyLoop, a native iOS pickleball scoring app designed for faster, more trustworthy live match play — rule accuracy, instant recovery, and offline reliability." />
+<title>Designing &amp; Shipping a Pickleball Scoring App · Jonathan Jalotjot</title>
+<meta name="description" content="Case study: RallyLoop, a native iOS pickleball scoring app designed and shipped with AI-assisted development (Claude Code) for faster, more trustworthy live match play." />
 
 <!--
   ============================================================================
-  CASE STUDY — RALLYLOOP (Native iOS pickleball scoring app)
+  CASE STUDY · RALLYLOOP (Native iOS pickleball scoring app)
   ============================================================================
   Self-contained page. Reuses the site's design system (tokens, fonts, nav,
   footer, custom cursor), matching project-ai-itinerary.html.
@@ -256,24 +256,26 @@
     <div class="wrap">
       <p class="case-kicker">RallyLoop · Native iOS app · Pickleball scoring</p>
       <div class="case-hero-grid">
-        <h1>Designing a Pickleball Scoring App for Faster, More Trustworthy Match Play</h1>
+        <h1>Designing and Shipping a Pickleball Scoring App with AI-Assisted Product Development</h1>
         <div class="intro">
-          <p>As product designer, I led the design of a native iOS pickleball scoring app built to
-          make live scoring clearer, faster, and easier to trust during play. The app was designed
-          around a simple goal: help players know the score, know who is serving, and know where to
-          stand, without needing to remember rules mid-game.</p>
-          <p>The opportunity was to turn a frustrating, error-prone part of recreational sport into a
-          calm, reliable mobile experience. Instead of creating another generic score tracker, the
-          product focused on rule accuracy, instant recovery from mistakes, offline reliability, and
-          a visual court model that reduces confusion in real time.</p>
+          <p>As product designer, I led the design and delivery of RallyLoop, a native iOS pickleball
+          scoring app built to make live scoring clearer, faster, and easier to trust during play.
+          As a personal project, it gave me the opportunity not only to define the product
+          experience, but also to use Claude Code as part of the workflow to prototype, build,
+          refine, and ship the app myself.</p>
+          <p>The app was designed around a simple goal: help players know the score, know who is
+          serving, and know where to stand, without needing to remember rules mid-game. Instead of
+          creating another generic score tracker, I focused on rule accuracy, instant recovery from
+          mistakes, offline reliability, and a visual court model that reduces confusion in real
+          time.</p>
         </div>
       </div>
 
       <div class="meta">
         <div class="cell"><p class="k">Role</p><p class="v">Product Designer</p></div>
         <div class="cell"><p class="k">Platform</p><p class="v">Native iOS</p></div>
-        <div class="cell"><p class="k">Scope</p><p class="v">Product definition, UX/UI, Interaction, Onboarding, Launch</p></div>
-        <div class="cell"><p class="k">Formats</p><p class="v">Side-out &amp; rally scoring</p></div>
+        <div class="cell"><p class="k">Build</p><p class="v">AI-assisted (Claude Code)</p></div>
+        <div class="cell"><p class="k">Type</p><p class="v">Personal project</p></div>
       </div>
     </div>
   </section>
@@ -294,7 +296,7 @@
         <h2>Turn a confusing scoring task into a fast, trustworthy courtside tool.</h2>
         <p>Pickleball scoring becomes surprisingly complex once players move beyond casual play,
         especially across side-out doubles, rally scoring, server identity, and court positioning.
-        Existing apps were falling short in three ways: they were incomplete on rules, weak on error
+        Existing apps were falling short in three key ways: they were incomplete on rules, weak on error
         recovery, and often introduced friction through subscriptions, paywalls, or unnecessary
         setup.</p>
         <p>That created a clear product opportunity: build a scoring experience that works in real
@@ -311,20 +313,15 @@
     <div class="wrap block-grid">
       <p class="label reveal">Role and scope</p>
       <div class="block-body reveal">
-        <h2>Lead the product direction and shape the end-to-end scoring experience.</h2>
-        <p>I owned the UX and product design direction from problem framing through to
-        production-ready behaviour, interaction design, and launch support. That included:</p>
-        <ul>
-          <li>Product definition and feature scope.</li>
-          <li>User flows and information architecture.</li>
-          <li>Interaction and interface design.</li>
-          <li>Onboarding.</li>
-          <li>System thinking around scoring logic.</li>
-          <li>Design decisions for match history, recovery, and edge cases.</li>
-        </ul>
-        <p>The work also extended into analytics thinking, launch readiness, App Store positioning,
-        and release quality. That meant aligning the product experience not only around usability,
-        but also around instrumentation, trust signals, and a clear go-to-market story.</p>
+        <h2>Lead the product direction and carry the work through design and shipping.</h2>
+        <p>This was a personal project, so my role spanned product strategy, UX, UI, prototyping,
+        implementation direction, and shipping. I owned the work from problem framing through to
+        production-ready behaviour, interaction design, launch preparation, and release quality.</p>
+        <p>That included product definition, user flows, information architecture, interaction
+        design, interface design, onboarding, system thinking around scoring logic, match history,
+        recovery behaviour, analytics planning, App Store positioning, and release readiness. It also
+        meant working in a more integrated way across design and frontend implementation than a
+        traditional handoff model would allow.</p>
       </div>
     </div>
   </section>
@@ -337,7 +334,7 @@
         <h2>Start with real player pain points, then design for live play.</h2>
         <p>The challenge was not simply to make scorekeeping digital. It was to understand what
         breaks down for players during a real match, and how the product could reduce confusion
-        without adding friction. The direction was shaped around recurring pain points such as
+        without adding friction. The product direction was shaped around recurring pain points such as
         accidental score taps, uncertainty around player positioning, weak support for rally
         scoring, and poor continuity in existing apps.</p>
         <p>Several principles anchored the design approach:</p>
@@ -349,6 +346,36 @@
         <p>Those principles translated into large tap targets, no loading states in the scoring
         flow, offline-first persistence, and a court diagram that derives and displays positions
         automatically.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== AI-ASSISTED BUILD WORKFLOW -->
+  <section class="block feature">
+    <div class="wrap">
+      <div class="lede reveal">
+        <p class="label">AI-assisted build workflow</p>
+        <h2>Use Claude Code to move from product thinking to a shippable app faster.</h2>
+        <p>A key part of this project was using Claude Code as an active product-development tool
+        rather than only as a writing or ideation assistant. I used it to help translate requirements
+        into working implementation, explore solution paths, structure logic, refine flows, and
+        accelerate the move from concept to testable product.</p>
+        <p>This made the process more iterative and transparent. Instead of stopping at static
+        mockups, I could use AI-assisted coding to work through product behaviour, edge cases, and UI
+        decisions in a more applied way. That was especially useful for areas where experience design
+        and product logic were tightly connected, such as score-state transitions, undo behaviour,
+        onboarding, and match recovery.</p>
+        <p>Claude Code supported my workflow across:</p>
+        <ul>
+          <li>Prototyping and interface implementation.</li>
+          <li>Translating product requirements into structured app behaviour.</li>
+          <li>Refining edge cases and state handling.</li>
+          <li>Accelerating iteration on screens and flows.</li>
+          <li>Bridging design intent and production-ready output.</li>
+        </ul>
+        <p>The value was not in replacing product design thinking. It was in extending it. Using
+        Claude Code helped me work more fluently across design, systems, and implementation, and ship
+        a stronger personal product than I could have through static design artefacts alone.</p>
       </div>
     </div>
   </section>
@@ -447,8 +474,9 @@
         </ul>
         <p>This created a clearer product foundation: one that solved the most frequent in-game
         problems first, while leaving space for future organiser features, premium utilities, Apple
-        Watch extensions, and club-tier workflows. The result was a more disciplined product
-        strategy, where future growth builds on trust and utility rather than feature sprawl.</p>
+        Watch extensions, and club-tier workflows. It also reflects the kind of systems thinking now
+        expected of product designers who work with AI-assisted tooling and technical prototypes, not
+        just interface comps.</p>
       </div>
       <div class="band tall reveal">
         <span class="ph" data-label="Add images/rallyloop-platform.jpg"></span>
@@ -461,7 +489,7 @@
   <section class="block outcomes">
     <div class="wrap">
       <p class="label reveal" style="margin-bottom:18px;">Outcomes</p>
-      <h2 class="reveal">Create value at gameplay, product, and launch level.</h2>
+      <h2 class="reveal">Create value at gameplay, product, and shipping level.</h2>
       <div class="stats">
         <div class="stat reveal">
           <p class="t">Side-out + rally scoring</p>
@@ -472,13 +500,13 @@
           <p class="d">Designed to work on court with no login, no signal dependency, and no interruption to live play.</p>
         </div>
         <div class="stat reveal">
-          <p class="t">App Store launch readiness</p>
-          <p class="d">Shaped through release planning, analytics, App Store positioning, and quality checks for production release.</p>
+          <p class="t">Personal project shipped with Claude Code</p>
+          <p class="d">Developed as a self-initiated product using AI-assisted workflows to move from product concept to release-ready app.</p>
         </div>
       </div>
-      <p class="closing reveal">Beyond feature delivery, the project established a stronger product
-      foundation for future match history, organiser workflows, Apple Watch utility, and premium
-      extensions.</p>
+      <p class="closing reveal">Beyond feature delivery, the project demonstrated practical AI tool
+      fluency, stronger cross-functional design-to-build capability, and a product foundation for
+      future match history, organiser workflows, Apple Watch utility, and premium extensions.</p>
     </div>
   </section>
 
@@ -490,10 +518,13 @@
         <h2>What this work proved.</h2>
         <p>This project showed that even a simple sports utility can become a strong product-design
         case study when the real challenge is trust, clarity, and rule translation under pressure.</p>
-        <p>It also reinforced the value of designing around real-world conditions instead of ideal
-        flows. Bright sunlight, sweaty hands, one-thumb use, no signal, and accidental taps were not
-        edge cases to tidy up later; they were the core context that shaped the product from the
-        beginning.</p>
+        <p>It also reinforced the value of working beyond static screens. Using Claude Code as part of
+        the process helped me think through product behaviour, implementation constraints, and edge
+        cases in a more direct way, making the design process more applied, iterative, and
+        shippable.</p>
+        <p>More broadly, it reflects how product design is changing. Strong design work increasingly
+        means combining customer insight, systems thinking, interface craft, AI-assisted workflows,
+        and enough technical fluency to help shape and ship the product, not just describe it.</p>
       </div>
     </div>
   </section>
