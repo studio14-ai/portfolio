@@ -571,7 +571,6 @@
           <p class="section-intro reveal">A selection of digital products, services, and systems
           shaped through strategy, research, design, and delivery.</p>
         </div>
-        <a class="textlink reveal" href="#contact">Start a project &rarr;</a>
       </div>
 
       <div class="work-grid">
@@ -883,7 +882,6 @@
           <h2 class="big" id="contact-h">Let's build something worth trusting.</h2>
           <p class="lead">Have a product, service, or customer journey that needs clarity? Tell me
           a little about what you're working on, and I'll get back to you.</p>
-          <span class="avail"><span class="dot"></span> Available for new projects</span>
         </div>
 
         <!--
@@ -901,7 +899,7 @@
             <input id="cf-email" name="email" type="email" autocomplete="email" required />
           </div>
           <div class="field">
-            <label for="cf-msg">Project details</label>
+            <label for="cf-msg">Message</label>
             <textarea id="cf-msg" name="message" rows="5" required
               placeholder="Tell me about the product, problem, or opportunity."></textarea>
           </div>
@@ -918,7 +916,6 @@
   <div class="wrap">
     <div class="foot-top">
       <p class="big-name">Jonathan Jalotjot</p>
-      <span class="avail"><span class="dot"></span> Available for new projects</span>
     </div>
     <nav class="foot-nav" aria-label="Footer">
       <a href="#work">Work</a>
@@ -1045,6 +1042,14 @@
     a.dataset.href = a.getAttribute('href');
     a.removeAttribute('href');
     a.addEventListener('click', (e) => e.preventDefault());
+  });
+
+  // Back-to-top (and brand mark): smooth-scroll to the very top of the page.
+  document.querySelectorAll('a[href="#top"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   });
 
   // Contact form: opens the visitor's email client pre-filled to Jonathan.
