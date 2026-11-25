@@ -575,7 +575,7 @@
 
       <div class="work-grid">
 
-        <article class="work reveal">
+        <article class="work reveal" data-live="true">
           <a class="media" href="project-design-system.html" aria-label="Journey-led design system">
             <!-- Add images/work-design-system.jpg (4:3, ~1200×900). Placeholder shows until the file exists. -->
             <span class="ph" data-label="Add images/work-design-system.jpg"></span>
@@ -588,11 +588,11 @@
             <p>Built a journey-led design system of reusable components, shared React Native
             foundations, per-brand configuration, and governance, so teams could ship accessible,
             consistent experiences at scale.</p>
-            <a class="view" href="project-design-system.html">Case study coming soon <span class="arw">&rarr;</span></a>
+            <a class="view" href="project-design-system.html">View case study <span class="arw">&rarr;</span></a>
           </div>
         </article>
 
-        <article class="work reveal">
+        <article class="work reveal" data-live="true">
           <a class="media" href="project-ai-itinerary.html" aria-label="Cover-More, AI itinerary planner">
             <!-- Add images/work-itinerary.jpg (4:3, ~1200×900). Placeholder shows until the file exists. -->
             <span class="ph" data-label="Add images/work-itinerary.jpg"></span>
@@ -605,7 +605,7 @@
             <p>Led UX/UI from discovery to launch for Cover-More's native travel app, designing an
             AI-powered itinerary planner that met travellers earlier in their journey, making travel
             insurance more useful and lifting engagement.</p>
-            <a class="view" href="project-ai-itinerary.html">Case study coming soon <span class="arw">&rarr;</span></a>
+            <a class="view" href="project-ai-itinerary.html">View case study <span class="arw">&rarr;</span></a>
           </div>
         </article>
 
@@ -1037,8 +1037,8 @@
   // Work-card links are disabled until the standalone project pages are ready.
   // The href is moved to data-href so there is no live URL to open by any means
   // (left/middle/right-click "open in new tab", keyboard). The source markup keeps
-  // its href — remove this block to re-enable navigation.
-  document.querySelectorAll('article.work a[href^="project-"]').forEach((a) => {
+  // its href. Cards marked data-live="true" are published and stay linked.
+  document.querySelectorAll('article.work:not([data-live]) a[href^="project-"]').forEach((a) => {
     a.dataset.href = a.getAttribute('href');
     a.removeAttribute('href');
     a.addEventListener('click', (e) => e.preventDefault());
@@ -1127,7 +1127,7 @@
     // Morph into a labelled pill over work-card images (the demo's "View Project").
     document.querySelectorAll('article.work a.media').forEach((el) => {
       el.addEventListener('mouseenter', () => {
-        label.textContent = 'Coming soon';
+        label.textContent = el.closest('article.work').hasAttribute('data-live') ? 'View case study' : 'Coming soon';
         dot.classList.add('is-label');
         dot.classList.remove('is-grow');
       });
