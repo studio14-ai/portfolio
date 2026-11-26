@@ -3,21 +3,29 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Designing &amp; Shipping a Pickleball Scoring App · Jonathan Jalotjot</title>
-<meta name="description" content="Case study: RallyLoop, a native iOS pickleball scoring app designed and shipped with AI-assisted development (Claude Code) for faster, more trustworthy live match play." />
+<title>Designing and Shipping a Pickleball Scoring App · Jonathan Jalotjot</title>
+<meta name="description" content="A case study on RallyLoop, a native iOS pickleball scoring app I designed and shipped as a personal project, using Claude Code to prototype, build, refine, and release it." />
 
 <!--
   ============================================================================
-  CASE STUDY · RALLYLOOP (Native iOS pickleball scoring app)
+  CASE STUDY, RALLYLOOP  (Personal project · Native iOS pickleball scoring app)
   ============================================================================
-  Self-contained page. Reuses the site's design system (tokens, fonts, nav,
-  footer, custom cursor), matching project-ai-itinerary.html.
+  Standalone page. Reuses the site's design system (tokens, fonts, nav, footer,
+  custom cursor) and the editorial structure of project-ai-itinerary.html.
 
   IMAGES (drop into images/ with these names; a labelled placeholder shows until then):
-      images/rallyloop-hero.jpg         wide hero band     16:9   ~1600×900
-      images/rallyloop-score.jpg        feature mockup     4:3    ~1200×900
-      images/rallyloop-reliability.jpg  feature mockup     4:3    ~1200×900
-      images/rallyloop-platform.jpg     feature mockup     4:3    ~1200×900
+      images/rallyloop-hero.jpg          wide hero band     16:9   ~1600×900
+                                         (live scoring screen in context)
+      images/rallyloop-workflow.jpg      process artefact   16:9   ~1600×900
+                                         (Claude Code session beside the running app, or spec to build)
+      images/rallyloop-score.jpg         feature mockup     16:9   ~1600×900
+                                         (score, server and court position on one surface)
+      images/rallyloop-undo.jpg          feature mockup     4:3    ~1200×900
+                                         (smart undo and game-end overlay)
+      images/rallyloop-court.jpg         feature mockup     4:3    ~1200×900
+                                         (auto-updating court diagram)
+      images/rallyloop-platform.jpg      feature mockup     16:9   ~1600×900
+                                         (v1 scope and future roadmap)
   All images are cropped to fill (object-fit: cover); keep key content centred.
   ============================================================================
 -->
@@ -87,11 +95,12 @@
   /* ---------------------------------------------------------------- Case hero */
   .case-hero { padding-block: clamp(28px, 5vw, 44px) clamp(36px, 6vw, 64px); }
   .case-kicker { font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin: 0 0 20px; }
-  .case-hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(28px, 6vw, 80px); align-items: end; }
-  .case-hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(2.6rem, 7vw, 5.4rem); line-height: 0.98; letter-spacing: -0.025em; margin: 0; }
-  .case-hero .intro { font-size: clamp(1.05rem, 1.9vw, 1.3rem); color: var(--ink-soft); margin: 0; }
+  .case-hero-grid { display: grid; grid-template-columns: 1fr; gap: clamp(24px, 4vw, 40px); }
+  .case-hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 1; letter-spacing: -0.025em; margin: 0; max-width: 20ch; }
+  .case-hero .intro { font-size: clamp(1.05rem, 1.9vw, 1.3rem); color: var(--ink-soft); margin: 0; max-width: 62ch; }
   .case-hero .intro p { margin: 0 0 16px; }
   .case-hero .intro p:last-child { margin-bottom: 0; }
+  .case-hero .intro strong { color: var(--ink); font-weight: 600; }
 
   /* Meta row */
   .meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: clamp(36px, 6vw, 64px); padding-top: 26px; border-top: 1px solid var(--line); }
@@ -99,13 +108,15 @@
   .meta .cell .v { font-family: var(--display); font-weight: 500; font-size: 15px; margin: 0; color: var(--ink); }
 
   /* ---------------------------------------------------------------- Media bands */
-  .band { width: 100%; border-radius: 18px; overflow: hidden; background: var(--ph-a); position: relative; }
+  .band { width: 100%; border-radius: 18px; overflow: hidden; background: var(--ph-a); position: relative; margin: 0; }
   .band.wide { aspect-ratio: 16 / 9; }
   .band.tall { aspect-ratio: 4 / 3; }
   .band .ph { position: absolute; inset: 0; }
   .band img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
   .ph { width: 100%; height: 100%; background: linear-gradient(135deg, var(--ph-a), var(--ph-b)); display: grid; place-items: center; color: var(--ink-soft); }
-  .ph::after { content: attr(data-label); font-size: 12px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; opacity: .7; padding: 8px 14px; border: 1px dashed color-mix(in srgb, var(--ink-soft) 45%, transparent); border-radius: 999px; text-align: center; }
+  .ph::after { content: attr(data-label); font-size: 12px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; opacity: .7; padding: 8px 14px; border: 1px dashed color-mix(in srgb, var(--ink-soft) 45%, transparent); border-radius: 999px; text-align: center; margin: 0 16px; }
+  figure.media { margin: 0; }
+  figure.media figcaption { margin-top: 14px; font-size: 14px; color: var(--ink-soft); max-width: 60ch; }
 
   .hero-band { margin-top: clamp(24px, 4vw, 40px); }
 
@@ -121,6 +132,7 @@
   .block-body ul, .block-body ol { margin: 0 0 20px; padding-left: 22px; color: var(--ink-soft); font-size: clamp(1rem, 1.6vw, 1.12rem); line-height: 1.5; max-width: 62ch; }
   .block-body li { margin-top: 8px; }
   .block-body li:first-child { margin-top: 0; }
+  .block-body li strong { color: var(--ink); font-weight: 600; }
 
   /* Feature: heading + copy + media */
   .feature { border-top: 1px solid var(--line); }
@@ -129,19 +141,47 @@
   .feature h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.06; letter-spacing: -0.015em; margin: 0 0 18px; }
   .feature p { font-size: clamp(1.02rem, 1.6vw, 1.18rem); color: var(--ink-soft); margin: 0; max-width: 62ch; }
   .feature .lede p + p { margin-top: 18px; }
+  .feature .lede p strong { color: var(--ink); font-weight: 600; }
   .feature .lede ul, .feature .lede ol { margin: 18px 0 0; padding-left: 22px; color: var(--ink-soft); font-size: clamp(1rem, 1.6vw, 1.12rem); line-height: 1.5; max-width: 62ch; }
   .feature .lede li { margin-top: 8px; }
   .feature .lede li:first-child { margin-top: 0; }
-  .feature .lede ul + p, .feature .lede ol + p { margin-top: 18px; }
-  .feature .band { margin-top: clamp(28px, 5vw, 52px); }
+  .feature .lede li strong { color: var(--ink); font-weight: 600; }
+  .feature .lede ul + p, .feature .lede ol + p, .feature .lede .cols + p { margin-top: 18px; }
+  .feature .band, .feature figure.media { margin-top: clamp(28px, 5vw, 52px); }
+  .feature figure.media .band { margin-top: 0; }
+  .two-up { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 36px); margin-top: clamp(28px, 5vw, 52px); }
+  .feature .two-up figure.media { margin-top: 0; }
+
+  /* ---------------------------------------------------------------- Process steps */
+  .steps { list-style: none; margin: clamp(32px, 5vw, 52px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 48px); }
+  .step { border-top: 1.5px solid var(--ink); padding-top: 18px; }
+  .step .num { font-family: var(--display); font-weight: 600; font-size: 13px; letter-spacing: .08em; color: var(--accent); margin: 0; }
+  .step h3 { font-family: var(--display); font-weight: 600; font-size: clamp(1.15rem, 1.8vw, 1.35rem); letter-spacing: -0.01em; margin: 6px 0 8px; }
+  .step p { color: var(--ink-soft); font-size: 15.5px; line-height: 1.5; margin: 0; max-width: 34ch; }
+
+  /* ---------------------------------------------------------------- Cards */
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2.5vw, 24px); margin: 4px 0 24px; }
+  .cols.three { grid-template-columns: repeat(3, 1fr); }
+  .feature .lede .cols { margin: 24px 0 0; }
+  .col-card { border: 1px solid var(--line); border-radius: 14px; padding: clamp(18px, 2.5vw, 24px); background: #fff; }
+  .col-card h3 { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .col-card.is-key h3 { color: var(--accent); }
+  .block-body .col-card ul, .feature .lede .col-card ul { margin: 0; padding-left: 20px; font-size: 1rem; max-width: none; }
+
+  /* Principle cards: principle in display type, design response below */
+  .principle .p-title { font-family: var(--display); font-weight: 600; font-size: 1.12rem; line-height: 1.25; letter-spacing: -0.01em; color: var(--ink); margin: 0 0 14px; }
+  .block-body .principle .p-resp, .principle .p-resp { font-size: 15px; line-height: 1.5; color: var(--ink-soft); margin: 0; padding-top: 12px; border-top: 1px solid var(--line); }
+  .principle .p-resp .k { display: block; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
 
   /* ---------------------------------------------------------------- Outcomes */
   .outcomes { border-top: 1px solid var(--line); }
   .outcomes h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.7rem, 3.4vw, 2.6rem); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 clamp(32px, 5vw, 48px); max-width: 26ch; }
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(28px, 4vw, 48px); margin-bottom: clamp(36px, 6vw, 60px); }
-  .stat::before { content: ""; display: block; width: 40px; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 20px; }
-  .stat .t { font-family: var(--display); font-weight: 700; font-size: clamp(1.45rem, 2.5vw, 2rem); line-height: 1.08; letter-spacing: -0.02em; margin: 0; color: var(--ink); }
-  .stat .d { margin: 14px 0 0; color: var(--ink-soft); font-size: 15px; line-height: 1.5; max-width: 32ch; }
+  .stats { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2.5vw, 24px); margin: 0 0 clamp(36px, 6vw, 60px); }
+  .stat { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: clamp(24px, 3vw, 36px); display: flex; flex-direction: column; }
+  .stat .idx { font-family: var(--display); font-weight: 600; font-size: 13px; letter-spacing: .08em; color: var(--accent); margin: 0 0 clamp(28px, 5vw, 56px); }
+  .stat .t { font-family: var(--display); font-weight: 700; font-size: clamp(1.6rem, 2.7vw, 2.2rem); line-height: 1.04; letter-spacing: -0.025em; margin: 0; color: var(--ink); }
+  .stat .t .accent { color: var(--accent); }
+  .stat .d { margin: auto 0 0; padding-top: 18px; color: var(--ink-soft); font-size: 15px; line-height: 1.5; max-width: 32ch; }
   .outcomes .closing { font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--ink); max-width: 60ch; margin: 0; }
 
   /* ---------------------------------------------------------------- Next / CTA */
@@ -171,7 +211,10 @@
   /* ---------------------------------------------------------------- Reveal */
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
   .reveal.in { opacity: 1; transform: none; }
+  html:not(.js) .reveal { opacity: 1; transform: none; }
 
+  /* On-load staggered reveal for the case-study hero (gated on .js so content
+     stays visible when JavaScript is unavailable). */
   html.js .backlink,
   html.js .case-hero .case-kicker,
   html.js .case-hero h1,
@@ -204,10 +247,13 @@
 
   /* ---------------------------------------------------------------- Responsive */
   @media (max-width: 900px) {
-    .case-hero-grid { grid-template-columns: 1fr; align-items: start; }
     .meta { grid-template-columns: repeat(2, 1fr); gap: 22px; }
     .block-grid { grid-template-columns: 1fr; gap: 20px; }
-    .stats { grid-template-columns: 1fr; gap: 28px; }
+    .two-up { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr; }
+    .stat .idx { margin-bottom: 20px; }
+    .steps { grid-template-columns: repeat(2, 1fr); }
+    .cols.three { grid-template-columns: 1fr; }
   }
   @media (max-width: 720px) {
     .nav-links { display: none; }
@@ -218,6 +264,12 @@
     .nav-toggle span { display: block; width: 18px; height: 2px; background: var(--ink); transition: .25s; }
     .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(4px) rotate(45deg); }
     .nav-toggle[aria-expanded="true"] span:nth-child(2) { transform: translateY(-2px) rotate(-45deg); }
+    .cols { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .steps { grid-template-columns: 1fr; }
+    .step p { max-width: none; }
+    .meta { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -252,30 +304,28 @@
   </div>
 
   <!-- ========================================================== HERO -->
-  <section class="case-hero">
+  <section class="case-hero" aria-labelledby="case-title">
     <div class="wrap">
-      <p class="case-kicker">RallyLoop · Native iOS app · Pickleball scoring</p>
+      <p class="case-kicker">RallyLoop · Personal project · Native iOS app · Pickleball scoring</p>
       <div class="case-hero-grid">
-        <h1>Designing and Shipping a Pickleball Scoring App with AI-Assisted Product Development</h1>
+        <h1 id="case-title">Designing and shipping a Pickleball Scoring App with AI-assisted product development</h1>
         <div class="intro">
-          <p>As product designer, I led the design and delivery of RallyLoop, a native iOS pickleball
-          scoring app built to make live scoring clearer, faster, and easier to trust during play.
-          As a personal project, it gave me the opportunity not only to define the product
-          experience, but also to use Claude Code as part of the workflow to prototype, build,
-          refine, and ship the app myself.</p>
-          <p>The app was designed around a simple goal: help players know the score, know who is
-          serving, and know where to stand, without needing to remember rules mid-game. Instead of
-          creating another generic score tracker, I focused on rule accuracy, instant recovery from
-          mistakes, offline reliability, and a visual court model that reduces confusion in real
-          time.</p>
+          <p>RallyLoop is a native iOS pickleball scoring app built to make live scoring clearer,
+          faster, and easier to trust during play. It was a personal project, so I owned it end to
+          end. I defined the product, designed the experience, and used <strong>Claude Code</strong>
+          to prototype, build, refine, and ship the app myself.</p>
+          <p>The goal was simple. Help players know the score, know who is serving, and know where
+          to stand, without remembering rules mid-game. Rather than another generic score tracker,
+          I focused on rule accuracy, instant recovery from mistakes, offline reliability, and a
+          visual court model that reduces confusion in real time.</p>
         </div>
       </div>
 
       <div class="meta">
-        <div class="cell"><p class="k">Role</p><p class="v">Product Designer</p></div>
+        <div class="cell"><p class="k">Type</p><p class="v">Personal project, self-initiated</p></div>
+        <div class="cell"><p class="k">Role</p><p class="v">Product designer, concept to release</p></div>
+        <div class="cell"><p class="k">Workflow</p><p class="v">AI-assisted build with Claude Code</p></div>
         <div class="cell"><p class="k">Platform</p><p class="v">Native iOS</p></div>
-        <div class="cell"><p class="k">Build</p><p class="v">AI-assisted (Claude Code)</p></div>
-        <div class="cell"><p class="k">Type</p><p class="v">Personal project</p></div>
       </div>
     </div>
   </section>
@@ -283,8 +333,8 @@
   <!-- Hero showcase band -->
   <div class="wrap hero-band reveal">
     <div class="band wide">
-      <span class="ph" data-label="Add images/rallyloop-hero.jpg"></span>
-      <img src="images/rallyloop-hero.jpg" alt="RallyLoop live scoring screen with score, server, and court position" onerror="this.remove()" />
+      <span class="ph" data-label="Hero · live scoring screen · images/rallyloop-hero.jpg"></span>
+      <img src="images/rallyloop-hero.jpg" alt="RallyLoop live scoring screen showing the score, the active server, and player positions on court" onerror="this.remove()" />
     </div>
   </div>
 
@@ -296,14 +346,16 @@
         <h2>Turn a confusing scoring task into a fast, trustworthy courtside tool.</h2>
         <p>Pickleball scoring becomes surprisingly complex once players move beyond casual play,
         especially across side-out doubles, rally scoring, server identity, and court positioning.
-        Existing apps were falling short in three key ways: they were incomplete on rules, weak on error
-        recovery, and often introduced friction through subscriptions, paywalls, or unnecessary
-        setup.</p>
-        <p>That created a clear product opportunity: build a scoring experience that works in real
-        playing conditions, supports both traditional and emerging formats, and helps players stay
-        focused on the game instead of the app.</p>
-        <p>The work also had to handle bright sunlight, one-thumb use, accidental taps, offline
-        usage, and the mental load of live decision-making during sport.</p>
+        Existing apps were falling short in three ways.</p>
+        <ul>
+          <li><strong>Incomplete on rules.</strong> Formats and edge cases that matter in real matches were missing or handled loosely.</li>
+          <li><strong>Weak on error recovery.</strong> A single wrong tap could be hard, or impossible, to undo.</li>
+          <li><strong>Heavy on friction.</strong> Subscriptions, paywalls, and unnecessary setup stood between players and the first point.</li>
+        </ul>
+        <p>That created a clear product opportunity, a scoring experience that works in real playing
+        conditions, supports both traditional and emerging formats, and keeps players focused on the
+        game instead of the app. It also had to hold up to bright sunlight, one-thumb use, accidental
+        taps, patchy signal, and the mental load of making decisions mid-rally.</p>
       </div>
     </div>
   </section>
@@ -313,39 +365,68 @@
     <div class="wrap block-grid">
       <p class="label reveal">Role and scope</p>
       <div class="block-body reveal">
-        <h2>Lead the product direction and carry the work through design and shipping.</h2>
-        <p>This was a personal project, so my role spanned product strategy, UX, UI, prototyping,
-        implementation direction, and shipping. I owned the work from problem framing through to
-        production-ready behaviour, interaction design, launch preparation, and release quality.</p>
-        <p>That included product definition, user flows, information architecture, interaction
-        design, interface design, onboarding, system thinking around scoring logic, match history,
-        recovery behaviour, analytics planning, App Store positioning, and release readiness. It also
-        meant working in a more integrated way across design and frontend implementation than a
-        traditional handoff model would allow.</p>
+        <h2>Lead the product direction and carry the work through to shipping.</h2>
+        <p>Because this was a personal project, my role spanned product strategy, UX, UI,
+        prototyping, implementation direction, and release. I owned the work from problem framing
+        through to production-ready behaviour and release quality.</p>
+        <div class="cols">
+          <div class="col-card is-key">
+            <h3>What I owned</h3>
+            <ul>
+              <li>Product definition and v1 scope</li>
+              <li>User flows and information architecture</li>
+              <li>Interaction and interface design</li>
+              <li>Onboarding</li>
+              <li>Scoring logic and rule modelling</li>
+              <li>Match history and recovery behaviour</li>
+              <li>Analytics planning</li>
+              <li>App Store positioning and release readiness</li>
+            </ul>
+          </div>
+          <div class="col-card">
+            <h3>How I worked</h3>
+            <ul>
+              <li>Solo, across design and build</li>
+              <li>Claude Code as an implementation partner</li>
+              <li>Scoring rules written as explicit, testable contracts</li>
+              <li>Short loops between design intent and working software</li>
+            </ul>
+          </div>
+        </div>
+        <p>It meant working in a far more integrated way across design and front-end
+        implementation than a traditional handoff model allows. Decisions about behaviour were made
+        and tested in the product itself, not only in static files.</p>
       </div>
     </div>
   </section>
 
   <!-- ========================================================== RESEARCH AND APPROACH -->
-  <section class="block">
+  <section class="block" style="border-top:1px solid var(--line);">
     <div class="wrap block-grid">
       <p class="label reveal">Research and approach</p>
       <div class="block-body reveal">
         <h2>Start with real player pain points, then design for live play.</h2>
         <p>The challenge was not simply to make scorekeeping digital. It was to understand what
         breaks down for players during a real match, and how the product could reduce confusion
-        without adding friction. The product direction was shaped around recurring pain points such as
-        accidental score taps, uncertainty around player positioning, weak support for rally
-        scoring, and poor continuity in existing apps.</p>
-        <p>Several principles anchored the design approach:</p>
-        <ul>
-          <li>Every core action had to be achievable quickly.</li>
-          <li>The app could not depend on connectivity.</li>
-          <li>The interface should never force users to recall rules from memory.</li>
-        </ul>
-        <p>Those principles translated into large tap targets, no loading states in the scoring
-        flow, offline-first persistence, and a court diagram that derives and displays positions
-        automatically.</p>
+        without adding friction.</p>
+        <p>The direction was shaped around recurring pain points, such as accidental score taps,
+        uncertainty about player positioning, weak support for rally scoring, and poor continuity
+        when a match was interrupted. Three principles anchored the design, each with a direct
+        design response.</p>
+        <div class="cols three">
+          <div class="col-card principle">
+            <p class="p-title">Every core action is achievable in a moment.</p>
+            <p class="p-resp"><span class="k">Design response</span>Large tap targets and no loading states anywhere in the scoring flow.</p>
+          </div>
+          <div class="col-card principle">
+            <p class="p-title">The app never depends on connectivity.</p>
+            <p class="p-resp"><span class="k">Design response</span>Offline-first persistence, with no login required to start a match.</p>
+          </div>
+          <div class="col-card principle">
+            <p class="p-title">Players are never asked to recall rules.</p>
+            <p class="p-resp"><span class="k">Design response</span>A court diagram that derives and displays positions automatically.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -356,27 +437,68 @@
       <div class="lede reveal">
         <p class="label">AI-assisted build workflow</p>
         <h2>Use Claude Code to move from product thinking to a shippable app faster.</h2>
-        <p>A key part of this project was using Claude Code as an active product-development tool
-        rather than only as a writing or ideation assistant. I used it to help translate requirements
-        into working implementation, explore solution paths, structure logic, refine flows, and
-        accelerate the move from concept to testable product.</p>
-        <p>This made the process more iterative and transparent. Instead of stopping at static
-        mockups, I could use AI-assisted coding to work through product behaviour, edge cases, and UI
-        decisions in a more applied way. That was especially useful for areas where experience design
-        and product logic were tightly connected, such as score-state transitions, undo behaviour,
-        onboarding, and match recovery.</p>
-        <p>Claude Code supported my workflow across:</p>
+        <p>A key part of this project was using Claude Code as an active product-development tool,
+        not only as a writing or ideation assistant. I used it to translate requirements into
+        working implementation, explore solution paths, structure logic, refine flows, and shorten
+        the distance between a concept and something I could test.</p>
+        <p>This made the process more iterative and more honest. Instead of stopping at static
+        mockups, I could work through product behaviour, edge cases, and UI decisions in running
+        software. That mattered most where experience design and product logic were tightly
+        coupled, such as score-state transitions, undo behaviour, onboarding, and match recovery.</p>
+        <p>Claude Code supported the workflow in five ways.</p>
         <ul>
-          <li>Prototyping and interface implementation.</li>
-          <li>Translating product requirements into structured app behaviour.</li>
-          <li>Refining edge cases and state handling.</li>
-          <li>Accelerating iteration on screens and flows.</li>
-          <li>Bridging design intent and production-ready output.</li>
+          <li><strong>Prototyping.</strong> Turning flows and interface decisions into working screens quickly.</li>
+          <li><strong>Structuring behaviour.</strong> Translating product requirements into clear app logic.</li>
+          <li><strong>Edge cases.</strong> Probing state handling until the unusual paths behaved as intended.</li>
+          <li><strong>Iteration.</strong> Making it cheap to try, compare, and refine alternatives.</li>
+          <li><strong>Fidelity.</strong> Keeping design intent intact all the way into production-ready output.</li>
         </ul>
-        <p>The value was not in replacing product design thinking. It was in extending it. Using
-        Claude Code helped me work more fluently across design, systems, and implementation, and ship
-        a stronger personal product than I could have through static design artefacts alone.</p>
+        <p>The value was not in replacing product design thinking. It was in extending it. I stayed
+        responsible for the problem framing, the rules, the judgement calls, and the quality bar.
+        Claude Code made it possible to act on those decisions directly, and to ship a stronger
+        product than static design artefacts alone would have allowed.</p>
       </div>
+
+      <ol class="steps" aria-label="Design-to-build loop">
+        <li class="step reveal">
+          <p class="num">01</p>
+          <h3>Frame</h3>
+          <p>Define the problem, the design principles, and a deliberately narrow v1 scope.</p>
+        </li>
+        <li class="step reveal">
+          <p class="num">02</p>
+          <h3>Specify</h3>
+          <p>Write the scoring rules as explicit contracts and test scenarios that every build could be checked against.</p>
+        </li>
+        <li class="step reveal">
+          <p class="num">03</p>
+          <h3>Prototype</h3>
+          <p>Use Claude Code to turn flows into working screens, then judge them in the hand, not on a canvas.</p>
+        </li>
+        <li class="step reveal">
+          <p class="num">04</p>
+          <h3>Refine</h3>
+          <p>Work through state transitions, undo, and recovery until the edge cases felt as solid as the happy path.</p>
+        </li>
+        <li class="step reveal">
+          <p class="num">05</p>
+          <h3>Validate</h3>
+          <p>Check behaviour against the rule contracts across both scoring formats.</p>
+        </li>
+        <li class="step reveal">
+          <p class="num">06</p>
+          <h3>Ship</h3>
+          <p>Prepare onboarding, App Store positioning, and release quality for launch.</p>
+        </li>
+      </ol>
+
+      <figure class="media reveal">
+        <div class="band wide">
+          <span class="ph" data-label="Workflow · Claude Code session beside the running app · images/rallyloop-workflow.jpg"></span>
+          <img src="images/rallyloop-workflow.jpg" alt="Claude Code session alongside the running RallyLoop app during development" onerror="this.remove()" />
+        </div>
+        <figcaption>Design decisions were tested in working software, with Claude Code closing the gap between intent and implementation.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -386,24 +508,26 @@
       <div class="lede reveal">
         <p class="label">Key product decision</p>
         <h2>Design the app around trust and clarity, not just score entry.</h2>
-        <p>The central product decision was to make the app do more than record points. It needed to
-        actively reduce disputes and uncertainty by showing score state, server identity, and court
-        position together in one live surface.</p>
-        <p>That led to several core decisions:</p>
+        <p>The central decision was to make the app do more than record points. It needed to
+        actively reduce disputes and uncertainty by showing <strong>score state, server identity,
+        and court position together on one live surface</strong>.</p>
+        <p>That led to four core decisions.</p>
         <ul>
-          <li>Support both side-out and rally scoring from match setup.</li>
-          <li>Make smart undo always available, including immediately after the game-winning point.</li>
-          <li>Use a game-end overlay rather than a hard final state, so accidental winning taps remain reversible.</li>
-          <li>Derive player positions from score parity and highlight the active server visually, so players do not have to remember rotation rules themselves.</li>
+          <li><strong>Both formats from setup.</strong> Side-out and rally scoring are chosen at match setup, not buried in settings.</li>
+          <li><strong>Smart undo, always.</strong> Undo is available at every point, including immediately after the game-winning point.</li>
+          <li><strong>A reversible ending.</strong> A game-end overlay replaces a hard final state, so an accidental winning tap can still be taken back.</li>
+          <li><strong>A live court model.</strong> Player positions are derived from score parity and the active server is highlighted, so nobody has to track rotation in their head.</li>
         </ul>
-        <p>This shifted the app from a passive score display into an active in-game guidance tool.
-        Rather than asking users to interpret rules under pressure, the product translates scoring
-        logic into something visible and immediate.</p>
+        <p>Together, these shifted the app from a passive score display into an active in-game
+        guide. Rather than asking players to interpret rules under pressure, the product translates
+        scoring logic into something visible and immediate.</p>
       </div>
-      <div class="band tall reveal">
-        <span class="ph" data-label="Add images/rallyloop-score.jpg"></span>
-        <img src="images/rallyloop-score.jpg" alt="Live scoring surface showing score, active server, and court positions" onerror="this.remove()" />
-      </div>
+      <figure class="media reveal">
+        <div class="band wide">
+          <span class="ph" data-label="Live surface · score, server, court · images/rallyloop-score.jpg"></span>
+          <img src="images/rallyloop-score.jpg" alt="Live scoring surface combining the score, the highlighted active server, and derived court positions" onerror="this.remove()" />
+        </div>
+      </figure>
     </div>
   </section>
 
@@ -413,20 +537,31 @@
       <div class="lede reveal">
         <p class="label">Designing for reliability</p>
         <h2>Make mistakes recoverable and complex rules easier to understand.</h2>
-        <p>One of the biggest usability risks was trust. In a live game, even a single mistaken tap
-        can create friction between players, and most competitor apps treated the final point as
-        irreversible. The product addressed this by making undo a first-class interaction, backed by
-        persistent state recovery and an endgame flow that keeps the active score screen mounted
-        until the result is confirmed.</p>
-        <p>The other major trust issue was rule complexity. Side-out doubles, in particular,
-        introduces a three-number format, server-number logic, and position rotation that many
-        casual players do not fully remember under pressure. The solution was not to explain more
-        text, but to design a UI that externalises the logic through onboarding, a computed score
-        display, and an auto-updating court diagram.</p>
+        <p>The biggest usability risk was trust. In a live game, a single mistaken tap can create
+        friction between players, and most competitor apps treated the final point as irreversible.
+        RallyLoop makes undo a first-class interaction, backed by persistent state recovery and an
+        endgame flow that keeps the active score screen in place until the result is confirmed.</p>
+        <p>The second trust issue was rule complexity. Side-out doubles introduces a three-number
+        score, server-number logic, and position rotation that many casual players do not fully
+        remember under pressure. The answer was not more explanatory text. It was an interface that
+        externalises the logic through well-timed onboarding, a computed score display, and an
+        auto-updating court diagram.</p>
       </div>
-      <div class="band tall reveal">
-        <span class="ph" data-label="Add images/rallyloop-reliability.jpg"></span>
-        <img src="images/rallyloop-reliability.jpg" alt="Undo interaction and auto-updating court diagram that externalise scoring rules" onerror="this.remove()" />
+      <div class="two-up">
+        <figure class="media reveal">
+          <div class="band tall">
+            <span class="ph" data-label="Smart undo and game-end overlay · images/rallyloop-undo.jpg"></span>
+            <img src="images/rallyloop-undo.jpg" alt="Smart undo and the reversible game-end overlay" onerror="this.remove()" />
+          </div>
+          <figcaption>A reversible ending, where the final point can be undone before the result is confirmed.</figcaption>
+        </figure>
+        <figure class="media reveal">
+          <div class="band tall">
+            <span class="ph" data-label="Auto-updating court diagram · images/rallyloop-court.jpg"></span>
+            <img src="images/rallyloop-court.jpg" alt="Court diagram that updates player positions and highlights the active server" onerror="this.remove()" />
+          </div>
+          <figcaption>Positions are derived from the score, so the rules are shown rather than remembered.</figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -437,21 +572,42 @@
       <div class="lede reveal">
         <p class="label">Validation and iteration</p>
         <h2>Use testability, instrumentation, and release discipline to support quality.</h2>
-        <p>Validation was built into the product at both the logic and release level. The scoring
-        engine was specified through explicit rule contracts and test scenarios covering scoring
-        transitions, win conditions, server identity, court-side derivation, invariants, and undo
-        behaviour across formats.</p>
-        <p>The measurement model also connected product quality to user behaviour after launch.
-        Success criteria included:</p>
+        <p>Validation was built into the product at both the logic and the release level. The
+        scoring engine was specified through explicit rule contracts and test scenarios covering four areas.</p>
         <ul>
-          <li>Weekly active scorers and match completion.</li>
-          <li>Undo usage and rally scoring adoption.</li>
-          <li>Retention and crash-free sessions.</li>
-          <li>Court diagram engagement.</li>
+          <li>Scoring transitions and win conditions.</li>
+          <li>Server identity and court-side derivation.</li>
+          <li>Invariants that must always hold, whatever the sequence of taps.</li>
+          <li>Undo behaviour across both formats.</li>
         </ul>
-        <p>Alongside these, anti-metrics were defined to catch early signs of setup friction or weak
-        onboarding timing, so the team could tell the difference between genuine adoption and
-        surface-level activity.</p>
+        <p>Writing the rules down this precisely also made AI-assisted building safer. Claude Code
+        could work quickly because the expected behaviour was unambiguous, and every change could be
+        checked against the same contracts.</p>
+        <p>Beyond the logic, I defined a measurement model to connect product quality with behaviour
+        after launch.</p>
+        <div class="cols">
+          <div class="col-card is-key">
+            <h3>Success signals</h3>
+            <ul>
+              <li>Weekly active scorers</li>
+              <li>Match completion</li>
+              <li>Undo usage</li>
+              <li>Rally scoring adoption</li>
+              <li>Retention</li>
+              <li>Crash-free sessions</li>
+              <li>Court diagram engagement</li>
+            </ul>
+          </div>
+          <div class="col-card">
+            <h3>Anti-metrics</h3>
+            <ul>
+              <li>Signs of friction during match setup</li>
+              <li>Signs that onboarding appears at the wrong moment</li>
+            </ul>
+          </div>
+        </div>
+        <p>The anti-metrics matter as much as the success signals. They help separate genuine
+        adoption from surface-level activity, and point to where the next iteration should focus.</p>
       </div>
     </div>
   </section>
@@ -463,25 +619,41 @@
         <p class="label">Platform and systems impact</p>
         <h2>Build a product foundation that can scale beyond v1 scorekeeping.</h2>
         <p>Although v1 focused on fast, reliable scoring, the product was structured with broader
-        expansion in mind. The scope deliberately prioritised free core scoring, local persistence,
-        and offline continuity, while deferring the following to later phases:</p>
-        <ul>
-          <li>Club management.</li>
-          <li>Social features.</li>
-          <li>Analytics dashboards.</li>
-          <li>Cloud sync.</li>
-          <li>Tournament workflows.</li>
-        </ul>
-        <p>This created a clearer product foundation: one that solved the most frequent in-game
-        problems first, while leaving space for future organiser features, premium utilities, Apple
-        Watch extensions, and club-tier workflows. It also reflects the kind of systems thinking now
-        expected of product designers who work with AI-assisted tooling and technical prototypes, not
-        just interface comps.</p>
+        expansion in mind. The scope was a deliberate trade-off.</p>
+        <div class="cols">
+          <div class="col-card is-key">
+            <h3>Shipped in v1</h3>
+            <ul>
+              <li>Free core scoring</li>
+              <li>Side-out and rally formats</li>
+              <li>Smart undo and match recovery</li>
+              <li>Live court diagram</li>
+              <li>Local persistence and offline continuity</li>
+            </ul>
+          </div>
+          <div class="col-card">
+            <h3>Held for later phases</h3>
+            <ul>
+              <li>Club management</li>
+              <li>Social features</li>
+              <li>Analytics dashboards</li>
+              <li>Cloud sync</li>
+              <li>Tournament workflows</li>
+            </ul>
+          </div>
+        </div>
+        <p>Solving the most frequent in-game problems first gave the product a clear foundation,
+        while leaving room for organiser features, premium utilities, an Apple Watch extension, and
+        club-tier workflows. It also reflects the kind of systems thinking now expected of product
+        designers who work with AI-assisted tooling and technical prototypes, not just interface
+        comps.</p>
       </div>
-      <div class="band tall reveal">
-        <span class="ph" data-label="Add images/rallyloop-platform.jpg"></span>
-        <img src="images/rallyloop-platform.jpg" alt="Product roadmap from core scoring toward organiser and premium features" onerror="this.remove()" />
-      </div>
+      <figure class="media reveal">
+        <div class="band wide">
+          <span class="ph" data-label="Roadmap · v1 core to future phases · images/rallyloop-platform.jpg"></span>
+          <img src="images/rallyloop-platform.jpg" alt="Product roadmap from v1 core scoring toward organiser, premium, and Apple Watch features" onerror="this.remove()" />
+        </div>
+      </figure>
     </div>
   </section>
 
@@ -489,24 +661,27 @@
   <section class="block outcomes">
     <div class="wrap">
       <p class="label reveal" style="margin-bottom:18px;">Outcomes</p>
-      <h2 class="reveal">Create value at gameplay, product, and shipping level.</h2>
-      <div class="stats">
-        <div class="stat reveal">
-          <p class="t">Side-out + rally scoring</p>
+      <h2 class="reveal">Value at gameplay, product, and shipping level.</h2>
+      <ul class="stats">
+        <li class="stat reveal">
+          <p class="idx">01 · Gameplay</p>
+          <p class="t">Side-out <span class="accent">+</span> rally scoring</p>
           <p class="d">Built to support both traditional and emerging pickleball scoring formats in one product experience.</p>
-        </div>
-        <div class="stat reveal">
+        </li>
+        <li class="stat reveal">
+          <p class="idx">02 · Product</p>
           <p class="t">Offline-first core flow</p>
           <p class="d">Designed to work on court with no login, no signal dependency, and no interruption to live play.</p>
-        </div>
-        <div class="stat reveal">
-          <p class="t">Personal project shipped with Claude Code</p>
+        </li>
+        <li class="stat reveal">
+          <p class="idx">03 · Shipping</p>
+          <p class="t">Personal project shipped with <span class="accent">Claude Code</span></p>
           <p class="d">Developed as a self-initiated product using AI-assisted workflows to move from product concept to release-ready app.</p>
-        </div>
-      </div>
+        </li>
+      </ul>
       <p class="closing reveal">Beyond feature delivery, the project demonstrated practical AI tool
-      fluency, stronger cross-functional design-to-build capability, and a product foundation for
-      future match history, organiser workflows, Apple Watch utility, and premium extensions.</p>
+      fluency, a stronger cross-functional design-to-build capability, and a product foundation
+      ready for match history, organiser workflows, Apple Watch utility, and premium extensions.</p>
     </div>
   </section>
 
@@ -516,15 +691,23 @@
       <p class="label reveal">Reflection</p>
       <div class="block-body reveal">
         <h2>What this work proved.</h2>
-        <p>This project showed that even a simple sports utility can become a strong product-design
-        case study when the real challenge is trust, clarity, and rule translation under pressure.</p>
-        <p>It also reinforced the value of working beyond static screens. Using Claude Code as part of
-        the process helped me think through product behaviour, implementation constraints, and edge
-        cases in a more direct way, making the design process more applied, iterative, and
+        <p>This project showed that even a simple sports utility becomes a serious product-design
+        problem when the real challenge is trust, clarity, and translating rules under pressure.</p>
+        <p>It also reinforced the value of working beyond static screens. Using Claude Code as part
+        of the process let me reason about product behaviour, implementation constraints, and edge
+        cases directly, which made the design process more applied, more iterative, and ultimately
         shippable.</p>
-        <p>More broadly, it reflects how product design is changing. Strong design work increasingly
-        means combining customer insight, systems thinking, interface craft, AI-assisted workflows,
-        and enough technical fluency to help shape and ship the product, not just describe it.</p>
+        <p>These are the lessons I take into any product.</p>
+        <ul>
+          <li>Design for the moment of use. Courtside conditions shaped every decision more than any screen layout.</li>
+          <li>Make reversibility a feature. Trust comes from knowing a mistake can be fixed instantly.</li>
+          <li>Show the system, do not explain it. A visible model beats a paragraph of rules.</li>
+          <li>Treat AI as leverage on judgement, not a substitute for it. Clear specifications make AI-assisted building faster and safer.</li>
+        </ul>
+        <p>More broadly, it reflects how product design is changing. Strong design work
+        increasingly combines customer insight, systems thinking, interface craft, AI-assisted
+        workflows, and enough technical fluency to help shape and ship the product, not just
+        describe it.</p>
       </div>
     </div>
   </section>
