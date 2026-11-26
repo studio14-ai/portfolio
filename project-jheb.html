@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Turning a Five-Star Reputation into Enquiries · Jonathan Jalotjot</title>
+<meta name="description" content="Case study: JHEB Automotive, an independent workshop in Narellan. Brand positioning, a mobile-first website, and a local search strategy that make a five-star reputation visible at the moment customers compare mechanics." />
+
+<!--
+  ============================================================================
+  CASE STUDY, JHEB AUTOMOTIVE  (Client project · Brand, website and local SEO)
+  ============================================================================
+  Standalone page. Reuses the site's design system (tokens, fonts, nav, footer,
+  custom cursor) and the editorial structure of project-rallyloop.html.
+
+  IMAGES (in images/, exported from the JHEB build and mockups):
+      images/jheb-laptop.jpg     hero band          16:9   1600×900  (desktop homepage in laptop mockup)
+      images/jheb-hero.jpg       feature            16:9   1600×900  (desktop first screen + proof strip)
+      images/jheb-services.jpg   feature            16:9   1600×900  (services accordion, logbook expanded)
+      images/jheb-mobile.jpg     feature            4:3    1200×900  (mobile first screen in phone mockup)
+      images/jheb-contact.jpg    feature            4:3    1200×900  (contact details + enquiry form)
+      images/jheb-reviews.jpg    feature            16:9   1600×900  (verbatim Google reviews)
+  All images are cropped to fill (object-fit: cover); keep key content centred.
+  ============================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script>document.documentElement.classList.add('js');</script>
+
+<style>
+  :root {
+    --bg:        #FAFAF8;
+    --ink:       #0A0A0A;
+    --ink-soft:  #4A4A46;
+    --line:      #E6E5DF;
+    --accent:    #FF4A1C;
+    --accent-ink:#FFFFFF;
+    --ph-a:      #EDECE6;
+    --ph-b:      #DAD8CF;
+    --display: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --body:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --maxw: 1240px;
+    --gutter: clamp(16px, 5vw, 64px);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--body); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--gutter); }
+
+  .skip { position: absolute; left: -9999px; top: 0; background: var(--ink); color: var(--bg); padding: 10px 16px; z-index: 100; border-radius: 0 0 8px 0; }
+  .skip:focus { left: 0; }
+
+  /* ---------------------------------------------------------------- Nav */
+  header.site {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .3s ease;
+  }
+  header.site.scrolled { border-color: var(--line); }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 18px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .brand .mark { position: relative; width: 34px; height: 34px; overflow: hidden; flex: none; }
+  .brand .mark img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
+  .brand .mark .mark-fallback { position: absolute; inset: 0; background: var(--ink); color: var(--bg); display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 17px; }
+  .brand .mark.has-logo .mark-fallback { display: none; }
+
+  .nav-links { display: flex; align-items: center; gap: clamp(14px, 3vw, 34px); }
+  .nav-links a.link { text-decoration: none; font-weight: 500; font-size: 15px; color: var(--ink); position: relative; padding: 4px 0; }
+  .nav-links a.link::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -2px; height: 1.5px; background: var(--ink); transition: right .25s ease; }
+  .nav-links a.link:hover::after { right: 0; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: var(--accent-ink); text-decoration: none; font-weight: 600; font-size: 14px; padding: 11px 20px; border-radius: 999px; transition: transform .2s ease, background .2s ease; border: none; cursor: pointer; }
+  .pill:hover { transform: translateY(-1px); background: #e8390d; }
+  .nav-toggle { display: none; }
+
+  /* ---------------------------------------------------------------- Back link */
+  .backlink { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 14px; color: var(--ink-soft); padding-top: clamp(28px, 5vw, 48px); transition: color .2s ease; }
+  .backlink .arw { transition: transform .2s ease; }
+  .backlink:hover { color: var(--ink); }
+  .backlink:hover .arw { transform: translateX(-4px); }
+
+  /* ---------------------------------------------------------------- Case hero */
+  .case-hero { padding-block: clamp(28px, 5vw, 44px) clamp(36px, 6vw, 64px); }
+  .case-kicker { font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin: 0 0 20px; }
+  .case-hero-grid { display: grid; grid-template-columns: 1fr; gap: clamp(24px, 4vw, 40px); align-items: start; }
+  .case-hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 1; letter-spacing: -0.025em; margin: 0; max-width: 20ch; }
+  .case-hero .intro { font-size: clamp(1.05rem, 1.9vw, 1.3rem); color: var(--ink-soft); margin: 0; max-width: 62ch; }
+  .case-hero .intro p { margin: 0 0 16px; }
+  .case-hero .intro p:last-child { margin-bottom: 0; }
+  .case-hero .intro strong { color: var(--ink); font-weight: 600; }
+
+  /* Meta row */
+  .meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: clamp(36px, 6vw, 64px); padding-top: 26px; border-top: 1px solid var(--line); }
+  .meta .cell .k { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 8px; }
+  .meta .cell .v { font-family: var(--display); font-weight: 500; font-size: 15px; margin: 0; color: var(--ink); }
+
+  /* ---------------------------------------------------------------- Media bands */
+  .band { width: 100%; border-radius: 18px; overflow: hidden; background: var(--ph-a); position: relative; margin: 0; }
+  .band.wide { aspect-ratio: 16 / 9; }
+  .band.tall { aspect-ratio: 4 / 3; }
+  .band .ph { position: absolute; inset: 0; }
+  .band img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ph { width: 100%; height: 100%; background: linear-gradient(135deg, var(--ph-a), var(--ph-b)); display: grid; place-items: center; color: var(--ink-soft); }
+  .ph::after { content: attr(data-label); font-size: 12px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; opacity: .7; padding: 8px 14px; border: 1px dashed color-mix(in srgb, var(--ink-soft) 45%, transparent); border-radius: 999px; text-align: center; margin: 0 16px; }
+  figure.media { margin: 0; }
+  figure.media figcaption { margin-top: 14px; font-size: 14px; color: var(--ink-soft); max-width: 60ch; }
+
+  .hero-band { margin-top: clamp(24px, 4vw, 40px); }
+
+  /* ---------------------------------------------------------------- Content blocks */
+  section.block { padding-block: clamp(48px, 8vw, 100px); }
+  .block-grid { display: grid; grid-template-columns: 260px 1fr; gap: clamp(24px, 5vw, 64px); align-items: start; }
+  .label { font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); margin: 0; display: flex; align-items: center; gap: 10px; }
+  .label::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; }
+  .block-body h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.7rem, 3.4vw, 2.6rem); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 24px; max-width: 22ch; }
+  .block-body p { font-size: clamp(1.05rem, 1.7vw, 1.25rem); color: var(--ink-soft); margin: 0 0 20px; max-width: 62ch; }
+  .block-body p:last-child { margin-bottom: 0; }
+  .block-body p strong { color: var(--ink); font-weight: 600; }
+  .block-body ul, .block-body ol { margin: 0 0 20px; padding-left: 22px; color: var(--ink-soft); font-size: clamp(1rem, 1.6vw, 1.12rem); line-height: 1.5; max-width: 62ch; }
+  .block-body li { margin-top: 8px; }
+  .block-body li:first-child { margin-top: 0; }
+  .block-body li strong { color: var(--ink); font-weight: 600; }
+
+  /* Feature: heading + copy + media */
+  .feature { border-top: 1px solid var(--line); }
+  .feature .lede { max-width: 760px; }
+  .feature .lede .label { margin-bottom: 16px; }
+  .feature h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.06; letter-spacing: -0.015em; margin: 0 0 18px; }
+  .feature p { font-size: clamp(1.02rem, 1.6vw, 1.18rem); color: var(--ink-soft); margin: 0; max-width: 62ch; }
+  .feature .lede p + p { margin-top: 18px; }
+  .feature .lede p strong { color: var(--ink); font-weight: 600; }
+  .feature .lede ul, .feature .lede ol { margin: 18px 0 0; padding-left: 22px; color: var(--ink-soft); font-size: clamp(1rem, 1.6vw, 1.12rem); line-height: 1.5; max-width: 62ch; }
+  .feature .lede li { margin-top: 8px; }
+  .feature .lede li:first-child { margin-top: 0; }
+  .feature .lede li strong { color: var(--ink); font-weight: 600; }
+  .feature .lede ul + p, .feature .lede ol + p, .feature .lede .cols + p { margin-top: 18px; }
+  .feature .band, .feature figure.media { margin-top: clamp(28px, 5vw, 52px); }
+  .feature figure.media .band { margin-top: 0; }
+  .two-up { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 36px); margin-top: clamp(28px, 5vw, 52px); }
+  .feature .two-up figure.media { margin-top: 0; }
+
+  /* ---------------------------------------------------------------- Process steps */
+  .steps { list-style: none; margin: clamp(32px, 5vw, 52px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 48px); }
+  .step { border-top: 1.5px solid var(--ink); padding-top: 18px; }
+  .step .num { font-family: var(--display); font-weight: 600; font-size: 13px; letter-spacing: .08em; color: var(--accent); margin: 0; }
+  .step h3 { font-family: var(--display); font-weight: 600; font-size: clamp(1.15rem, 1.8vw, 1.35rem); letter-spacing: -0.01em; margin: 6px 0 8px; }
+  .step p { color: var(--ink-soft); font-size: 15.5px; line-height: 1.5; margin: 0; max-width: 34ch; }
+
+  /* ---------------------------------------------------------------- Cards */
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2.5vw, 24px); margin: 4px 0 24px; }
+  .cols.three { grid-template-columns: repeat(3, 1fr); }
+  .feature .lede .cols { margin: 24px 0 0; }
+  .col-card { border: 1px solid var(--line); border-radius: 14px; padding: clamp(18px, 2.5vw, 24px); background: #fff; }
+  .col-card h3 { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .col-card.is-key h3 { color: var(--accent); }
+  .block-body .col-card ul, .feature .lede .col-card ul { margin: 0; padding-left: 20px; font-size: 1rem; max-width: none; }
+
+  /* Principle cards: principle in display type, design response below */
+  .principle .p-title { font-family: var(--display); font-weight: 600; font-size: 1.12rem; line-height: 1.25; letter-spacing: -0.01em; color: var(--ink); margin: 0 0 14px; }
+  .block-body .principle .p-resp, .principle .p-resp { font-size: 15px; line-height: 1.5; color: var(--ink-soft); margin: 0; padding-top: 12px; border-top: 1px solid var(--line); }
+  .principle .p-resp .k { display: block; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+
+  /* ---------------------------------------------------------------- Outcomes */
+  .outcomes { border-top: 1px solid var(--line); }
+  .outcomes h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.7rem, 3.4vw, 2.6rem); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 clamp(32px, 5vw, 48px); max-width: 26ch; }
+  .stats { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2.5vw, 24px); margin: 0 0 clamp(36px, 6vw, 60px); }
+  .stat { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: clamp(24px, 3vw, 36px); display: flex; flex-direction: column; }
+  .stat .idx { font-family: var(--display); font-weight: 600; font-size: 13px; letter-spacing: .08em; color: var(--accent); margin: 0 0 clamp(28px, 5vw, 56px); }
+  .stat .t { font-family: var(--display); font-weight: 700; font-size: clamp(1.6rem, 2.7vw, 2.2rem); line-height: 1.04; letter-spacing: -0.025em; margin: 0; color: var(--ink); }
+  .stat .t .accent { color: var(--accent); }
+  .stat .d { margin: auto 0 0; padding-top: 18px; color: var(--ink-soft); font-size: 15px; line-height: 1.5; max-width: 32ch; }
+  .outcomes .closing { font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--ink); max-width: 60ch; margin: 0; }
+
+  /* ---------------------------------------------------------------- Next / CTA */
+  .cta { border-top: 1px solid var(--line); text-align: center; }
+  .cta h2 { font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 6vw, 4rem); line-height: 1.02; letter-spacing: -0.025em; margin: 0 auto clamp(28px, 4vw, 40px); max-width: 16ch; }
+  .cta .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .cta .pill.lg { padding: 15px 26px; font-size: 15px; }
+  .cta .ghost { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 15px; padding: 15px 26px; border: 1px solid var(--line); border-radius: 999px; background: #fff; transition: border-color .2s ease; }
+  .cta .ghost:hover { border-color: var(--ink); }
+
+  /* Next project row */
+  .next-project { display: block; border-top: 1px solid var(--line); text-decoration: none; }
+  .next-project .next-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: clamp(40px, 7vw, 88px); }
+  .next-project .np-meta { display: flex; flex-direction: column; gap: 12px; }
+  .next-project .np-label { font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+  .next-project .np-title { font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 6vw, 4rem); line-height: 1; letter-spacing: -0.025em; color: var(--ink); transition: color .2s ease; }
+  .next-project .np-arrow { font-family: var(--display); font-size: clamp(1.8rem, 5vw, 3rem); color: var(--ink-soft); transition: transform .3s cubic-bezier(.2,.7,.2,1), color .2s ease; flex: none; }
+  .next-project:hover .np-title { color: var(--accent); }
+  .next-project:hover .np-arrow { transform: translateX(12px); color: var(--accent); }
+
+  /* ---------------------------------------------------------------- Footer */
+  footer.site { border-top: 1px solid var(--line); padding-block: clamp(40px, 6vw, 72px) 40px; margin-top: clamp(48px, 8vw, 100px); }
+  .foot-bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13.5px; color: var(--ink-soft); }
+  .foot-bottom a { text-decoration: none; font-weight: 500; }
+  .foot-bottom a:hover { color: var(--ink); }
+
+  /* ---------------------------------------------------------------- Reveal */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  html:not(.js) .reveal { opacity: 1; transform: none; }
+
+  /* On-load staggered reveal for the case-study hero (gated on .js so content
+     stays visible when JavaScript is unavailable). */
+  html.js .backlink,
+  html.js .case-hero .case-kicker,
+  html.js .case-hero h1,
+  html.js .case-hero .intro,
+  html.js .case-hero .meta .cell { opacity: 0; transform: translateY(22px); }
+  html.js .case-hero .case-kicker.in, html.js .case-hero h1.in, html.js .case-hero .intro.in,
+  html.js .case-hero .meta .cell.in, html.js .backlink.in {
+    opacity: 1; transform: none; transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.js .backlink, html.js .case-hero .case-kicker, html.js .case-hero h1,
+    html.js .case-hero .intro, html.js .case-hero .meta .cell {
+      opacity: 1 !important; transform: none !important; transition: none !important;
+    }
+  }
+
+  /* ---------------------------------------------------------------- Custom cursor */
+  #cursor { position: fixed; top: 0; left: 0; z-index: 60; width: 32px; height: 32px; border-radius: 999px; background: #fff; mix-blend-mode: difference; display: flex; align-items: center; justify-content: center; pointer-events: none; will-change: transform; opacity: 0; transform: translate3d(-100px,-100px,0) translate(-50%,-50%); transition: width .3s cubic-bezier(.2,.7,.2,1), height .3s cubic-bezier(.2,.7,.2,1), padding .3s cubic-bezier(.2,.7,.2,1), background-color .25s ease, opacity .25s ease; }
+  #cursor .cursor-label { font-family: var(--display); font-weight: 600; font-size: 12px; letter-spacing: .01em; white-space: nowrap; color: var(--accent-ink); opacity: 0; transform: translateY(3px); transition: opacity .2s ease, transform .2s ease; }
+  #cursor.is-grow { width: 64px; height: 64px; }
+  #cursor.is-label { width: auto; height: auto; padding: 10px 15px; border-radius: 999px; background: var(--accent); mix-blend-mode: normal; }
+  #cursor.is-label .cursor-label { opacity: 1; transform: none; }
+  @media (hover: hover) and (pointer: fine) { html.cursor-custom, html.cursor-custom * { cursor: none !important; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    * { animation: none !important; }
+  }
+
+  /* ---------------------------------------------------------------- Responsive */
+  @media (max-width: 900px) {
+    .case-hero-grid { grid-template-columns: 1fr; align-items: start; }
+    .meta { grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .block-grid { grid-template-columns: 1fr; gap: 20px; }
+    .two-up { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr; }
+    .stat .idx { margin-bottom: 20px; }
+    .steps { grid-template-columns: repeat(2, 1fr); }
+    .cols.three { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    .nav-links { display: none; }
+    .nav-links.open { display: flex; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: flex-start; gap: 4px; background: var(--bg); border-bottom: 1px solid var(--line); padding: 16px var(--gutter) 24px; }
+    .nav-links.open a.link { font-size: 20px; padding: 8px 0; }
+    .nav-links.open .pill { margin-top: 8px; }
+    .nav-toggle { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 40px; border: 1px solid var(--line); border-radius: 10px; background: #fff; cursor: pointer; gap: 4px; flex-direction: column; }
+    .nav-toggle span { display: block; width: 18px; height: 2px; background: var(--ink); transition: .25s; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(4px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { transform: translateY(-2px) rotate(-45deg); }
+    .cols { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .steps { grid-template-columns: 1fr; }
+    .step p { max-width: none; }
+    .meta { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#challenge">Skip to content</a>
+
+<!-- ============================================================ NAV -->
+<header class="site" id="top">
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="Jonathan Jalotjot, home">
+      <span class="mark">
+        <img src="images/logo.svg" alt="Jonathan Jalotjot logo" onload="this.closest('.mark').classList.add('has-logo')" onerror="this.remove()" />
+        <span class="mark-fallback">JJ</span>
+      </span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
+      <span></span><span></span>
+    </button>
+    <nav class="nav-links" id="navlinks">
+      <a class="link" href="index.html#work">Work</a>
+      <a class="link" href="index.html#about">About</a>
+      <a class="link" href="index.html#contact">Contact</a>
+      <a class="pill" href="index.html#contact">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+
+<main>
+  <div class="wrap">
+    <a class="backlink" href="index.html#work"><span class="arw">&larr;</span> All work</a>
+  </div>
+
+  <!-- ========================================================== HERO -->
+  <section class="case-hero" aria-labelledby="case-title">
+    <div class="wrap">
+      <p class="case-kicker">JHEB Automotive · Client project · Brand, website and local search</p>
+      <div class="case-hero-grid">
+        <h1 id="case-title">Turning a five-star local reputation into a website that wins the job</h1>
+        <div class="intro">
+          <p>JHEB Automotive is an independent mechanical workshop in Narellan, in Sydney&rsquo;s
+          southwest, with a <strong>perfect 5.0 Google rating from 90 reviews</strong>. Its website
+          didn&rsquo;t show any of that. It was a single page that named the business, listed a few
+          services, and gave a phone number.</p>
+          <p>I led the work end to end: diagnosing the problem, repositioning the brand, planning the
+          information architecture and local search strategy, then designing, writing, and building a
+          mobile-first website. I also wrote the pitch that framed it as an investment. The aim was to
+          make the workshop&rsquo;s reputation visible at the moment people compare mechanics, and to
+          make calling or booking effortless from a phone.</p>
+        </div>
+      </div>
+
+      <div class="meta">
+        <div class="cell"><p class="k">Type</p><p class="v">Client project, local small business</p></div>
+        <div class="cell"><p class="k">Role</p><p class="v">Strategy, design, copy and front-end build</p></div>
+        <div class="cell"><p class="k">Workflow</p><p class="v">AI-assisted research and build with Claude Code</p></div>
+        <div class="cell"><p class="k">Platform</p><p class="v">Responsive web, mobile-first</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hero showcase band -->
+  <div class="wrap hero-band reveal">
+    <div class="band wide">
+      <span class="ph" data-label="Hero · desktop homepage · images/jheb-laptop.jpg"></span>
+      <img src="images/jheb-laptop.jpg" alt="JHEB Automotive homepage on a laptop, with the headline Every Vehicle. Done Right., a five-star rating line, and a Book in today call card" onerror="this.remove()" />
+    </div>
+  </div>
+
+  <!-- ========================================================== CHALLENGE -->
+  <section class="block" id="challenge">
+    <div class="wrap block-grid">
+      <p class="label reveal">Challenge</p>
+      <div class="block-body reveal">
+        <h2>A great reputation that nobody could see before they called.</h2>
+        <p>Most drivers check two or three mechanics before they pick up the phone. They read reviews,
+        scan the website, and look for a reason to trust one workshop over another. JHEB had already
+        done the hard part: years of good work, repeat customers, and a perfect rating. But the
+        website was a business card, not a sales asset, and it was losing that comparison by default.</p>
+        <div class="cols">
+          <div class="col-card is-key">
+            <h3>Structural problems</h3>
+            <ul>
+              <li>No clear action above the fold</li>
+              <li>No reviews, ratings, or testimonials</li>
+              <li>No booking path beyond a phone number</li>
+              <li>One page, so almost nothing for Google to rank</li>
+            </ul>
+          </div>
+          <div class="col-card">
+            <h3>Messaging problems</h3>
+            <ul>
+              <li>&ldquo;Quality mechanical work&rdquo;, which every competitor says</li>
+              <li>Services listed, not explained</li>
+              <li>No story, no voice, no local proof</li>
+              <li>Nothing about who you would be trusting</li>
+            </ul>
+          </div>
+        </div>
+        <p>So the brief was not &ldquo;make it look modern&rdquo;. It was to <strong>close the gap between
+        how good the workshop is and how it shows up online</strong>, without rebuilding anything that
+        already worked.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== ROLE AND SCOPE -->
+  <section class="block" style="padding-top:0;">
+    <div class="wrap block-grid">
+      <p class="label reveal">Role and scope</p>
+      <div class="block-body reveal">
+        <h2>One person across strategy, design, copy, and build.</h2>
+        <p>For a small business, every handover between specialists adds cost and loses intent. I
+        carried the whole engagement myself, so the thinking behind the positioning made it all the
+        way into the code.</p>
+        <div class="cols">
+          <div class="col-card is-key">
+            <h3>What I owned</h3>
+            <ul>
+              <li>Brand diagnosis and competitive framing</li>
+              <li>Positioning, personality, and tone of voice</li>
+              <li>Sitemap and homepage conversion structure</li>
+              <li>Visual direction drawn from the existing logo</li>
+              <li>All website copy</li>
+              <li>Front-end build in HTML, CSS, and JavaScript</li>
+              <li>Local SEO strategy and phased roadmap</li>
+              <li>Client pitch and investment options</li>
+            </ul>
+          </div>
+          <div class="col-card">
+            <h3>How I worked</h3>
+            <ul>
+              <li>Started from verified facts: Google Business Profile, reviews, and ASIC records</li>
+              <li>AI-assisted research to speed up the market and keyword groundwork</li>
+              <li>Claude Code as a build partner, so design decisions were tested in the browser</li>
+              <li>Short loops on real devices, not static comps</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== RESEARCH AND APPROACH -->
+  <section class="block" style="border-top:1px solid var(--line);">
+    <div class="wrap block-grid">
+      <p class="label reveal">Research and approach</p>
+      <div class="block-body reveal">
+        <h2>Start from why people choose a mechanic, not what the workshop does.</h2>
+        <p>Choosing a mechanic is a trust decision made under some anxiety. I mapped the main customer
+        groups and what would tip each one towards booking:</p>
+        <ul>
+          <li><strong>Everyday drivers:</strong> worried about being overcharged or told half the story. Swayed by clear pricing, readable reviews, and easy booking.</li>
+          <li><strong>Logbook customers:</strong> worried about voiding a new car&rsquo;s warranty. Swayed by explicit &ldquo;logbook-compliant&rdquo; reassurance.</li>
+          <li><strong>Enthusiasts and project owners:</strong> want someone who understands the build. Swayed by evidence of complex work.</li>
+          <li><strong>Pre-purchase inspections:</strong> high urgency and time-sensitive. Swayed by fast turnaround and an independent point of view.</li>
+        </ul>
+        <p>The workshop&rsquo;s own Google reviews were the richest research source. The themes customers
+        raised most often were <strong>honesty, quick work, fair pricing, and thorough
+        explanations</strong>. That told me what to lead with. Three principles shaped the design:</p>
+        <div class="cols three">
+          <div class="col-card principle">
+            <p class="p-title">Proof comes before persuasion.</p>
+            <p class="p-resp"><span class="k">Design response</span>The rating sits in the first sentence and real reviews are quoted word for word.</p>
+          </div>
+          <div class="col-card principle">
+            <p class="p-title">The workshop is always one tap away.</p>
+            <p class="p-resp"><span class="k">Design response</span>Tappable phone numbers throughout and a call card in the first screen.</p>
+          </div>
+          <div class="col-card principle">
+            <p class="p-title">Every service earns its own space.</p>
+            <p class="p-resp"><span class="k">Design response</span>Nine services explained on the homepage now, each mapped to its own page later.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== KEY PRODUCT DECISION -->
+  <section class="block feature">
+    <div class="wrap">
+      <div class="lede reveal">
+        <p class="label">Key decision</p>
+        <h2>Position JHEB as the capable independent: dealer range, local honesty.</h2>
+        <p>The positioning I wrote placed JHEB between two familiar options: the dealership that can
+        do everything but charges for it, and the corner shop that is cheap but limited. JHEB could
+        credibly offer <strong>the range of a main dealer, the transparency of a trusted friend, and the
+        pricing of an independent</strong>.</p>
+        <p>That became four pillars, each answering a fear customers actually have:</p>
+        <ul>
+          <li><strong>Upfront pricing:</strong> you see the price before work starts.</li>
+          <li><strong>Everything in one place:</strong> from a logbook service to an engine rebuild.</li>
+          <li><strong>Proper diagnostics:</strong> modern equipment, old-school accountability.</li>
+          <li><strong>Local reputation:</strong> Narellan-based, trusted across the southwest.</li>
+        </ul>
+        <p>The tone is a skilled tradie talking to you across the counter: plain English, specific, and
+        confident without arrogance. That is where lines like &ldquo;Straight answers. Proper workmanship.
+        No runaround.&rdquo; came from.</p>
+        <p>I also made a deliberate call on claims. The pitch used a strong superlative to sell the
+        positioning, but on the live site an unproven &ldquo;best in the southwest&rdquo; claim is a risk
+        under Australian Consumer Law. The website says something the reviews can back up instead:
+        <strong>&ldquo;The independent workshop locals trust.&rdquo;</strong></p>
+      </div>
+      <figure class="media reveal">
+        <div class="band wide">
+          <span class="ph" data-label="First screen · capability, proof, call · images/jheb-hero.jpg"></span>
+          <img src="images/jheb-hero.jpg" alt="Desktop first screen with the headline, a sentence citing 90+ local drivers at a five-star rating, Book A Service and Our Services buttons, a call card, and a strip showing 5.0 rating, 90+ reviews and 24/7 mobile call-outs" onerror="this.remove()" />
+        </div>
+        <figcaption>Capability in the headline, proof in the first sentence, and a direct line to the workshop before the first scroll.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ========================================================== DESIGNING THE EXPERIENCE -->
+  <section class="block feature">
+    <div class="wrap">
+      <div class="lede reveal">
+        <p class="label">Designing the experience</p>
+        <h2>A homepage ordered like a conversation at the counter.</h2>
+        <p>Every section has one job, in the order a hesitant customer needs it answered: can you fix
+        it, should I trust you, and how do I get it booked? The visual language comes from the existing
+        logo, its lime green on a dark, workshop-toned palette, so the brand feels upgraded rather than
+        replaced.</p>
+      </div>
+
+      <ol class="steps" aria-label="Homepage section order">
+        <li class="step reveal">
+          <p class="num">01</p>
+          <h3>Promise</h3>
+          <p>&ldquo;Every Vehicle. Done Right.&rdquo; with two routes forward: book, or browse services.</p>
+        </li>
+        <li class="step reveal">
+          <p class="num">02</p>
+          <h3>Proof</h3>
+          <p>A track-record strip: the 5.0 rating, 90+ reviews, and 24/7 mobile call-outs.</p>
+        </li>
+        <li class="step reveal">
+          <p class="num">03</p>
+          <h3>Capability</h3>
+          <p>Nine services, each explained in plain English with a direct booking button.</p>
+        </li>
+        <li class="step reveal">
+          <p class="num">04</p>
+          <h3>Reasons</h3>
+          <p>The four pillars, written to answer the fears customers actually bring in.</p>
+        </li>
+        <li class="step reveal">
+          <p class="num">05</p>
+          <h3>Voices</h3>
+          <p>Real Google reviews, quoted word for word, with a link to read all of them.</p>
+        </li>
+        <li class="step reveal">
+          <p class="num">06</p>
+          <h3>Action</h3>
+          <p>A four-step &ldquo;how it works&rdquo; and a short enquiry form, with contact details alongside.</p>
+        </li>
+      </ol>
+
+      <figure class="media reveal">
+        <div class="band wide">
+          <span class="ph" data-label="Services accordion · images/jheb-services.jpg"></span>
+          <img src="images/jheb-services.jpg" alt="Services section titled Everything your car needs, under one roof, with Logbook Servicing expanded to show a photo, a description, warranty-safe tags and a Book This Service button" onerror="this.remove()" />
+        </div>
+        <figcaption>Services are sold, not listed: what it protects you from, who it suits, and a booking button inside every panel.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ========================================================== MOBILE-FIRST -->
+  <section class="block feature">
+    <div class="wrap">
+      <div class="lede reveal">
+        <p class="label">Designing for mobile</p>
+        <h2>Built for someone standing next to a car that won&rsquo;t start.</h2>
+        <p>Most people meet a local mechanic on their phone first, often in a hurry. So the mobile site
+        is not a squeezed desktop layout. It is built to <strong>scan, decide, and call or book in under
+        a minute</strong>.</p>
+        <ul>
+          <li><strong>Full-width actions:</strong> &ldquo;Book A Service&rdquo; and &ldquo;Our Services&rdquo; stack as large thumb targets in the first screen.</li>
+          <li><strong>Tap to call everywhere:</strong> every phone number dials directly, from the header to the footer.</li>
+          <li><strong>A menu that never traps you:</strong> the full-screen menu scrolls on short phones, so the booking button is always reachable.</li>
+          <li><strong>Services that stay put:</strong> each panel opens in place with no page jump, and closes itself once it scrolls out of view.</li>
+          <li><strong>A form that respects the moment:</strong> name, phone, vehicle, service, and what&rsquo;s wrong. Nothing more.</li>
+          <li><strong>Fast on patchy signal:</strong> service and workshop photos re-optimised to roughly 80 to 170KB each.</li>
+        </ul>
+      </div>
+      <div class="two-up">
+        <figure class="media reveal">
+          <div class="band tall">
+            <span class="ph" data-label="Mobile first screen · images/jheb-mobile.jpg"></span>
+            <img src="images/jheb-mobile.jpg" alt="JHEB Automotive mobile homepage in a phone mockup, with stacked Book A Service and Our Services buttons above a 5.0 Google rating" onerror="this.remove()" />
+          </div>
+          <figcaption>On a phone, the first screen answers who, where, and how good, then offers one obvious next step.</figcaption>
+        </figure>
+        <figure class="media reveal">
+          <div class="band tall">
+            <span class="ph" data-label="Enquiry form and contact details · images/jheb-contact.jpg"></span>
+            <img src="images/jheb-contact.jpg" alt="Contact section headed Tell us the problem. We'll handle the rest., with location, phone, email and hours cards beside a short enquiry form" onerror="this.remove()" />
+          </div>
+          <figcaption>&ldquo;Tell us the problem.&rdquo; The enquiry asks for symptoms in the customer&rsquo;s own words, not mechanic jargon.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== TRUST AND CREDIBILITY -->
+  <section class="block feature">
+    <div class="wrap">
+      <div class="lede reveal">
+        <p class="label">Designing for credibility</p>
+        <h2>Let customers make the case, and make sure every claim holds up.</h2>
+        <p>The most persuasive copy on the site was not written by me. Six real Google reviews run in a
+        slow-moving row that pauses when you touch it, quoted word for word with the reviewer&rsquo;s name.
+        They do a job no headline can: a customer told it wasn&rsquo;t worth fixing their gearbox, a Sunday
+        door-lock repair done for free, a stranded driver from Melbourne sent home the same weekend.</p>
+        <p>Credibility also meant discipline about what I would not say. Before anything went in front
+        of the client, I audited every claim:</p>
+        <ul>
+          <li><strong>Removed unsourced numbers</strong> from early drafts, including a circular &ldquo;100% of undecided customers&rdquo; stat, an unverified bounce time, and keyword volumes with no dated source.</li>
+          <li><strong>Verified business details</strong> against the ASIC register and corrected an ABN carried over from earlier documents. A wrong ABN in a footer is a self-inflicted trust problem.</li>
+          <li><strong>Flagged operational promises</strong>, such as 24/7 mobile call-outs and a live star rating, for the owner to confirm, because they are commitments, not design decisions.</li>
+          <li><strong>Used placeholders, not guesses,</strong> wherever the pitch needed figures only the client could supply.</li>
+        </ul>
+      </div>
+      <figure class="media reveal">
+        <div class="band wide">
+          <span class="ph" data-label="Verbatim Google reviews · images/jheb-reviews.jpg"></span>
+          <img src="images/jheb-reviews.jpg" alt="Reviews section headed A perfect 5.0 rating from 90+ reviews, showing four verbatim Google reviews with reviewer names and a link to read all 90 on Google" onerror="this.remove()" />
+        </div>
+        <figcaption>Real names, real words, and a link to all 90 reviews. Proof the visitor can check for themselves.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ========================================================== LOCAL SEARCH -->
+  <section class="block feature">
+    <div class="wrap">
+      <div class="lede reveal">
+        <p class="label">Platform and systems impact</p>
+        <h2>From one page to a search footprint that grows every month.</h2>
+        <p>A single page gives Google almost nothing to work with. The long-term plan turns every
+        service and every suburb into something people can find: <strong>a service-by-suburb page
+        matrix</strong>, so &ldquo;logbook service Campbelltown&rdquo; or &ldquo;pre-purchase inspection
+        Narellan&rdquo; lands on a page written for exactly that search.</p>
+        <div class="cols">
+          <div class="col-card is-key">
+            <h3>Nine services</h3>
+            <ul>
+              <li>Logbook servicing</li>
+              <li>Brakes and suspension</li>
+              <li>Engine diagnostics and rebuilds</li>
+              <li>Air conditioning</li>
+              <li>Tyres and wheel alignment</li>
+              <li>Pre-purchase inspections</li>
+              <li>Transmission service</li>
+              <li>Electrical diagnostics</li>
+              <li>Performance and aftermarket</li>
+            </ul>
+          </div>
+          <div class="col-card">
+            <h3>Nine suburbs</h3>
+            <ul>
+              <li>Narellan</li>
+              <li>Campbelltown</li>
+              <li>Camden</li>
+              <li>Ingleburn</li>
+              <li>Minto</li>
+              <li>Harrington Park</li>
+              <li>Gregory Hills</li>
+              <li>Macquarie Fields</li>
+              <li>Leumeah</li>
+            </ul>
+          </div>
+        </div>
+        <p>Around the pages sits the groundwork that makes local search work: business schema across
+        the site, identical name, address, and phone details everywhere, a complete and active Google
+        Business Profile, and an automatic review request after every job. That last one matters most.
+        It turns each good job into the next customer&rsquo;s reason to call.</p>
+        <p>The roadmap is phased so the business sees value early and only commits further once it does:</p>
+        <ol>
+          <li><strong>Foundation:</strong> Google Business Profile, photos, fresh reviews, and consistent directory listings.</li>
+          <li><strong>Core build:</strong> the homepage, priority service pages, about, and booking.</li>
+          <li><strong>Search expansion:</strong> remaining service pages, first suburb pages, and the review workflow.</li>
+          <li><strong>Compound:</strong> remaining suburbs, a monthly article, and headline testing.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== THE PITCH -->
+  <section class="block feature">
+    <div class="wrap">
+      <div class="lede reveal">
+        <p class="label">Selling the work</p>
+        <h2>Pitch the outcome, not the deliverables.</h2>
+        <p>The first version of the pitch was seventeen slides of good thinking: brand diagnosis, UX
+        patterns, sitemaps, and timelines. It read like a design document. A workshop owner doesn&rsquo;t
+        buy a sitemap. They buy more calls.</p>
+        <p>I restructured it into a ten-slide argument that a busy owner could follow in one sitting:</p>
+        <ul>
+          <li><strong>The asset:</strong> you already have the hard part, a reputation.</li>
+          <li><strong>The leak:</strong> you are being compared before you are being called.</li>
+          <li><strong>The cost of doing nothing:</strong> a monthly figure built from the client&rsquo;s own job values, not invented ones.</li>
+          <li><strong>The fix:</strong> positioning, the four pillars, and the design, with mobile shown first.</li>
+          <li><strong>How you get found, the plan, and the investment:</strong> three clear tiers.</li>
+        </ul>
+        <p>The investment slide offered <strong>Foundation, Growth, and Compound</strong> tiers, with an
+        honest exit built in: start with Foundation, and if the calls haven&rsquo;t increased in 60 days,
+        don&rsquo;t continue. The deeper craft detail moved to an appendix, available on request.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== MEASUREMENT -->
+  <section class="block feature">
+    <div class="wrap">
+      <div class="lede reveal">
+        <p class="label">Measuring success</p>
+        <h2>Judge the site by calls and bookings, not by how it looks.</h2>
+        <p>For a local workshop, a beautiful site that doesn&rsquo;t ring the phone has failed. I defined
+        what success looks like in terms the owner already cares about:</p>
+        <div class="cols">
+          <div class="col-card is-key">
+            <h3>Success signals</h3>
+            <ul>
+              <li>Tap-to-call clicks from the site</li>
+              <li>Enquiry form submissions</li>
+              <li>Calls and direction requests from Google Business Profile</li>
+              <li>Rankings for priority service and suburb searches</li>
+              <li>New reviews each month</li>
+            </ul>
+          </div>
+          <div class="col-card">
+            <h3>Anti-metrics</h3>
+            <ul>
+              <li>Calls asking for hours or location the site should have answered</li>
+              <li>Enquiries for services JHEB doesn&rsquo;t offer</li>
+            </ul>
+          </div>
+        </div>
+        <p>The anti-metrics keep the work honest. A rise in calls is only good news if they are the
+        right calls, from people ready to book.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== OUTCOMES -->
+  <section class="block outcomes">
+    <div class="wrap">
+      <p class="label reveal" style="margin-bottom:18px;">Outcomes</p>
+      <h2 class="reveal">Value at brand, product, and growth level.</h2>
+      <ul class="stats">
+        <li class="stat reveal">
+          <p class="idx">01 · Brand</p>
+          <p class="t">5.0 <span class="accent">&#9733;</span> from 90 reviews, made visible</p>
+          <p class="d">A reputation that lived only on Google now leads the homepage, the headline copy, and the proof strip.</p>
+        </li>
+        <li class="stat reveal">
+          <p class="idx">02 · Product</p>
+          <p class="t">A mobile-first site, <span class="accent">built</span></p>
+          <p class="d">Designed, written, and coded end to end, with tap-to-call, a short enquiry form, and nine services explained.</p>
+        </li>
+        <li class="stat reveal">
+          <p class="idx">03 · Growth</p>
+          <p class="t">1 page <span class="accent">&rarr;</span> a 9 &times; 9 search plan</p>
+          <p class="d">A phased local search roadmap that turns every service and suburb into a way to be found.</p>
+        </li>
+      </ul>
+      <p class="closing reveal">Beyond the website, the client got a clear positioning, a verified set
+      of business facts, and a pitch that ties every dollar to a measurable result, with a built-in
+      point to stop if it isn&rsquo;t working.</p>
+    </div>
+  </section>
+
+  <!-- ========================================================== REFLECTION -->
+  <section class="block" style="border-top:1px solid var(--line);">
+    <div class="wrap block-grid">
+      <p class="label reveal">Reflection</p>
+      <div class="block-body reveal">
+        <h2>What this work proved.</h2>
+        <p>Small-business websites are often treated as a visual job. This one showed it is really a
+        product problem: understanding why customers hesitate, and designing every screen to remove
+        that hesitation at the moment it happens.</p>
+        <p>Owning strategy, copy, design, and build myself, with Claude Code as a build partner, meant
+        nothing was lost between the positioning and the finished page. A line written in the strategy
+        could be tested on a real phone within minutes.</p>
+        <p>The lessons I take into any product:</p>
+        <ul>
+          <li>Find the asset before the problem. JHEB didn&rsquo;t need a new reputation, just a way to show the one it had.</li>
+          <li>Let customers make the case. Real reviews persuade in a way no headline can.</li>
+          <li>Every claim is a promise. Verify it, soften it, or leave it out.</li>
+          <li>Sell outcomes in the client&rsquo;s language. Calls and bookings, not sitemaps and schema.</li>
+        </ul>
+        <p>More broadly, it reflects how I like to work: start from real evidence, make the decision
+        visible in the product, and be honest about what is known and what still needs to be proven.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== NEXT PROJECT -->
+  <a class="next-project" href="project-rallyloop.html">
+    <div class="wrap next-inner">
+      <span class="np-meta">
+        <span class="np-label">Next project</span>
+        <span class="np-title">RallyLoop</span>
+      </span>
+      <span class="np-arrow" aria-hidden="true">&rarr;</span>
+    </div>
+  </a>
+
+  <!-- ========================================================== CTA -->
+  <section class="block cta">
+    <div class="wrap">
+      <h2 class="reveal">Have a product that needs shaping?</h2>
+      <div class="actions reveal">
+        <a class="pill lg" href="index.html#contact">Get in touch &rarr;</a>
+        <a class="ghost" href="index.html#work">See more work</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================================================ FOOTER -->
+<footer class="site">
+  <div class="wrap foot-bottom">
+    <span>&copy; <span id="year"></span> Jonathan Jalotjot · Lead Product Designer</span>
+    <a href="#top">Back to top &uarr;</a>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Nav shadow + mobile toggle
+  const header = document.querySelector('header.site');
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.getElementById('navlinks');
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    links.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false');
+  }));
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Case-study hero: staggered reveal on page load
+  (function () {
+    const reduceM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const heroEls = [
+      document.querySelector('.backlink'),
+      document.querySelector('.case-hero .case-kicker'),
+      document.querySelector('.case-hero h1'),
+      document.querySelector('.case-hero .intro'),
+      ...document.querySelectorAll('.case-hero .meta .cell')
+    ].filter(Boolean);
+    heroEls.forEach((el, i) => { el.style.transitionDelay = (i * 0.08).toFixed(2) + 's'; });
+    if (reduceM) { heroEls.forEach(el => el.classList.add('in')); }
+    else { requestAnimationFrame(() => requestAnimationFrame(() => heroEls.forEach(el => el.classList.add('in')))); }
+  })();
+
+  // Playful custom cursor (desktop / fine-pointer only, skipped for reduced motion)
+  (function () {
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!fine || reduce) return;
+    const dot = document.createElement('div');
+    dot.id = 'cursor'; dot.setAttribute('aria-hidden', 'true');
+    const label = document.createElement('span'); label.className = 'cursor-label';
+    dot.appendChild(label); document.body.appendChild(dot);
+    document.documentElement.classList.add('cursor-custom');
+    let x = -100, y = -100, tx = -100, ty = -100, shown = false;
+    const ease = 0.18;
+    window.addEventListener('mousemove', (e) => {
+      tx = e.clientX; ty = e.clientY;
+      if (!shown) { shown = true; dot.style.opacity = '1'; }
+    }, { passive: true });
+    document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; });
+    document.addEventListener('mouseenter', () => { if (shown) dot.style.opacity = '1'; });
+    (function tick() {
+      x += (tx - x) * ease; y += (ty - y) * ease;
+      dot.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0) translate(-50%,-50%)';
+      requestAnimationFrame(tick);
+    })();
+    document.querySelectorAll('a, button, input, textarea, summary, [role="button"]').forEach((el) => {
+      el.addEventListener('mouseenter', () => dot.classList.add('is-grow'));
+      el.addEventListener('mouseleave', () => dot.classList.remove('is-grow'));
+    });
+  })();
+</script>
+</body>
+</html>
